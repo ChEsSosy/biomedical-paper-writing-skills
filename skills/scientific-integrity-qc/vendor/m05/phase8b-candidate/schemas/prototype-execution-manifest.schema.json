@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "prototype-execution-manifest.schema.json", "type": "object",
+  "required": ["schema_name", "schema_version", "execution_id", "execution_manifest_sha256", "execution_package_hash", "mode", "admission_receipt_ref", "backend_profile_ref", "plan_ref", "program", "input_bindings", "output_directory", "record_directory", "command", "parameters", "expected_outputs", "authorization_ref", "authorization_state"],
+  "properties": {
+    "schema_name": {"const": "prototype_execution_manifest"}, "schema_version": {"const": "0.1.0"}, "execution_id": {"type": "string", "minLength": 1}, "execution_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "execution_package_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "mode": {"const": "prototype_execution_and_inspection"},
+    "admission_receipt_ref": {"$ref": "#/$defs/hashRef"}, "backend_profile_ref": {"$ref": "#/$defs/hashRef"}, "plan_ref": {"$ref": "#/$defs/hashRef"},
+    "program": {"type": "object", "required": ["path", "sha256", "generator_id", "generator_version", "generator_sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "generator_id": {"const": "phase8b-restricted-python-generator"}, "generator_version": {"const": "0.1.0"}, "generator_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false},
+    "input_bindings": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["input_id", "path", "sha256"], "properties": {"input_id": {"type": "string", "minLength": 1}, "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false}},
+    "output_directory": {"type": "string", "minLength": 1}, "record_directory": {"type": "string", "minLength": 1}, "command": {"type": "array", "minItems": 3, "items": {"type": "string"}}, "parameters": {"type": "object", "additionalProperties": {"type": "string"}},
+    "expected_outputs": {"type": "array", "minItems": 4, "items": {"type": "object", "required": ["role", "path", "format", "panel_ids"], "properties": {"role": {"type": "string"}, "path": {"type": "string", "minLength": 1}, "format": {"type": "string", "enum": ["svg", "png", "tsv", "json"]}, "panel_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}}, "additionalProperties": false}},
+    "authorization_ref": {"$ref": "#/$defs/hashRef"}, "authorization_state": {"const": "externally_authorized"},
+    "runtime_result_ref": {"$ref": "#/$defs/hashRef"}, "render_output_ref": {"$ref": "#/$defs/hashRef"}
+  },
+  "$defs": {"hashRef": {"type": "object", "required": ["id", "version", "sha256"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false}},
+  "additionalProperties": false
+}

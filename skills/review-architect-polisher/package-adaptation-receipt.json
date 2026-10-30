@@ -1,0 +1,48 @@
+{
+  "schema_name": "phase9_item4_package_adaptation",
+  "schema_version": "0.1.6",
+  "skill_name": "review-architect-polisher",
+  "skill_package_version": "0.1.7",
+  "derived_from": {
+    "candidate_version": "0.1.5",
+    "review_bundle_sha256": "cea2889f2f2987e38219bb64ce38ecb0e622791ac6e8e0058c4d0145bd7eba0e",
+    "review_state": "REJECTED_WITH_ONE_EXACT_CITATION_GAP_EDGE_ALIGNMENT_DEFECT"
+  },
+  "frozen_phase7_contract": {
+    "version": "0.1.3",
+    "source_sha256": "8d58609f1bf65c98e43d641c39360f26964c2adab6082821cbf2462d51bb339f"
+  },
+  "frozen_phase7a_implementation": {
+    "version": "0.1.1",
+    "modified_in_place": false
+  },
+  "frozen_phase7b_contract": {
+    "version": "0.1.2",
+    "source_sha256": "87c560ef33e796e953dce24a7dfb0ed750024ef830521c0bbec4af3f43517fb6"
+  },
+  "phase7b_core": {
+    "version": "0.1.6",
+    "modified_in_place": false
+  },
+  "phase7b_patch_layer": {
+    "version": "0.1.6",
+    "modified_in_place": false
+  },
+  "narrow_patch_scope": [
+    "distinct start/end edge identity for non-empty lexical replace gaps"
+  ],
+  "scientific_behavior_expanded_beyond_contract": false,
+  "installed_or_activated": false,
+  "guidance_update": {
+    "parent_package_version": "0.1.6",
+    "accepted_batches": [
+      "A",
+      "B",
+      "C1"
+    ],
+    "runtime_identity_check_changed": true,
+    "runtime_identity_check_scope": "package-version constant separated from implementation version",
+    "scientific_revision_logic_changed": false,
+    "schema_logic_changed": false
+  }
+}

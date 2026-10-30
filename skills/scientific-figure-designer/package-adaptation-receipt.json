@@ -1,0 +1,320 @@
+{
+  "schema_name": "phase9_item5_package_adaptation",
+  "schema_version": "0.1.0",
+  "skill_name": "scientific-figure-designer",
+  "skill_package_version": "0.1.0",
+  "frozen_phase8_contract": {
+    "version": "0.1.1",
+    "sha256": "533f6f11bc20315f0eb75da53571c6e0545ce213bb4c5dd60e071879f88177b3"
+  },
+  "frozen_phase8a_implementation": {
+    "version": "0.1.2",
+    "modified_in_place": false
+  },
+  "frozen_phase8b_contract": {
+    "version": "0.1.1",
+    "sha256": "5de0a025eb74ebedd0bc89a885600b11e8e2ca4c40fad8644b1a7f1d3ecc5699"
+  },
+  "frozen_phase8b_implementation": {
+    "version": "0.1.1",
+    "modified_in_place": false
+  },
+  "file_bindings": [
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/analysis-output-record.schema.json",
+      "package_path": "candidate/schemas/analysis-output-record.schema.json",
+      "source_sha256": "faab2c4ac048dcb9d4083b47cf2f12d46c66cd3518fa4430dd89f022b9e27d5c",
+      "package_sha256": "faab2c4ac048dcb9d4083b47cf2f12d46c66cd3518fa4430dd89f022b9e27d5c",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/design-package-manifest.schema.json",
+      "package_path": "candidate/schemas/design-package-manifest.schema.json",
+      "source_sha256": "8dfa34e1c4f534c5aeb68f2b1980d2704d4b6c0e2f07061587f060954f79743b",
+      "package_sha256": "8dfa34e1c4f534c5aeb68f2b1980d2704d4b6c0e2f07061587f060954f79743b",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/figure-authority-decision.schema.json",
+      "package_path": "candidate/schemas/figure-authority-decision.schema.json",
+      "source_sha256": "1a933c6427e6516b29863e41447b8d6fafbc84808228005f98d4ae1d3c12a58d",
+      "package_sha256": "1a933c6427e6516b29863e41447b8d6fafbc84808228005f98d4ae1d3c12a58d",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/figure-card.schema.json",
+      "package_path": "candidate/schemas/figure-card.schema.json",
+      "source_sha256": "05524e631d28763062d495109ee2ce26e3e9207d66abdff329b4f6c5d20a4c16",
+      "package_sha256": "05524e631d28763062d495109ee2ce26e3e9207d66abdff329b4f6c5d20a4c16",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/figure-contract.schema.json",
+      "package_path": "candidate/schemas/figure-contract.schema.json",
+      "source_sha256": "16d4f27e152b3cefa8aad30919b2a8330e537cf5ccdd930276b53816e439ca5f",
+      "package_sha256": "16d4f27e152b3cefa8aad30919b2a8330e537cf5ccdd930276b53816e439ca5f",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/figure-qc.schema.json",
+      "package_path": "candidate/schemas/figure-qc.schema.json",
+      "source_sha256": "873485194958f563c58016dc010a4e4643a5a50435614ca0a494af5cf658431f",
+      "package_sha256": "873485194958f563c58016dc010a4e4643a5a50435614ca0a494af5cf658431f",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/figure-shared-definitions.schema.json",
+      "package_path": "candidate/schemas/figure-shared-definitions.schema.json",
+      "source_sha256": "7583a65d29bc380881b1db3c2a56d4d685524de4e3430e78e702753a5975d7b2",
+      "package_sha256": "7583a65d29bc380881b1db3c2a56d4d685524de4e3430e78e702753a5975d7b2",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/plot-recipe.schema.json",
+      "package_path": "candidate/schemas/plot-recipe.schema.json",
+      "source_sha256": "a4bc939228235bfa768a6a8ddf74f390d3972400e33f7247f8161a412b2b31c8",
+      "package_sha256": "a4bc939228235bfa768a6a8ddf74f390d3972400e33f7247f8161a412b2b31c8",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/source-data-manifest.schema.json",
+      "package_path": "candidate/schemas/source-data-manifest.schema.json",
+      "source_sha256": "b64dbba5db36f7acd3535e5bf9915aed85f0c93edbebd164d8b247c60e51a317",
+      "package_sha256": "b64dbba5db36f7acd3535e5bf9915aed85f0c93edbebd164d8b247c60e51a317",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/trusted-inputs-root.schema.json",
+      "package_path": "candidate/schemas/trusted-inputs-root.schema.json",
+      "source_sha256": "8ab2df85db7e5d19a6e63b987269e4812c8b297b4eec6b6b430675f880416c90",
+      "package_sha256": "8ab2df85db7e5d19a6e63b987269e4812c8b297b4eec6b6b430675f880416c90",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/schemas/trusted-source-inputs.schema.json",
+      "package_path": "candidate/schemas/trusted-source-inputs.schema.json",
+      "source_sha256": "1c7a8bd6f92ffb142d8f69f07125e2bb9a3f5c3a30506bf1b1e0fef8b9f3b946",
+      "package_sha256": "1c7a8bd6f92ffb142d8f69f07125e2bb9a3f5c3a30506bf1b1e0fef8b9f3b946",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/scripts/schema_runtime.py",
+      "package_path": "candidate/scripts/schema_runtime.py",
+      "source_sha256": "66734bd823ddebc2c46c832e825b60a271a79844fdd87a8731c56e22522ec3d1",
+      "package_sha256": "d6804d9747068a7811fe2e1214bc7186e2b4613e1bcbeca3d25816ac6df76c5c",
+      "adaptation": "package-local shared-validator path only"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/scripts/validate_figure_package.py",
+      "package_path": "candidate/scripts/validate_figure_package.py",
+      "source_sha256": "e2f314f0af00df31419d38b11eda500ddd53df065a92c7d046b7e994c245bcb1",
+      "package_sha256": "e2f314f0af00df31419d38b11eda500ddd53df065a92c7d046b7e994c245bcb1",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/tests/fixture_factory.py",
+      "package_path": "candidate/tests/fixture_factory.py",
+      "source_sha256": "f8d77b226972a196afb5d61b9d5c0e7bfcb39c7223c60eb6a6c33ef61ed527d2",
+      "package_sha256": "f8d77b226972a196afb5d61b9d5c0e7bfcb39c7223c60eb6a6c33ef61ed527d2",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/tests/fixtures/negative-cases.json",
+      "package_path": "candidate/tests/fixtures/negative-cases.json",
+      "source_sha256": "1123d9af0496a50654e84419c76eee5f0f84de862bd4ad9db05eb84500d76ec7",
+      "package_sha256": "1123d9af0496a50654e84419c76eee5f0f84de862bd4ad9db05eb84500d76ec7",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/candidate/tests/test_figure_package.py",
+      "package_path": "candidate/tests/test_figure_package.py",
+      "source_sha256": "d7a7f13202c0f253bbde5fd930a261f8d39a2a630c0d65f6521fcc6de916ebd6",
+      "package_sha256": "d7a7f13202c0f253bbde5fd930a261f8d39a2a630c0d65f6521fcc6de916ebd6",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/backend-environment-profile.schema.json",
+      "package_path": "phase8b-candidate/schemas/backend-environment-profile.schema.json",
+      "source_sha256": "41cca1e32ae5a67e8208eb456719cff17f746ac1aa19b8cd2442328865758abb",
+      "package_sha256": "41cca1e32ae5a67e8208eb456719cff17f746ac1aa19b8cd2442328865758abb",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/bounded-program-plan.schema.json",
+      "package_path": "phase8b-candidate/schemas/bounded-program-plan.schema.json",
+      "source_sha256": "2514af1470f5de23b07aee69cb970c4292866daf0dc26abb56bbfd6a80b43ea1",
+      "package_sha256": "2514af1470f5de23b07aee69cb970c4292866daf0dc26abb56bbfd6a80b43ea1",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/design-revision-proposal.schema.json",
+      "package_path": "phase8b-candidate/schemas/design-revision-proposal.schema.json",
+      "source_sha256": "66c30112f811454c1e2e1750280274a68788dba6c4c2c47e0b2af381fa3efde3",
+      "package_sha256": "66c30112f811454c1e2e1750280274a68788dba6c4c2c47e0b2af381fa3efde3",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/figure-qc-phase8b.schema.json",
+      "package_path": "phase8b-candidate/schemas/figure-qc-phase8b.schema.json",
+      "source_sha256": "5093b961b40cf344abfa9cac127140aab4a95487db46cea84f39be8a8a10ec29",
+      "package_sha256": "5093b961b40cf344abfa9cac127140aab4a95487db46cea84f39be8a8a10ec29",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/phase8a-admission-receipt.schema.json",
+      "package_path": "phase8b-candidate/schemas/phase8a-admission-receipt.schema.json",
+      "source_sha256": "b6c690b2115d9362c328e36899ddc45891e36065ec38ef843b1d6288c54aa50f",
+      "package_sha256": "b6c690b2115d9362c328e36899ddc45891e36065ec38ef843b1d6288c54aa50f",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/prototype-execution-authorization.schema.json",
+      "package_path": "phase8b-candidate/schemas/prototype-execution-authorization.schema.json",
+      "source_sha256": "a039d9203ad6d517a13d1631779eedb593dfd900c4a5d2755b2b041edcce8d56",
+      "package_sha256": "a039d9203ad6d517a13d1631779eedb593dfd900c4a5d2755b2b041edcce8d56",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/prototype-execution-manifest.schema.json",
+      "package_path": "phase8b-candidate/schemas/prototype-execution-manifest.schema.json",
+      "source_sha256": "d25dbe2622af3d93fcc3f05b740ab8bb1d504f2628dd5178b8e07ae7ac314662",
+      "package_sha256": "d25dbe2622af3d93fcc3f05b740ab8bb1d504f2628dd5178b8e07ae7ac314662",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/prototype-execution-result.schema.json",
+      "package_path": "phase8b-candidate/schemas/prototype-execution-result.schema.json",
+      "source_sha256": "346775e6e99e1f2ec51124cb787579297a1fa51bcf846da74d7e267f9707e92f",
+      "package_sha256": "346775e6e99e1f2ec51124cb787579297a1fa51bcf846da74d7e267f9707e92f",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/render-inspection-record.schema.json",
+      "package_path": "phase8b-candidate/schemas/render-inspection-record.schema.json",
+      "source_sha256": "b456b0cd925afc706fe543764a036f8f7e374793bb07d9c4cff3f7ed6a1d8a3b",
+      "package_sha256": "b456b0cd925afc706fe543764a036f8f7e374793bb07d9c4cff3f7ed6a1d8a3b",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/schemas/render-output-manifest.schema.json",
+      "package_path": "phase8b-candidate/schemas/render-output-manifest.schema.json",
+      "source_sha256": "f1411ece372a3fe9fd3a1d7e710d9157bf8f901225292115619c9a3437aaee46",
+      "package_sha256": "f1411ece372a3fe9fd3a1d7e710d9157bf8f901225292115619c9a3437aaee46",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/generate_restricted_python.py",
+      "package_path": "phase8b-candidate/scripts/generate_restricted_python.py",
+      "source_sha256": "37f349cb7f752a016bd8e9a99b36eac92707af8eafea8976ed41a1f535fe270d",
+      "package_sha256": "37f349cb7f752a016bd8e9a99b36eac92707af8eafea8976ed41a1f535fe270d",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/inspect_render_metadata.py",
+      "package_path": "phase8b-candidate/scripts/inspect_render_metadata.py",
+      "source_sha256": "f009bba13193ae55a807199678e32004c59a4aed6693a67c11a6d59c1bdef427",
+      "package_sha256": "f009bba13193ae55a807199678e32004c59a4aed6693a67c11a6d59c1bdef427",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/phase8b_runtime.py",
+      "package_path": "phase8b-candidate/scripts/phase8b_runtime.py",
+      "source_sha256": "51ae2b1a8e2be612a3dddd21c2ccd9c8327f4e484e714a7642d8d875b9fabf2f",
+      "package_sha256": "51ae2b1a8e2be612a3dddd21c2ccd9c8327f4e484e714a7642d8d875b9fabf2f",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/probe_backend_environment.py",
+      "package_path": "phase8b-candidate/scripts/probe_backend_environment.py",
+      "source_sha256": "b577421c1bc1f7e0ca171f1f808489f764b669a761ff575b0b9f49f98ca3e084",
+      "package_sha256": "b577421c1bc1f7e0ca171f1f808489f764b669a761ff575b0b9f49f98ca3e084",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/run_prototype.py",
+      "package_path": "phase8b-candidate/scripts/run_prototype.py",
+      "source_sha256": "7753f1da7f5224cf4a21f976e4710f44dea00488d27689faca42f6a71f63714c",
+      "package_sha256": "7753f1da7f5224cf4a21f976e4710f44dea00488d27689faca42f6a71f63714c",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/validate_generated_program.py",
+      "package_path": "phase8b-candidate/scripts/validate_generated_program.py",
+      "source_sha256": "7fd3043f5c887eef5301c45330341d2b41fa354f3a0ca751237c895f98e7b2f7",
+      "package_sha256": "7fd3043f5c887eef5301c45330341d2b41fa354f3a0ca751237c895f98e7b2f7",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/validate_phase8b_admission.py",
+      "package_path": "phase8b-candidate/scripts/validate_phase8b_admission.py",
+      "source_sha256": "b58e848fad0741edde66b01c0108165084181dd83800cc04582519c9ad23befd",
+      "package_sha256": "b58e848fad0741edde66b01c0108165084181dd83800cc04582519c9ad23befd",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/scripts/validate_phase8b_package.py",
+      "package_path": "phase8b-candidate/scripts/validate_phase8b_package.py",
+      "source_sha256": "b3fa251a1bab8c5895472ea6892fa1cc9a9fcf8da36b26cfd90ac9a3938a5313",
+      "package_sha256": "b3fa251a1bab8c5895472ea6892fa1cc9a9fcf8da36b26cfd90ac9a3938a5313",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/tests/fixture_factory.py",
+      "package_path": "phase8b-candidate/tests/fixture_factory.py",
+      "source_sha256": "2c1b3cfe56cafa4e09a1fbdc027ef928d988716b613cc8a54c34cafeaae68b20",
+      "package_sha256": "2c1b3cfe56cafa4e09a1fbdc027ef928d988716b613cc8a54c34cafeaae68b20",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/tests/fixtures/negative-cases.json",
+      "package_path": "phase8b-candidate/tests/fixtures/negative-cases.json",
+      "source_sha256": "0c829401f5fffef3071b8d6281a9351a89164c2a8a0f8782f62a6048f7ede056",
+      "package_sha256": "0c829401f5fffef3071b8d6281a9351a89164c2a8a0f8782f62a6048f7ede056",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/05_scientific-figure-designer/phase8b-candidate/tests/test_phase8b_contract.py",
+      "package_path": "phase8b-candidate/tests/test_phase8b_contract.py",
+      "source_sha256": "cd480dfb8b4229192477cd3995b3b31c2c09759b07fc7d49ad4edb9b590223b9",
+      "package_sha256": "cd480dfb8b4229192477cd3995b3b31c2c09759b07fc7d49ad4edb9b590223b9",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/04_review-architect-polisher/package-candidate-0.1.6/review-architect-polisher/shared-core/schemas/qc-finding.schema.json",
+      "package_path": "shared-core/schemas/qc-finding.schema.json",
+      "source_sha256": "1b65b2165a01d6aec51c9525c393a416397cde80d3e62b2cb5fb02d70c81cea8",
+      "package_sha256": "1b65b2165a01d6aec51c9525c393a416397cde80d3e62b2cb5fb02d70c81cea8",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/04_review-architect-polisher/package-candidate-0.1.6/review-architect-polisher/shared-core/schemas/shared-artifact.schema.json",
+      "package_path": "shared-core/schemas/shared-artifact.schema.json",
+      "source_sha256": "a2a8479a505a79dd652e92d450041a7362d13724c58666aa3a0fe1ccf39feaeb",
+      "package_sha256": "a2a8479a505a79dd652e92d450041a7362d13724c58666aa3a0fe1ccf39feaeb",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/04_review-architect-polisher/package-candidate-0.1.6/review-architect-polisher/shared-core/scripts/validate_artifact.py",
+      "package_path": "shared-core/scripts/validate_artifact.py",
+      "source_sha256": "898ea588b065eedeb1ca7867ee2a3631496d8a36ca5605e4fd2718725003cc49",
+      "package_sha256": "898ea588b065eedeb1ca7867ee2a3631496d8a36ca5605e4fd2718725003cc49",
+      "adaptation": "byte-identical copy"
+    },
+    {
+      "source_path": "result/04_review-architect-polisher/package-candidate-0.1.6/review-architect-polisher/shared-core/shared-core-vendor-inventory.json",
+      "package_path": "shared-core/shared-core-vendor-inventory.json",
+      "source_sha256": "582a00089707e6086e431eb49c57cc6fba384cd38a91bbc89682225d91dae114",
+      "package_sha256": "582a00089707e6086e431eb49c57cc6fba384cd38a91bbc89682225d91dae114",
+      "adaptation": "byte-identical copy"
+    }
+  ],
+  "package_only_adaptations": [
+    "candidate/scripts/schema_runtime.py: package-local shared-validator path only"
+  ],
+  "public_modes": [
+    "design_review_only",
+    "prototype_execution_and_inspection"
+  ],
+  "scientific_behavior_expanded_beyond_frozen_contracts": false,
+  "installed_or_activated": false
+}

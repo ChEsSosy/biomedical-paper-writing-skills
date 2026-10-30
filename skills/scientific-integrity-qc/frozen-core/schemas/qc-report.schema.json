@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qc-report.schema.json",
+  "title": "Minimum Scientific Integrity QC Report 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "status", "warnings", "report_id", "manifest_id",
+    "source_sha256", "candidate_sha256", "validator_version", "ruleset_version",
+    "check_results", "finding_ids", "finding_counts", "gate_outcome",
+    "human_review_required", "degraded_modes", "limitations", "human_decision_queue"
+  ],
+  "properties": {
+    "schema_name": {"const": "qc-report"},
+    "schema_version": {"const": "0.1.0"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "warnings": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/warning"}
+    },
+    "report_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "manifest_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "source_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "candidate_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "validator_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "ruleset_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "check_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "required", "execution_state", "finding_ids"],
+        "properties": {
+          "check_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "required": {"type": "boolean"},
+          "execution_state": {"$ref": "qc-shared-definitions.schema.json#/$defs/checkExecutionState"},
+          "finding_ids": {
+            "type": "array",
+            "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+            "uniqueItems": true
+          },
+          "reason": {"type": "string"}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "finding_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "finding_counts": {
+      "type": "object",
+      "required": ["blocker", "error", "warning", "info"],
+      "properties": {
+        "blocker": {"type": "integer", "minimum": 0},
+        "error": {"type": "integer", "minimum": 0},
+        "warning": {"type": "integer", "minimum": 0},
+        "info": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "gate_outcome": {"$ref": "qc-shared-definitions.schema.json#/$defs/gateOutcome"},
+    "human_review_required": {"type": "boolean"},
+    "degraded_modes": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+    },
+    "limitations": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+    },
+    "human_decision_queue": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

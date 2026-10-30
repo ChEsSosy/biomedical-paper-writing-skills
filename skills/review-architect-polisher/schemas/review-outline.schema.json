@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-outline.schema.json",
+  "title": "Phase 7A Review Outline 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "created_at", "created_by", "status", "scope_ref", "source_registry_ref", "synthesis_ref",
+    "review_type", "profile_guidance", "taxonomy_axis_ids", "section_plans", "placed_conflict_ids",
+    "placed_limitation_ids", "placed_gap_ids", "source_coverage_audit", "candidate_figure_table_briefs",
+    "decision_refs", "unresolved_queries", "terminal_state"
+  ],
+  "properties": {
+    "schema_name": {"const": "review_outline"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.3"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "scope_ref": {"$ref": "review-scope.schema.json#/$defs/artifactRef"},
+    "source_registry_ref": {"$ref": "review-scope.schema.json#/$defs/artifactRef"},
+    "synthesis_ref": {"$ref": "review-scope.schema.json#/$defs/artifactRef"},
+    "review_type": {"type": "string", "enum": ["narrative_review", "mini_review", "scoping_style_review", "systematic_style_draft"]},
+    "profile_guidance": {
+      "oneOf": [
+        {"$ref": "#/$defs/profileGuidance"},
+        {"type": "null"}
+      ]
+    },
+    "taxonomy_axis_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+    "section_plans": {"type": "array", "items": {"$ref": "#/$defs/sectionPlan"}, "minItems": 1, "uniqueItems": true},
+    "placed_conflict_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+    "placed_limitation_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+    "placed_gap_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+    "source_coverage_audit": {"$ref": "review-synthesis-matrix.schema.json#/$defs/sourceCoverageAudit"},
+    "candidate_figure_table_briefs": {"type": "array", "items": {"$ref": "#/$defs/figureTableBrief"}, "uniqueItems": true},
+    "decision_refs": {"type": "array", "items": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"}, "uniqueItems": true},
+    "unresolved_queries": {"type": "array", "items": {"$ref": "review-scope.schema.json#/$defs/query"}, "uniqueItems": true},
+    "terminal_state": {"const": "ready_for_author_review"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "profileGuidance": {
+      "type": "object",
+      "required": ["profile_id", "profile_kind", "profile_version", "profile_sha256", "profile_alignment_used", "feature_ids"],
+      "properties": {
+        "profile_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "profile_kind": {"type": "string", "enum": ["review_article", "original_article", "mixed", "uncertain"]},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "profile_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+        "profile_alignment_used": {"type": "boolean"},
+        "feature_ids": {"type": "array", "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "sectionPlan": {
+      "type": "object",
+      "required": ["section_id", "title", "theme_ids", "paragraph_plans"],
+      "properties": {
+        "section_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "title": {"type": "string", "minLength": 1},
+        "theme_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "paragraph_plans": {"type": "array", "items": {"$ref": "#/$defs/paragraphPlan"}, "minItems": 1, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "paragraphPlan": {
+      "type": "object",
+      "required": [
+        "paragraph_id", "role", "theme_id", "claim_ids", "evidence_cluster_ids", "source_ids",
+        "conflict_ids", "limitation_ids", "gap_ids"
+      ],
+      "properties": {
+        "paragraph_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "role": {"type": "string", "enum": ["scope", "synthesis", "consensus", "conflict", "limitation", "gap", "future_direction", "transition", "conclusion"]},
+        "theme_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "claim_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "evidence_cluster_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "source_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "conflict_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "limitation_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "gap_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"}
+      },
+      "additionalProperties": false
+    },
+    "figureTableBrief": {
+      "type": "object",
+      "required": ["brief_id", "output_type", "purpose", "theme_ids", "claim_ids", "source_ids"],
+      "properties": {
+        "brief_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "output_type": {"type": "string", "enum": ["figure", "table"]},
+        "purpose": {"type": "string", "minLength": 1},
+        "theme_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "claim_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"},
+        "source_ids": {"$ref": "review-synthesis-matrix.schema.json#/$defs/idArray"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

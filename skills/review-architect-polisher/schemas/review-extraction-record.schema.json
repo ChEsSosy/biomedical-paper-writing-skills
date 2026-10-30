@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-extraction-record.schema.json",
+  "title": "Phase 7A Review Extraction Record Interface 0.1.0",
+  "type": "object",
+  "required": [
+    "interface_name", "interface_version", "record_sha256", "extraction_record_id",
+    "source_registry_ref", "source_id", "evidence_unit_id", "extraction_type",
+    "source_access_level", "source_locator", "source_span_sha256", "extracted_content",
+    "normalized_proposition", "extraction_origin", "review_status", "review_decision_origin",
+    "reviewer_identity"
+  ],
+  "properties": {
+    "interface_name": {"const": "review_extraction_record"},
+    "interface_version": {"const": "0.1.0"},
+    "record_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "extraction_record_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "source_registry_ref": {"$ref": "review-scope.schema.json#/$defs/artifactRef"},
+    "source_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "evidence_unit_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "study_family_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "extraction_type": {
+      "type": "string",
+      "enum": ["result", "method", "source_claim", "limitation", "population", "comparator", "outcome", "statistic", "author_note"]
+    },
+    "source_access_level": {"$ref": "review-source-registry.schema.json#/$defs/accessLevel"},
+    "source_locator": {
+      "oneOf": [
+        {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"},
+        {"type": "null"}
+      ]
+    },
+    "source_span_sha256": {
+      "oneOf": [
+        {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+        {"type": "null"}
+      ]
+    },
+    "extracted_content": {"type": ["string", "null"]},
+    "normalized_proposition": {"type": ["string", "null"]},
+    "extraction_origin": {"type": "string", "enum": ["direct_source_extraction", "author_supplied_source_note", "model_assisted_extraction"]},
+    "review_status": {"type": "string", "enum": ["pending", "author_review_required", "approved", "rejected"]},
+    "review_decision_origin": {"type": "string", "enum": ["author_supplied", "authorized_review_workflow", "model_proposed"]},
+    "decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+    "reviewer_identity": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

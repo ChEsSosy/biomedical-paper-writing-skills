@@ -1,0 +1,295 @@
+{
+  "schema_name": "skill_package_inventory",
+  "schema_version": "0.1.1",
+  "skill_name": "manuscript-story-architect",
+  "skill_package_version": "0.1.1",
+  "package_manifest_id": "phase9-item2-manuscript-story-architect-0.1.1",
+  "package_manifest_sha256": "a90890785e6c32f86813a0054d2be8e9e39d3f4ec6cdc43797d863663f42c9b3",
+  "source_components": [
+    {
+      "component_id": "module02-development-contract",
+      "component_kind": "contract",
+      "version": "0.1.1",
+      "path": "references/development-contract.md",
+      "sha256": "35463a8dd99e39135fef2c13efb5b2632c4ddd2940a37cc92442b0de408018f9"
+    },
+    {
+      "component_id": "manuscript-story-architect-implementation",
+      "component_kind": "implementation",
+      "version": "0.1.3",
+      "path": "scripts/story_artifact_checks.py",
+      "sha256": "9f7927a73dad234657e6fa9bc29db401945e1d5e7de9065e26ea1b2a8dff1e28"
+    },
+    {
+      "component_id": "manuscript-story-architect-entrypoint",
+      "component_kind": "entrypoint",
+      "version": "0.1.1",
+      "path": "SKILL.md",
+      "sha256": "94850cacfb2b2cb2e94fa8cbec8a809f24090e81db22b990a11150cee0a83677"
+    }
+  ],
+  "vendored_shared_core": {
+    "version": "0.2.2",
+    "inventory_path": "shared-core/shared-core-vendor-inventory.json",
+    "inventory_sha256": "a584b246d88e035a54eca8ab9859c7dc5e9eadf6518d9cfb8117a72d7f087590"
+  },
+  "supported_interfaces": [
+    {
+      "direction": "input",
+      "name": "module02_article_profile_admission",
+      "version": "0.1.0"
+    },
+    {
+      "direction": "output",
+      "name": "module02_manuscript_plan_bundle",
+      "version": "0.1.0"
+    },
+    {
+      "direction": "output",
+      "name": "module02_figure_story_bundle",
+      "version": "0.1.0"
+    }
+  ],
+  "files": [
+    {
+      "role": "ui_metadata",
+      "path": "agents/openai.yaml",
+      "sha256": "21dc09f0c7a530e2c93cceb19e94e39f6d30944ddf48b3cdbfc8ef1610a6374d",
+      "size_bytes": 352
+    },
+    {
+      "role": "reference",
+      "path": "package-adaptation-receipt.json",
+      "sha256": "e964f17353b955aa7c52c4afd7ce83bb5a1233c71c9bda99cceaddaee574ab7a",
+      "size_bytes": 11986
+    },
+    {
+      "role": "reference",
+      "path": "references/claim-evidence-gate.md",
+      "sha256": "ff334ed54385ab957d290a8eb37492fdec408e666d2a480e422f2a830b29eed0",
+      "size_bytes": 1894
+    },
+    {
+      "role": "reference",
+      "path": "references/development-contract.md",
+      "sha256": "35463a8dd99e39135fef2c13efb5b2632c4ddd2940a37cc92442b0de408018f9",
+      "size_bytes": 12049
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/additional-modalities.md",
+      "sha256": "a81932effc8eab7b26cc4d15a26ff7accb084c4c5abd365995ca92b7f557508a",
+      "size_bytes": 1454
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/animal.md",
+      "sha256": "561fbd4985ac7dd530e926814483a45cf711bb44a5e1e03ee6529570e24dbeda",
+      "size_bytes": 1436
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/cell.md",
+      "sha256": "caae881deff53a5078d40c3e644b274bdb2e199981cbd9c7e9fc6698e5ed9af7",
+      "size_bytes": 1290
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/computational.md",
+      "sha256": "27c3220dd0f1823812ed4c5ec9e191375a237adb38a743028225beecbeb84a1e",
+      "size_bytes": 1286
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/index.md",
+      "sha256": "b0bbf13add9a4a7dec47346d1cac684d9e4161f6685fb0ab244f6e5e062c00db",
+      "size_bytes": 1448
+    },
+    {
+      "role": "reference",
+      "path": "references/experiment-profiles/molecular.md",
+      "sha256": "7983348b8a39753663fab587fc6ccad355db9d8afd76ba90aa08fa69272410d8",
+      "size_bytes": 1280
+    },
+    {
+      "role": "reference",
+      "path": "references/figure-story-sequencing.md",
+      "sha256": "ada732c144472dba9e156884f0c2585b8addab9656e9e07cbd8cc92e3055decb",
+      "size_bytes": 2012
+    },
+    {
+      "role": "reference",
+      "path": "references/observation-interpretation-boundary-validation.md",
+      "sha256": "86f19aa147221847fb7d969f9721173deb9b66bea037a761dd23794eb8195460",
+      "size_bytes": 1996
+    },
+    {
+      "role": "reference",
+      "path": "references/original-article-story.md",
+      "sha256": "caba7b29fd99054104a66a3dcab3b20a3294cd2a1dc216852682cb01f25976b7",
+      "size_bytes": 2013
+    },
+    {
+      "role": "reference",
+      "path": "references/section-and-paragraph-roles.md",
+      "sha256": "08ceb0a0e526227bae5ab9b4cb9f8f2e8ed7eedb30c5b3d0e44c520ecc21678d",
+      "size_bytes": 2399
+    },
+    {
+      "role": "schema",
+      "path": "schemas/claim-evidence-map.schema.json",
+      "sha256": "9a8ab3c73cf1d47fcaf00b37d87208e9c99c42698151ecbc129e0c67e2b1b391",
+      "size_bytes": 3791
+    },
+    {
+      "role": "schema",
+      "path": "schemas/interpretation-card.schema.json",
+      "sha256": "7ffc746f32c61c0ea31ca637f55c325af93a32a6c687bba3c636634902d4b629",
+      "size_bytes": 8560
+    },
+    {
+      "role": "schema",
+      "path": "schemas/manuscript-plan.schema.json",
+      "sha256": "ca8a57315a103235803729334235ef51c6cf4bc9e98b55b350128635d280c086",
+      "size_bytes": 17992
+    },
+    {
+      "role": "schema",
+      "path": "schemas/story-artifact-definitions.schema.json",
+      "sha256": "ef4db07ee9cb0b38560b93e51f41093bdecd608f3f08bbb8092ac10b57aeb8ed",
+      "size_bytes": 11382
+    },
+    {
+      "role": "script",
+      "path": "scripts/check_artifact_links.py",
+      "sha256": "a7132de549b9f96120469371bc8abfe63e471a1ebd9a51cf75fcc1e7a69d107b",
+      "size_bytes": 2497
+    },
+    {
+      "role": "script",
+      "path": "scripts/check_section_coverage.py",
+      "sha256": "5fb5681a8fadad2b38878b37a008d21b0fa962e82c47ee13bf833f569bdffdc4",
+      "size_bytes": 1978
+    },
+    {
+      "role": "script",
+      "path": "scripts/materialize_figure_sequence.py",
+      "sha256": "6e1723b8d4c89e966c576cc0bf9d8ffc45a92605656100da1d52a21d74153f5e",
+      "size_bytes": 7461
+    },
+    {
+      "role": "script",
+      "path": "scripts/render_reverse_outline.py",
+      "sha256": "6be0c27bc12793675925ebfbb10cd8ef1d342b48218454bb0aa70b31ab887e87",
+      "size_bytes": 5071
+    },
+    {
+      "role": "script",
+      "path": "scripts/schema_runtime.py",
+      "sha256": "21f1d0553ee4a2766a094c307edc41fe528a4c89100efbf5b137aa6b317486c9",
+      "size_bytes": 5645
+    },
+    {
+      "role": "script",
+      "path": "scripts/story_artifact_checks.py",
+      "sha256": "9f7927a73dad234657e6fa9bc29db401945e1d5e7de9065e26ea1b2a8dff1e28",
+      "size_bytes": 27815
+    },
+    {
+      "role": "script",
+      "path": "scripts/validate_claim_evidence_map.py",
+      "sha256": "fde5070da7dc902258ba9b687c6db64578e678aaad613ca81e8abe6f3bd065ed",
+      "size_bytes": 1717
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/qc-finding.schema.json",
+      "sha256": "1b65b2165a01d6aec51c9525c393a416397cde80d3e62b2cb5fb02d70c81cea8",
+      "size_bytes": 888
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/shared-artifact.schema.json",
+      "sha256": "a2a8479a505a79dd652e92d450041a7362d13724c58666aa3a0fe1ccf39feaeb",
+      "size_bytes": 8884
+    },
+    {
+      "role": "script",
+      "path": "shared-core/scripts/validate_artifact.py",
+      "sha256": "898ea588b065eedeb1ca7867ee2a3631496d8a36ca5605e4fd2718725003cc49",
+      "size_bytes": 12498
+    },
+    {
+      "role": "reference",
+      "path": "shared-core/shared-core-vendor-inventory.json",
+      "sha256": "582a00089707e6086e431eb49c57cc6fba384cd38a91bbc89682225d91dae114",
+      "size_bytes": 1418
+    },
+    {
+      "role": "skill",
+      "path": "SKILL.md",
+      "sha256": "94850cacfb2b2cb2e94fa8cbec8a809f24090e81db22b990a11150cee0a83677",
+      "size_bytes": 8883
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/negative-cases.json",
+      "sha256": "9e7678c8b40175b421281c50b215734f1103e6d213667ce7f9a395ac81279021",
+      "size_bytes": 5715
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/valid-claim-evidence-map.json",
+      "sha256": "0c3f8719fc28f852576afb636b5e3eddbc1d782a973b5d8957048b75981f4015",
+      "size_bytes": 4749
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/valid-interpretation-card.json",
+      "sha256": "cc7fd7fce603ad43670b2dee0fb2eab7a9bf301a9de127abfe845f44d1e6a8e1",
+      "size_bytes": 3222
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/valid-manuscript-plan.json",
+      "sha256": "7e811eb582e917a9bed4cc55bdce843c8c92165fb671c931052eb28765e64145",
+      "size_bytes": 7895
+    },
+    {
+      "role": "test",
+      "path": "tests/test_package_validator_resolution.py",
+      "sha256": "1d3f220c9de17e73c8af28c07888965fd72b83ff5d60772d7186b3da0c626a32",
+      "size_bytes": 5169
+    },
+    {
+      "role": "test",
+      "path": "tests/test_packaged_contract_paths.py",
+      "sha256": "9126625da0f88525bb0fe03829551ad2e6be1ac18ad97f419e940ce438bcf65b",
+      "size_bytes": 979
+    },
+    {
+      "role": "test",
+      "path": "tests/test_phase9_package.py",
+      "sha256": "2ef7c994ec48fd1bf12b4d93ba45aa5b24b2c9ba9deaa2929f08c70bc9835735",
+      "size_bytes": 4266
+    },
+    {
+      "role": "test",
+      "path": "tests/test_skill_package.py",
+      "sha256": "04f8439dcf15715630b4f7660b9d6aa9dcda666e2e245f1de885777b11c8500a",
+      "size_bytes": 1983
+    },
+    {
+      "role": "test",
+      "path": "tests/test_story_artifact_schemas.py",
+      "sha256": "12689fa2880758d889c41c5c9ac7ea830d92f7cdf31f98793d4d9dd196e45622",
+      "size_bytes": 6289
+    },
+    {
+      "role": "test",
+      "path": "tests/test_story_scripts.py",
+      "sha256": "78fe82462890ddb1b42d1966fa8c2f18e55c75c38c1cada4abb51d4c5e86dcc7",
+      "size_bytes": 17908
+    }
+  ]
+}

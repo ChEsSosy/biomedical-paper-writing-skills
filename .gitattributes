@@ -1,0 +1,2 @@
+# Preserve exact package bytes on checkout, including on Windows.
+* -text

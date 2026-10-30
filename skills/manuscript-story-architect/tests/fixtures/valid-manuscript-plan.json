@@ -1,0 +1,220 @@
+{
+  "schema_name": "manuscript_plan",
+  "schema_version": "0.1.1",
+  "artifact_id": "manuscript-plan:synthetic-plan-a",
+  "created_at": "2026-08-30T12:00:00+00:00",
+  "created_by": "manuscript-story-architect-contract/0.1.1",
+  "source_artifact_ids": [
+    "claim-map:synthetic-manuscript-1",
+    "interpretation-card:synthetic-1"
+  ],
+  "source_files": [
+    {
+      "path": "input/synthetic-manuscript.md",
+      "role": "other",
+      "document_id": "synthetic-manuscript-1",
+      "access_status": "author_owned"
+    }
+  ],
+  "status": "author_review_required",
+  "warnings": [],
+  "manuscript_id": "synthetic-manuscript-1",
+  "document_type": "original_article",
+  "plan_id": "plan:synthetic-a",
+  "plan_label": "Synthetic structure candidate A",
+  "claim_evidence_map_id": "claim-map:synthetic-manuscript-1",
+  "interpretation_card_ids": ["interpretation-card:synthetic-1"],
+  "upstream_profiles": {
+    "structure_profile": {
+      "artifact_id": "structure-profile:synthetic-article-1",
+      "profile_kind": "structure_profile",
+      "extraction_mode": "deterministic",
+      "scientific_authority": false
+    },
+    "architecture_profile": {
+      "artifact_id": "architecture-profile:synthetic-article-1",
+      "profile_kind": "architecture_profile",
+      "review_status": "reviewed",
+      "scientific_authority": false
+    }
+  },
+  "journal_adaptation": {
+    "target_journal": "Synthetic Journal",
+    "target_journal_profile": "journal-profile:synthetic-journal-original-article",
+    "journal_instructions_provenance": [
+      {
+        "location_kind": "author_input",
+        "source_file_path": "input/synthetic-journal-instructions.md",
+        "local_identifier": "journal instructions supplied for the synthetic fixture"
+      }
+    ],
+    "article_subtype": "original research article",
+    "allowed_influences": ["structure", "emphasis", "compression", "order"],
+    "scientific_authority": false
+  },
+  "story_anchors": {
+    "central_question": {
+      "statement": "Does the candidate intervention change the measured response in model A?",
+      "provenance": "author_supplied",
+      "source_locators": [
+        {
+          "location_kind": "author_input",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "local_identifier": "author-confirmed-central-question"
+        }
+      ],
+      "author_approval": "approved"
+    },
+    "take_home_message": {
+      "statement": "The candidate intervention is associated with the measured response under the tested conditions.",
+      "provenance": "architect_proposed_restatement",
+      "source_locators": [
+        {
+          "location_kind": "manuscript_text",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "section": "results",
+          "paragraph_id": "paragraph:results-1",
+          "sentence_id": "sentence:results-1-1",
+          "local_identifier": "results paragraph 1 sentence 1"
+        }
+      ],
+      "support_status": "partially_supported",
+      "author_approval": "pending"
+    },
+    "novelty_scope": {
+      "statement": "The author limits the novelty claim to the tested intervention, model, and assay context.",
+      "provenance": "author_supplied",
+      "source_locators": [
+        {
+          "location_kind": "author_input",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "local_identifier": "author-supplied-novelty-scope"
+        }
+      ],
+      "author_approval": "pending"
+    },
+    "key_claim_ids": ["claim:result-1"],
+    "key_boundary_ids": ["boundary:interpretation-1"]
+  },
+  "current_structure_assessment": {
+    "input_mode": "existing_manuscript",
+    "reverse_outline_items": [
+      {
+        "source_paragraph_id": "paragraph:results-1",
+        "current_role": "reports the primary assay-specific observation",
+        "source_locators": [
+          {
+            "location_kind": "manuscript_text",
+            "source_file_path": "input/synthetic-manuscript.md",
+            "document_id": "synthetic-manuscript-1",
+            "section": "results",
+            "paragraph_id": "paragraph:results-1",
+            "local_identifier": "results paragraph 1"
+          }
+        ]
+      }
+    ]
+  },
+  "frozen_elements": [
+    {
+      "element_id": "frozen:comparison-1",
+      "description": "Preserve the candidate-versus-control comparison direction.",
+      "source_locators": [
+        {
+          "location_kind": "author_input",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "local_identifier": "author-confirmed-comparison-1"
+        }
+      ],
+      "author_approval": "approved"
+    }
+  ],
+  "section_plans": [
+    {
+      "section_id": "section:results-1",
+      "canonical_section": "results",
+      "goal": "Report the assay-specific observation and its tested scope.",
+      "claim_ids": ["claim:result-1"],
+      "paragraph_plans": [
+        {
+          "paragraph_id": "plan-paragraph:results-1",
+          "role": "result",
+          "goal": "Present the comparison, measured direction, and model boundary without mechanistic language.",
+          "source_paragraph_ids": ["paragraph:results-1"],
+          "claim_ids": ["claim:result-1"],
+          "evidence_ids": ["evidence:cell-1"],
+          "figure_ids": ["figure:1"],
+          "transition_goal": "Move from the observation to its bounded interpretation.",
+          "material_reordering": false,
+          "author_approval": "pending"
+        }
+      ],
+      "author_approval": "pending"
+    },
+    {
+      "section_id": "section:discussion-1",
+      "canonical_section": "discussion",
+      "goal": "Interpret the observation within the assay and model boundary.",
+      "claim_ids": ["claim:result-1"],
+      "paragraph_plans": [
+        {
+          "paragraph_id": "plan-paragraph:discussion-1",
+          "role": "interpretation",
+          "goal": "State the tentative association and the evidence still required for broader claims.",
+          "source_paragraph_ids": ["paragraph:discussion-1"],
+          "claim_ids": ["claim:result-1"],
+          "evidence_ids": ["evidence:cell-1"],
+          "figure_ids": ["figure:1"],
+          "transition_goal": "Lead into limitations and unresolved questions.",
+          "material_reordering": true,
+          "author_approval": "pending"
+        }
+      ],
+      "author_approval": "pending"
+    }
+  ],
+  "figure_sequence": [
+    {
+      "figure_id": "figure:1",
+      "order": 1,
+      "purpose": "Show the primary assay-specific comparison.",
+      "claim_ids": ["claim:result-1"],
+      "evidence_ids": ["evidence:cell-1"],
+      "author_approval": "pending"
+    }
+  ],
+  "evidence_assignment_audit": {
+    "assigned_evidence_ids": ["evidence:cell-1"],
+    "unassigned_evidence": []
+  },
+  "gaps_and_risks": [
+    {
+      "gap_id": "gap:model-generality-1",
+      "gap_type": "evidence_gap",
+      "severity": "warning",
+      "description": "The current evidence does not establish generality beyond model A.",
+      "related_ids": ["claim:result-1", "evidence:cell-1"],
+      "status": "author_review_required"
+    }
+  ],
+  "author_decisions": [
+    {
+      "decision_id": "decision:plan-selection-1",
+      "decision_type": "material_reordering",
+      "question": "Should the bounded interpretation be moved to the opening Discussion paragraph?",
+      "options": ["approve candidate A", "retain the current order", "request another candidate"],
+      "related_ids": ["plan:synthetic-a", "plan-paragraph:discussion-1"],
+      "status": "pending"
+    }
+  ],
+  "approval_summary": {
+    "overall_status": "pending",
+    "pending_decision_count": 1,
+    "open_blocker_count": 0,
+    "material_reordering_requires_approval": true
+  }
+}

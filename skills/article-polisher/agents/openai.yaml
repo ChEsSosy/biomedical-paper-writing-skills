@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article Polisher"
+  short_description: "Apply auditable Original Article revisions"
+  default_prompt: "Use $article-polisher to revise this Original Article within the supplied permission contract and return deterministic lineage, a complete change manifest, unresolved author queries, and independent-QC readiness without changing the science."

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+  <front>
+    <article-meta>
+      <abstract>
+        <p>A synthetic JATS fixture tests structured Review parsing without imported scientific content.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Introduction</title>
+      <p>Structured XML provides explicit section boundaries for deterministic extraction.</p>
+    </sec>
+    <sec>
+      <title>Conceptual categories</title>
+      <p>This thematic parent contains neutral validation language.</p>
+      <sec>
+        <title>Measurement boundaries</title>
+        <p>The nested thematic child tests true parent-section identifiers.</p>
+      </sec>
+      <sec>
+        <title>Reporting variation</title>
+        <p>A second child allows sibling order to be checked.</p>
+      </sec>
+    </sec>
+    <sec>
+      <title>Open reporting questions</title>
+      <p>A separate top-level theme must not disappear during canonical aggregation.</p>
+    </sec>
+    <sec>
+      <title>Conclusions</title>
+      <p>The fixture remains a software test rather than a scientific source.</p>
+    </sec>
+  </body>
+</article>

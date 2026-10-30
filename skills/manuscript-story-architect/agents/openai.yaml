@@ -1,0 +1,6 @@
+interface:
+  display_name: "Manuscript Story Architect"
+  short_description: "Build an auditable Original Article story plan"
+  default_prompt: "Use $manuscript-story-architect to map this Original Article's claims, evidence, boundaries, paragraph roles, and Figure sequence without rewriting the manuscript."
+policy:
+  allow_implicit_invocation: true

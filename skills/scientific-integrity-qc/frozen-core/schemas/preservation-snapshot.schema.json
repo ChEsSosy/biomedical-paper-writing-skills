@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "preservation-snapshot.schema.json",
+  "title": "Minimum QC Preservation Snapshot 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "status", "warnings", "snapshot_id", "side",
+    "file_identity", "document_id", "ruleset_version", "extracted_categories",
+    "citation_styles", "reference_subtypes", "units", "anchors"
+  ],
+  "properties": {
+    "schema_name": {"const": "preservation-snapshot"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "warnings": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/warning"}
+    },
+    "snapshot_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "side": {"$ref": "qc-shared-definitions.schema.json#/$defs/side"},
+    "file_identity": {"$ref": "qc-shared-definitions.schema.json#/$defs/fileIdentity"},
+    "document_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "ruleset_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "extracted_categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["numeric", "citation", "reference", "terminology", "placeholder", "semantic_signal"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "citation_styles": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["numeric_bracket", "author_year_parenthetical"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "reference_subtypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "figure", "extended_data_figure", "supplementary_figure", "table",
+          "supplementary_table", "equation", "section", "appendix"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "units": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/unitRecord"},
+      "minItems": 1
+    },
+    "anchors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "anchor_id", "anchor_class", "unit_id", "raw_representation",
+          "normalized_representation", "occurrence_index", "anchor_sha256", "locator",
+          "context_sha256", "extraction_status", "extraction_support", "frozen",
+          "author_approval"
+        ],
+        "properties": {
+          "anchor_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "anchor_class": {
+            "type": "string",
+            "enum": [
+              "numeric", "citation", "reference", "terminology", "equation", "variable",
+              "placeholder", "frozen_literal", "semantic_signal"
+            ]
+          },
+          "signal_class": {
+            "type": "string",
+            "enum": ["direction", "negation", "causality", "mechanism", "hedging", "boundary"]
+          },
+          "citation_style": {
+            "type": "string",
+            "enum": ["numeric_bracket", "author_year_parenthetical"]
+          },
+          "reference_subtype": {
+            "type": "string",
+            "enum": [
+              "figure", "extended_data_figure", "supplementary_figure", "table",
+              "supplementary_table", "equation", "section", "appendix"
+            ]
+          },
+          "terminology_match_mode": {
+            "type": "string",
+            "enum": ["case_sensitive", "case_insensitive"]
+          },
+          "unit_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "raw_representation": {"type": "string", "minLength": 1, "maxLength": 500},
+          "normalized_representation": {"type": "string", "minLength": 1, "maxLength": 500},
+          "occurrence_index": {"type": "integer", "minimum": 1},
+          "anchor_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+          "locator": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"},
+          "context_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+          "extraction_status": {
+            "type": "string",
+            "enum": ["exact", "normalized_exact", "ambiguous", "unassessable"]
+          },
+          "extraction_support": {
+            "type": "object",
+            "required": ["method", "rule_version", "match_count"],
+            "properties": {
+              "method": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+              "rule_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+              "match_count": {"type": "integer", "minimum": 0},
+              "ambiguity_reason": {"type": "string"}
+            },
+            "additionalProperties": false
+          },
+          "numeric_components": {
+            "type": "object",
+            "required": [
+              "comparator", "sign", "value", "exponent", "uncertainty_kind",
+              "uncertainty_value", "range_low", "range_high", "unit", "numerator",
+              "denominator", "context_type"
+            ],
+            "properties": {
+              "comparator": {"type": "string", "enum": ["none", "<", "<=", ">", ">=", "=", "approximately"]},
+              "sign": {"type": "string", "enum": ["none", "positive", "negative"]},
+              "value": {"type": ["string", "null"]},
+              "exponent": {"type": ["string", "null"]},
+              "uncertainty_kind": {
+                "type": "string",
+                "enum": ["none", "plus_minus", "range", "confidence_interval", "ratio"]
+              },
+              "uncertainty_value": {"type": ["string", "null"]},
+              "range_low": {"type": ["string", "null"]},
+              "range_high": {"type": ["string", "null"]},
+              "unit": {"type": ["string", "null"]},
+              "numerator": {"type": ["string", "null"]},
+              "denominator": {"type": ["string", "null"]},
+              "context_type": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+            },
+            "additionalProperties": false
+          },
+          "frozen": {"type": "boolean"},
+          "author_approval": {"$ref": "qc-shared-definitions.schema.json#/$defs/authorApproval"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

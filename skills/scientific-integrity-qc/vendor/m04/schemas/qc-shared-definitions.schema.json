@@ -1,0 +1,317 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qc-shared-definitions.schema.json",
+  "title": "Minimum Scientific Integrity QC Shared Definitions 0.3.2",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
+    },
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "artifactStatus": {
+      "type": "string",
+      "enum": ["draft", "author_review_required", "author_approved", "superseded"]
+    },
+    "authorApproval": {
+      "type": "string",
+      "enum": ["not_requested", "pending", "approved", "rejected", "revision_requested"]
+    },
+    "alignmentReviewStatus": {
+      "type": "string",
+      "enum": ["machine_proposed", "caller_accepted", "author_approved", "rejected"]
+    },
+    "authorizationOrigin": {
+      "type": "string",
+      "enum": ["author", "calling_workflow"]
+    },
+    "authorizationState": {
+      "type": "string",
+      "enum": ["machine_proposed", "caller_accepted", "author_approved"]
+    },
+    "side": {"type": "string", "enum": ["source", "candidate"]},
+    "documentFormat": {"type": "string", "enum": ["plain_text", "markdown", "section_records"]},
+    "checkExecutionState": {
+      "type": "string",
+      "enum": ["passed", "failed", "unassessable", "skipped_with_reason"]
+    },
+    "severity": {"type": "string", "enum": ["blocker", "error", "warning", "info"]},
+    "findingStatus": {
+      "type": "string",
+      "enum": ["open", "author_review_required", "accepted", "resolved", "dismissed"]
+    },
+    "gateOutcome": {
+      "type": "string",
+      "enum": ["pass", "pass_with_warnings", "fail", "unassessable"]
+    },
+    "fileIdentity": {
+      "type": "object",
+      "required": ["file_id", "path", "side", "format", "sha256"],
+      "properties": {
+        "file_id": {"$ref": "#/$defs/identifier"},
+        "path": {"$ref": "#/$defs/nonEmptyString"},
+        "side": {"$ref": "#/$defs/side"},
+        "format": {"$ref": "#/$defs/documentFormat"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "typedLocator": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "locator_type", "side", "file_id", "unit_id", "start_line", "end_line",
+            "start_char", "end_char", "span_sha256"
+          ],
+          "properties": {
+            "locator_type": {"const": "line_char_range"},
+            "side": {"$ref": "#/$defs/side"},
+            "file_id": {"$ref": "#/$defs/identifier"},
+            "unit_id": {"$ref": "#/$defs/identifier"},
+            "start_line": {"type": "integer", "minimum": 1},
+            "end_line": {"type": "integer", "minimum": 1},
+            "start_char": {"type": "integer", "minimum": 0},
+            "end_char": {"type": "integer", "minimum": 0},
+            "span_sha256": {"$ref": "#/$defs/sha256"}
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "locator_type", "side", "artifact_id", "unit_id", "local_identifier", "span_sha256"
+          ],
+          "properties": {
+            "locator_type": {"const": "structured_unit"},
+            "side": {"$ref": "#/$defs/side"},
+            "artifact_id": {"$ref": "#/$defs/identifier"},
+            "unit_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "span_sha256": {"$ref": "#/$defs/sha256"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "unitRecord": {
+      "type": "object",
+      "required": ["unit_id", "ordinal", "locator"],
+      "properties": {
+        "unit_id": {"$ref": "#/$defs/identifier"},
+        "ordinal": {"type": "integer", "minimum": 1},
+        "locator": {"$ref": "#/$defs/typedLocator"}
+      },
+      "additionalProperties": false
+    },
+    "unitAlignment": {
+      "type": "object",
+      "required": [
+        "alignment_id", "source_unit_ids", "candidate_unit_ids", "source_locators",
+        "candidate_locators", "alignment_type", "alignment_origin", "review_status",
+        "execution_support"
+      ],
+      "properties": {
+        "alignment_id": {"$ref": "#/$defs/identifier"},
+        "source_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "candidate_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/typedLocator"}
+        },
+        "candidate_locators": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/typedLocator"}
+        },
+        "alignment_type": {
+          "type": "string",
+          "enum": ["one_to_one", "split", "merge", "moved", "added", "removed"]
+        },
+        "alignment_origin": {
+          "type": "string",
+          "enum": ["producing_skill", "deterministic_aligner", "author_supplied"]
+        },
+        "review_status": {"$ref": "#/$defs/alignmentReviewStatus"},
+        "execution_support": {"type": "string", "enum": ["supported", "unassessable"]}
+      },
+      "additionalProperties": false
+    },
+    "revisionContract": {
+      "type": "object",
+      "required": [
+        "revision_contract_id", "revision_contract_version", "contract_sha256",
+        "source_document_id", "source_artifact_id", "source_artifact_version",
+        "source_artifact_sha256", "revision_mode", "authorized_scope",
+        "allowed_operations", "prohibited_operations", "frozen_anchor_ids",
+        "approved_structural_change_ids", "structural_change_authorizations",
+        "comparison_scope", "authorization_origin", "authorization_state", "author_approval"
+      ],
+      "properties": {
+        "revision_contract_id": {"$ref": "#/$defs/identifier"},
+        "revision_contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"},
+        "source_document_id": {"$ref": "#/$defs/identifier"},
+        "source_artifact_id": {"$ref": "#/$defs/identifier"},
+        "source_artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "source_artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "revision_mode": {"type": "string", "enum": ["light", "medium", "deep"]},
+        "authorized_scope": {
+          "type": "object",
+          "required": ["document_id", "unit_ids"],
+          "properties": {
+            "document_id": {"$ref": "#/$defs/identifier"},
+            "unit_ids": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/identifier"},
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "allowed_operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "grammar", "punctuation", "syntax", "clarity", "lexical_tightening",
+              "redundancy_removal", "transition", "sentence_split", "sentence_merge",
+              "sentence_reorder", "information_reorder", "topic_sentence_repair",
+              "paragraph_split", "paragraph_merge", "paragraph_move"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "prohibited_operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "change_numeric_anchor", "change_citation_identity", "change_terminology_identity",
+              "change_claim_scope", "change_claim_evidence_relation", "change_approval_state",
+              "unapproved_paragraph_restructure"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "frozen_anchor_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "approved_structural_change_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "structural_change_authorizations": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/structuralChangeAuthorization"}
+        },
+        "source_plan_id": {"$ref": "#/$defs/identifier"},
+        "comparison_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "authorization_origin": {"$ref": "#/$defs/authorizationOrigin"},
+        "authorization_state": {"$ref": "#/$defs/authorizationState"},
+        "author_approval": {"$ref": "#/$defs/authorApproval"}
+      },
+      "additionalProperties": false
+    },
+    "structuralChangeAuthorization": {
+      "type": "object",
+      "required": [
+        "structural_change_id", "allowed_effects", "source_unit_ids",
+        "candidate_unit_ids", "required_upstream_artifact_ids", "author_approval"
+      ],
+      "properties": {
+        "structural_change_id": {"$ref": "#/$defs/identifier"},
+        "allowed_effects": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["paragraph_split", "paragraph_merge", "paragraph_move"]},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "candidate_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "required_upstream_artifact_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "author_approval": {"$ref": "#/$defs/authorApproval"}
+      },
+      "additionalProperties": false
+    },
+    "approvedException": {
+      "type": "object",
+      "required": [
+        "exception_id", "target_kind", "expected_source_representation",
+        "approved_candidate_representation", "source_sha256", "candidate_sha256",
+        "candidate_anchor_sha256", "reason", "author_approval"
+      ],
+      "properties": {
+        "exception_id": {"$ref": "#/$defs/identifier"},
+        "target_kind": {"type": "string", "enum": ["anchor_id", "locator", "anchor_and_locator"]},
+        "anchor_id": {"$ref": "#/$defs/identifier"},
+        "locator": {"$ref": "#/$defs/typedLocator"},
+        "expected_source_representation": {"$ref": "#/$defs/nonEmptyString"},
+        "approved_candidate_representation": {"$ref": "#/$defs/nonEmptyString"},
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_anchor_sha256": {"$ref": "#/$defs/sha256"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"},
+        "author_approval": {"$ref": "#/$defs/authorApproval"}
+      },
+      "additionalProperties": false
+    },
+    "upstreamBaseline": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_type", "artifact_version", "artifact_status", "baseline_use"],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_type": {
+          "type": "string",
+          "enum": ["claim_evidence_map", "interpretation_card", "manuscript_plan", "other"]
+        },
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_status": {"$ref": "#/$defs/artifactStatus"},
+        "baseline_use": {
+          "type": "string",
+          "enum": ["hard_constraint", "structural_baseline", "reference_only"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "warning": {
+      "type": "object",
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": {"$ref": "#/$defs/identifier"},
+        "message": {"$ref": "#/$defs/nonEmptyString"},
+        "severity": {"$ref": "#/$defs/severity"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

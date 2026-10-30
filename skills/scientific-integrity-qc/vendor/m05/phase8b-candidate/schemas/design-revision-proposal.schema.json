@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "design-revision-proposal.schema.json", "type": "object",
+  "required": ["schema_name", "schema_version", "proposal_id", "proposal_sha256", "proposal_kind", "design_package_ref", "requested_changes", "authority_route", "mutates_admitted_package"],
+  "properties": {
+    "schema_name": {"const": "design_revision_proposal"}, "schema_version": {"const": "0.1.0"}, "proposal_id": {"type": "string", "minLength": 1}, "proposal_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "proposal_kind": {"type": "string", "enum": ["presentation_only", "scientific_change_request", "realization_correction"]},
+    "design_package_ref": {"type": "object", "required": ["design_package_id", "design_package_hash"], "properties": {"design_package_id": {"type": "string", "minLength": 1}, "design_package_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false},
+    "requested_changes": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["field", "before", "after", "reason"], "properties": {"field": {"type": "string", "minLength": 1}, "before": {}, "after": {}, "reason": {"type": "string", "minLength": 1}}, "additionalProperties": false}},
+    "authority_route": {"type": "string", "enum": ["phase8a_revalidation_required", "author_review_required", "mechanical_regeneration"]},
+    "mutates_admitted_package": {"const": false}
+  }, "additionalProperties": false
+}

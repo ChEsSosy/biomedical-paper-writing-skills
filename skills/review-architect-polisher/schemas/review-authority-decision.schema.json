@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-authority-decision.schema.json",
+  "title": "Phase 7A Review Authority Decision Interface 0.1.0",
+  "type": "object",
+  "required": [
+    "interface_name", "interface_version", "decision_id", "decision_sha256", "decision_type",
+    "subject_refs", "decision_value", "authorization_origin", "authorization_state",
+    "decision_producer_role", "created_at", "created_by", "reviewed_by", "upstream_input_bindings"
+  ],
+  "properties": {
+    "interface_name": {"const": "review_authority_decision"},
+    "interface_version": {"const": "0.1.0"},
+    "decision_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "decision_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "decision_type": {
+      "type": "string",
+      "enum": [
+        "extraction_review", "evidence_unit_assignment", "independence_resolution",
+        "author_position_origin", "author_objective", "source_access_verification",
+        "source_set_coverage", "scope_decision", "taxonomy_decision", "synthesis_decision",
+        "support_relation_review", "outline_decision"
+      ]
+    },
+    "subject_refs": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/subjectRef"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "decision_value": {"type": "string", "enum": ["approve", "reject", "resolve", "confirm"]},
+    "authorization_origin": {"$ref": "qc-shared-definitions.schema.json#/$defs/authorizationOrigin"},
+    "authorization_state": {"$ref": "qc-shared-definitions.schema.json#/$defs/authorizationState"},
+    "decision_producer_role": {
+      "type": "string",
+      "enum": ["author", "authorized_review_workflow", "authorized_retrieval_or_verification_workflow"]
+    },
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "reviewed_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "upstream_input_bindings": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/inputBinding"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "decisionRef": {
+      "type": "object",
+      "required": ["decision_id", "interface_version", "decision_sha256"],
+      "properties": {
+        "decision_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "interface_version": {"const": "0.1.0"},
+        "decision_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "subjectRef": {
+      "type": "object",
+      "required": [
+        "subject_type", "subject_id", "asserted_state", "artifact_version", "artifact_sha256"
+      ],
+      "properties": {
+        "subject_type": {
+          "type": "string",
+          "enum": [
+            "extraction_record", "source_record", "evidence_unit", "study_family", "coverage_record",
+            "author_position", "author_objective", "scope", "taxonomy_axis", "synthesis_claim",
+            "support_relation", "review_outline"
+          ]
+        },
+        "subject_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "asserted_state": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "inputBinding": {
+      "type": "object",
+      "required": ["input_id", "input_sha256"],
+      "properties": {
+        "input_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "input_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

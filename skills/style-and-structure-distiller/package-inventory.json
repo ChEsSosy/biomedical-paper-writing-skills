@@ -1,0 +1,301 @@
+{
+  "schema_name": "skill_package_inventory",
+  "schema_version": "0.1.1",
+  "skill_name": "style-and-structure-distiller",
+  "skill_package_version": "0.1.3",
+  "package_manifest_id": "m01-local-maintenance-0.1.3",
+  "source_components": [
+    {
+      "component_id": "style-and-structure-distiller-implementation",
+      "component_kind": "implementation",
+      "version": "0.2.9",
+      "path": "scripts/parsers.py",
+      "sha256": "b78c35db4b835453351b1e77be48e7a529629935c4a853fae0d56f5cea9d2fd2"
+    },
+    {
+      "component_id": "style-and-structure-distiller-entrypoint",
+      "component_kind": "entrypoint",
+      "version": "0.1.3",
+      "path": "SKILL.md",
+      "sha256": "99930c7221a53def2e3ea66cf5a994507d7609d03d79dc35012c667f4bad667f"
+    }
+  ],
+  "vendored_shared_core": {
+    "version": "0.2.2",
+    "inventory_path": "shared-core/shared-core-vendor-inventory.json",
+    "inventory_sha256": "a584b246d88e035a54eca8ab9859c7dc5e9eadf6518d9cfb8117a72d7f087590"
+  },
+  "supported_interfaces": [
+    {
+      "direction": "input",
+      "name": "module01_corpus_admission",
+      "version": "0.1.0"
+    },
+    {
+      "direction": "output",
+      "name": "module01_descriptive_profile_bundle",
+      "version": "0.1.0"
+    }
+  ],
+  "files": [
+    {
+      "role": "ui_metadata",
+      "path": "agents/openai.yaml",
+      "sha256": "75dd0304769b38d9f3116420d152b01af591c0d5a05904d027f12f5618528d5a",
+      "size_bytes": 299
+    },
+    {
+      "role": "reference",
+      "path": "package-adaptation-receipt.json",
+      "sha256": "4578ee57742cc49ac7f7cd45b552556d3304cf26c44384a66c75aebdd3eaa62b",
+      "size_bytes": 11953
+    },
+    {
+      "role": "reference",
+      "path": "references/confidence-and-qc.md",
+      "sha256": "8843753379d86806864e44a13acf85bf34fa5e4d7a882f0f9233a41ea9c845bd",
+      "size_bytes": 2672
+    },
+    {
+      "role": "reference",
+      "path": "references/corpus-governance.md",
+      "sha256": "5cee871d7e5d07bb08dd16bbbebc07887de3f6659f03f044d287770cf26d7f94",
+      "size_bytes": 2063
+    },
+    {
+      "role": "reference",
+      "path": "references/feature-catalog.md",
+      "sha256": "8e554d2d98d031f455267ee674e234aab103d45f6a7939e3b2f22522950e5458",
+      "size_bytes": 2857
+    },
+    {
+      "role": "reference",
+      "path": "references/maintenance-0.2.7.md",
+      "sha256": "ee1ce8e7df72a4bc4f9bd3da358a7684dfa3bbc024daaf0ffd51933acca36802",
+      "size_bytes": 974
+    },
+    {
+      "role": "reference",
+      "path": "references/maintenance-0.2.8.md",
+      "sha256": "39ae495b4966fde7bc5ea17ec7defa9c8501858b46bfb5ebf1f2b21632c6404b",
+      "size_bytes": 685
+    },
+    {
+      "role": "reference",
+      "path": "references/maintenance-0.2.9.md",
+      "sha256": "3f7b3861535223620a29e24998ecefc1d57a6c7be1f9bfd1fe642997a1a02dc7",
+      "size_bytes": 578
+    },
+    {
+      "role": "reference",
+      "path": "references/markdown-projection.md",
+      "sha256": "83d2666a7012befbece7c623afe2e07d6582dda589c5e6cf51d814cdc1bfa95b",
+      "size_bytes": 3889
+    },
+    {
+      "role": "reference",
+      "path": "references/prohibited-content-boundary.md",
+      "sha256": "1404a95f1d5a21311fc1423b02919b237dfd990aafbc8265fdbc91217836d226",
+      "size_bytes": 1549
+    },
+    {
+      "role": "reference",
+      "path": "references/section-taxonomy.md",
+      "sha256": "b5fdd08f1b1154708e5b50524b2ba5e2a2a02bd9f4c83b3febff9e3387ca6adc",
+      "size_bytes": 2655
+    },
+    {
+      "role": "schema",
+      "path": "schemas/corpus-balance.schema.json",
+      "sha256": "c2153596c910bf6fffc6398388f8ae5a7a54126f6693f7a51e4cc08f79445201",
+      "size_bytes": 2975
+    },
+    {
+      "role": "schema",
+      "path": "schemas/corpus-manifest.schema.json",
+      "sha256": "ca5c5baaa1fba9b5c7191cd38f12260afcefcd1f1f1793372d8b050932d7de62",
+      "size_bytes": 4272
+    },
+    {
+      "role": "schema",
+      "path": "schemas/document-record.schema.json",
+      "sha256": "fd3efa4abf0941efb2fb6df1ba7152625e32ff2a4b51c5f88916c8a41e72ec18",
+      "size_bytes": 3774
+    },
+    {
+      "role": "schema",
+      "path": "schemas/figure-reference-map.schema.json",
+      "sha256": "5bbcab195086f2c6a8894b45d7a55862f9a5f03b259bb38455787e421501b66b",
+      "size_bytes": 3197
+    },
+    {
+      "role": "schema",
+      "path": "schemas/gold-evaluation.schema.json",
+      "sha256": "a0f1e545bc33df23cd912e87c1e53fd7b209633b852eeeec41305062ed91dbc3",
+      "size_bytes": 5461
+    },
+    {
+      "role": "schema",
+      "path": "schemas/gold-standard.schema.json",
+      "sha256": "27434e2affc715afae2b1d49c68967d7d3fb982338941b1a8488ee992de10c8b",
+      "size_bytes": 3859
+    },
+    {
+      "role": "schema",
+      "path": "schemas/section-map.schema.json",
+      "sha256": "a4d2422fa6f7113c1d2c522b174f23f02bcee8dd0eb7edb4e8708396afcb4714",
+      "size_bytes": 4932
+    },
+    {
+      "role": "schema",
+      "path": "schemas/structure-profile.schema.json",
+      "sha256": "567b462f89601d147a5ed2f9074439a7a50201b5a32aef2a300455d53e1d8de3",
+      "size_bytes": 4227
+    },
+    {
+      "role": "schema",
+      "path": "schemas/style-profile.schema.json",
+      "sha256": "24cad825075c1da772a27d709345d6f3ef9e22b577353554f191c6c9a26eee4f",
+      "size_bytes": 7303
+    },
+    {
+      "role": "script",
+      "path": "scripts/aggregation.py",
+      "sha256": "26f0466090d001f667a325675f72488c11853d88774a23f91d6e4c00a100b061",
+      "size_bytes": 18932
+    },
+    {
+      "role": "script",
+      "path": "scripts/confidence_qc.py",
+      "sha256": "b2267aa7ccc95483d00f0bebf41b1073e06b42cadcaa6deae05a081dc95c4865",
+      "size_bytes": 11588
+    },
+    {
+      "role": "script",
+      "path": "scripts/distill_corpus.py",
+      "sha256": "79625bb84ad62392c0886abb281811a90efc3c154d85d6103df6ca9a69ba21d2",
+      "size_bytes": 10311
+    },
+    {
+      "role": "script",
+      "path": "scripts/evaluate_gold.py",
+      "sha256": "c71e8cb690856221895dce993f87081e88f6d93dc11b022440953a29d39089e5",
+      "size_bytes": 22114
+    },
+    {
+      "role": "script",
+      "path": "scripts/features.py",
+      "sha256": "eecf2aa579f34ed7b9119738135770fa8e82eeadf91825a167fa559a4501ef84",
+      "size_bytes": 11748
+    },
+    {
+      "role": "script",
+      "path": "scripts/manifest.py",
+      "sha256": "2cbb24912f9f506d6e5d1c12e0c2239628792d199da7a1072bc48334d3a88df6",
+      "size_bytes": 8444
+    },
+    {
+      "role": "script",
+      "path": "scripts/parsers.py",
+      "sha256": "b78c35db4b835453351b1e77be48e7a529629935c4a853fae0d56f5cea9d2fd2",
+      "size_bytes": 29833
+    },
+    {
+      "role": "script",
+      "path": "scripts/project_markdown.py",
+      "sha256": "5adda4ecbe987cfd534985319acf9ac4db39f757dd06548549cb9e66af9159d2",
+      "size_bytes": 10140
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/qc-finding.schema.json",
+      "sha256": "1b65b2165a01d6aec51c9525c393a416397cde80d3e62b2cb5fb02d70c81cea8",
+      "size_bytes": 888
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/shared-artifact.schema.json",
+      "sha256": "a2a8479a505a79dd652e92d450041a7362d13724c58666aa3a0fe1ccf39feaeb",
+      "size_bytes": 8884
+    },
+    {
+      "role": "script",
+      "path": "shared-core/scripts/validate_artifact.py",
+      "sha256": "898ea588b065eedeb1ca7867ee2a3631496d8a36ca5605e4fd2718725003cc49",
+      "size_bytes": 12498
+    },
+    {
+      "role": "reference",
+      "path": "shared-core/shared-core-vendor-inventory.json",
+      "sha256": "582a00089707e6086e431eb49c57cc6fba384cd38a91bbc89682225d91dae114",
+      "size_bytes": 1418
+    },
+    {
+      "role": "skill",
+      "path": "SKILL.md",
+      "sha256": "99930c7221a53def2e3ea66cf5a994507d7609d03d79dc35012c667f4bad667f",
+      "size_bytes": 6442
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/approved-corpus-manifest.json",
+      "sha256": "82220307227a522ac92689156819cac70f1f3a14da4aa740b6a6f3b45b2a2dec",
+      "size_bytes": 2565
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/approved-review-manifest.json",
+      "sha256": "58dee6328b0722ef773cf33556a8397e5dff2543b519101524cbe44c931261d1",
+      "size_bytes": 2602
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/gold/synthetic-original-gold.json",
+      "sha256": "2335101662c92d890ad2020fb94afb53b32f63565d02c26b2bee1eb9cf4142be",
+      "size_bytes": 6247
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/papers/article-1.md",
+      "sha256": "98b19d8e983acc50de3c54fbd916ddfeef9ab9a7b054fb4d904be3c18c66dea5",
+      "size_bytes": 1029
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/papers/article-2.md",
+      "sha256": "12d648894786ec3a71aefb94c048dbbdf22c3d8e1005b0e2dbdf3469f8028a74",
+      "size_bytes": 918
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/review-papers/review-1.md",
+      "sha256": "2d4f3049dc2b0e425d6b0e22364fa444eaf57706a4f57e72fd8669760cc99f81",
+      "size_bytes": 720
+    },
+    {
+      "role": "test",
+      "path": "tests/fixtures/review-papers/review-2.nxml",
+      "sha256": "c15cd11717fdb1494ae89e3e1e6596e9ccff46f9b8ca931bfb4319a2de59ecbc",
+      "size_bytes": 1146
+    },
+    {
+      "role": "test",
+      "path": "tests/test_phase3_1.py",
+      "sha256": "268b8c87406924a9351e6b38c36a049ed17a5070a0a50ccb66a5c3623d7897bb",
+      "size_bytes": 31493
+    },
+    {
+      "role": "test",
+      "path": "tests/test_phase9_package.py",
+      "sha256": "2ef7c994ec48fd1bf12b4d93ba45aa5b24b2c9ba9deaa2929f08c70bc9835735",
+      "size_bytes": 4266
+    },
+    {
+      "role": "test",
+      "path": "tests/test_projection.py",
+      "sha256": "0ef98d1d496f3e31013df329dd2f5f965ff09cd966d435eae8ebe36a63b6f6a3",
+      "size_bytes": 9741
+    }
+  ],
+  "package_manifest_sha256": "3ef8f11d0e867797a35ce9fb4735dd53744eca1b1168516f2df7a20227124ec5"
+}

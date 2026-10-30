@@ -1,0 +1,172 @@
+[
+  {
+    "case_id": "claim-map-rejects-review-article",
+    "fixture": "valid-claim-evidence-map.json",
+    "path": ["document_type"],
+    "operation": "replace",
+    "value": "review_article",
+    "expected_keyword": "const"
+  },
+  {
+    "case_id": "claim-map-requires-claim-locator",
+    "fixture": "valid-claim-evidence-map.json",
+    "path": ["claim_records", 0, "source_locators"],
+    "operation": "replace",
+    "value": [],
+    "expected_keyword": "minItems"
+  },
+  {
+    "case_id": "claim-map-rejects-unknown-experiment-label",
+    "fixture": "valid-claim-evidence-map.json",
+    "path": ["evidence_records", 0, "experiment_labels", 0],
+    "operation": "replace",
+    "value": "wet_lab",
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "claim-map-rejects-model-inferred-claim-origin",
+    "fixture": "valid-claim-evidence-map.json",
+    "path": ["claim_records", 0, "claim_origin"],
+    "operation": "replace",
+    "value": "model_inferred_from_data",
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "story-locator-rejects-mixed-coordinate-variants",
+    "fixture": "valid-claim-evidence-map.json",
+    "path": ["claim_records", 0, "source_locators", 0, "figure_id"],
+    "operation": "add",
+    "value": "figure:unexpected",
+    "expected_keyword": "oneOf"
+  },
+  {
+    "case_id": "interpretation-card-requires-boundary",
+    "fixture": "valid-interpretation-card.json",
+    "path": ["boundary"],
+    "operation": "remove",
+    "expected_keyword": "required"
+  },
+  {
+    "case_id": "interpretation-card-rejects-untracked-alternative-provenance",
+    "fixture": "valid-interpretation-card.json",
+    "path": ["alternative_explanations", 0, "provenance"],
+    "operation": "replace",
+    "value": "invented_by_model",
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "interpretation-card-rejects-default-invented-validation-experiment",
+    "fixture": "valid-interpretation-card.json",
+    "path": ["proposed_validation_experiments"],
+    "operation": "replace",
+    "value": [
+      {
+        "experiment_proposal_id": "experiment-proposal:invalid-1",
+        "description": "A concrete experiment invented during default story planning.",
+        "origin": "architect_invented_by_default",
+        "source_locators": [
+          {
+            "location_kind": "author_input",
+            "source_file_path": "input/synthetic-manuscript.md",
+            "local_identifier": "invalid-default-proposal"
+          }
+        ],
+        "author_approval": "pending"
+      }
+    ],
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "manuscript-plan-requires-paragraphs",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["section_plans", 0, "paragraph_plans"],
+    "operation": "replace",
+    "value": [],
+    "expected_keyword": "minItems"
+  },
+  {
+    "case_id": "manuscript-plan-requires-story-anchors",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["story_anchors"],
+    "operation": "remove",
+    "expected_keyword": "required"
+  },
+  {
+    "case_id": "manuscript-plan-rejects-inferred-novelty",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["story_anchors", "novelty_scope", "provenance"],
+    "operation": "replace",
+    "value": "architect_proposed_restatement",
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "manuscript-plan-requires-approval-for-explicitly-approved-novelty",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["story_anchors", "novelty_scope", "provenance"],
+    "operation": "replace",
+    "value": "explicitly_approved_by_author",
+    "expected_keyword": "oneOf"
+  },
+  {
+    "case_id": "manuscript-plan-denies-journal-scientific-authority",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["journal_adaptation", "scientific_authority"],
+    "operation": "replace",
+    "value": true,
+    "expected_keyword": "const"
+  },
+  {
+    "case_id": "manuscript-plan-denies-upstream-profile-scientific-authority",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["upstream_profiles", "structure_profile", "scientific_authority"],
+    "operation": "replace",
+    "value": true,
+    "expected_keyword": "const"
+  },
+  {
+    "case_id": "manuscript-plan-requires-reviewed-architecture-profile",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["upstream_profiles", "architecture_profile", "review_status"],
+    "operation": "replace",
+    "value": "unreviewed",
+    "expected_keyword": "const"
+  },
+  {
+    "case_id": "manuscript-plan-rejects-journal-influence-on-claim-scope",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["journal_adaptation", "allowed_influences", 0],
+    "operation": "replace",
+    "value": "claim_scope",
+    "expected_keyword": "enum"
+  },
+  {
+    "case_id": "manuscript-plan-requires-reverse-outline-for-existing-manuscript",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["current_structure_assessment", "reverse_outline_items"],
+    "operation": "replace",
+    "value": [],
+    "expected_keyword": "oneOf"
+  },
+  {
+    "case_id": "manuscript-plan-requires-unassigned-evidence-reason",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["evidence_assignment_audit", "unassigned_evidence"],
+    "operation": "replace",
+    "value": [
+      {
+        "evidence_id": "evidence:unassigned-1",
+        "rationale": "The reason field is intentionally absent in this negative fixture.",
+        "author_approval": "pending"
+      }
+    ],
+    "expected_keyword": "required"
+  },
+  {
+    "case_id": "manuscript-plan-rejects-silent-approval-status",
+    "fixture": "valid-manuscript-plan.json",
+    "path": ["approval_summary", "overall_status"],
+    "operation": "replace",
+    "value": "silently_approved",
+    "expected_keyword": "enum"
+  }
+]

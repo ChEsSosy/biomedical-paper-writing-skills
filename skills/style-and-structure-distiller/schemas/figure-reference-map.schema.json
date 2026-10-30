@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure-reference-map.schema.json",
+  "title": "Many-to-Many Figure Reference Map 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "document_id", "reference_count", "unique_figure_count", "figure_references"
+  ],
+  "properties": {
+    "schema_name": {"const": "figure_reference_map"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "document_id": {"type": "string", "minLength": 1},
+    "reference_count": {"type": "integer", "minimum": 0},
+    "unique_figure_count": {"type": "integer", "minimum": 0},
+    "figure_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "reference_id", "figure_id", "figure_type", "figure_number", "panel_tokens", "source_reference_text",
+          "source_section_id", "source_paragraph_id", "source_parser_locator", "source_locator",
+          "reference_start_in_normalized_paragraph", "reference_end_in_normalized_paragraph",
+          "reference_span_sha256", "reference_order"
+        ],
+        "properties": {
+          "reference_id": {"type": "string", "minLength": 1},
+          "figure_id": {"type": "string", "minLength": 1},
+          "figure_type": {"type": "string", "enum": ["figure", "extended_data_figure", "supplementary_figure"]},
+          "figure_number": {"type": "string", "minLength": 1},
+          "panel_tokens": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "source_reference_text": {"type": "string", "minLength": 1, "maxLength": 160},
+          "source_section_id": {"type": "string", "minLength": 1},
+          "source_paragraph_id": {"type": ["string", "null"]},
+          "source_parser_locator": {"type": "string", "minLength": 1},
+          "source_locator": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceLocator"},
+          "reference_start_in_normalized_paragraph": {"type": "integer", "minimum": 0},
+          "reference_end_in_normalized_paragraph": {"type": "integer", "minimum": 1},
+          "reference_span_sha256": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"},
+          "reference_order": {"type": "integer", "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

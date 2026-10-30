@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "document-record.schema.json",
+  "title": "Observable Document Record 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "document_id", "article_type", "source_format", "source_sha256",
+    "parser_name", "parser_version", "parser_format_prior", "observed_parse_qc", "word_count",
+    "paragraph_count", "sentence_count", "section_count", "figure_reference_count"
+  ],
+  "properties": {
+    "schema_name": {"const": "document_record"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "document_id": {"type": "string", "minLength": 1},
+    "article_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "source_format": {"type": "string", "enum": ["plain_text", "markdown", "jats_xml", "html", "pdf_text"]},
+    "source_sha256": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"},
+    "parser_name": {"const": "parsers.py"},
+    "parser_version": {"type": "string", "minLength": 1},
+    "parser_format_prior": {"type": "number", "minimum": 0, "maximum": 1},
+    "observed_parse_qc": {
+      "type": "object",
+      "required": [
+        "heading_count", "recognized_heading_count", "heading_recognition_rate", "paragraph_candidate_count",
+        "retained_paragraph_count", "empty_paragraph_rate", "fragment_paragraph_rate",
+        "reference_contamination_rate", "parser_invariant_checks"
+      ],
+      "properties": {
+        "heading_count": {"type": "integer", "minimum": 0},
+        "recognized_heading_count": {"type": "integer", "minimum": 0},
+        "heading_recognition_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "paragraph_candidate_count": {"type": "integer", "minimum": 0},
+        "retained_paragraph_count": {"type": "integer", "minimum": 0},
+        "empty_paragraph_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "fragment_paragraph_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "reference_contamination_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "parser_invariant_checks": {
+          "type": "object",
+          "required": ["parent_precedes_child", "parent_ids_resolve", "child_backlinks_consistent", "all_passed"],
+          "properties": {
+            "parent_precedes_child": {"type": "boolean"},
+            "parent_ids_resolve": {"type": "boolean"},
+            "child_backlinks_consistent": {"type": "boolean"},
+            "all_passed": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "word_count": {"type": "integer", "minimum": 0},
+    "paragraph_count": {"type": "integer", "minimum": 0},
+    "sentence_count": {"type": "integer", "minimum": 0},
+    "section_count": {"type": "integer", "minimum": 0},
+    "figure_reference_count": {"type": "integer", "minimum": 0}
+  },
+  "additionalProperties": false
+}

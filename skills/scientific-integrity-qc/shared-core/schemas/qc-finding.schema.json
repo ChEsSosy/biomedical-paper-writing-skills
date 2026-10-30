@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qc-finding.schema.json",
+  "title": "Biomedical Writing QC Finding",
+  "type": "object",
+  "required": ["finding_id", "check_id", "severity", "message", "object_locator", "evidence", "status"],
+  "properties": {
+    "finding_id": {"type": "string", "minLength": 1},
+    "check_id": {"type": "string", "minLength": 1},
+    "severity": {"type": "string", "enum": ["blocker", "error", "warning", "info"]},
+    "message": {"type": "string", "minLength": 1},
+    "object_locator": {"type": "string", "minLength": 1},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "suggested_action": {"type": "string"},
+    "status": {"type": "string", "enum": ["open", "author_review_required", "accepted", "resolved", "dismissed"]},
+    "human_decision": {"type": "string"}
+  },
+  "additionalProperties": false
+}

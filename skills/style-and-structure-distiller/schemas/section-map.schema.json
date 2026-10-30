@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "section-map.schema.json",
+  "title": "Raw and Canonical Section Map 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "document_id", "article_type", "root_section_ids", "sections", "paragraphs"
+  ],
+  "properties": {
+    "schema_name": {"const": "section_map"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "document_id": {"type": "string", "minLength": 1},
+    "article_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "root_section_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "section_id", "parent_section_id", "child_section_ids", "source_heading", "source_heading_level",
+          "source_parent_heading", "canonical_section", "canonical_parent_section", "canonical_mapping_basis",
+          "canonical_mapping_prior", "source_order", "sibling_order", "depth", "paragraph_ids",
+          "paragraph_count", "word_count", "parser_locator", "source_locator"
+        ],
+        "properties": {
+          "section_id": {"type": "string", "minLength": 1},
+          "parent_section_id": {"type": ["string", "null"]},
+          "child_section_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "source_heading": {"type": "string", "maxLength": 500},
+          "source_heading_level": {"type": "integer", "minimum": 0, "maximum": 20},
+          "source_parent_heading": {"type": "string", "maxLength": 500},
+          "canonical_section": {
+            "type": "string",
+            "enum": ["front_matter", "abstract", "introduction", "methods", "results", "discussion", "results_discussion", "conclusion", "review_body", "figure_legend", "data_availability", "references", "other"]
+          },
+          "canonical_parent_section": {
+            "type": ["string", "null"],
+            "enum": [null, "front_matter", "abstract", "introduction", "methods", "results", "discussion", "results_discussion", "conclusion", "review_body", "figure_legend", "data_availability", "references", "other"]
+          },
+          "canonical_mapping_basis": {"type": "string", "enum": ["exact_heading", "heading_synonym", "inherited_parent", "review_thematic", "front_matter", "unrecognized"]},
+          "canonical_mapping_prior": {"type": "number", "minimum": 0, "maximum": 1},
+          "source_order": {"type": "integer", "minimum": 0},
+          "sibling_order": {"type": "integer", "minimum": 0},
+          "depth": {"type": "integer", "minimum": 0},
+          "paragraph_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "paragraph_count": {"type": "integer", "minimum": 0},
+          "word_count": {"type": "integer", "minimum": 0},
+          "parser_locator": {"type": "string", "minLength": 1},
+          "source_locator": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceLocator"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "paragraphs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "paragraph_id", "section_id", "order_in_section", "global_order", "word_count", "sentence_count",
+          "parser_locator", "source_locator"
+        ],
+        "properties": {
+          "paragraph_id": {"type": "string", "minLength": 1},
+          "section_id": {"type": "string", "minLength": 1},
+          "order_in_section": {"type": "integer", "minimum": 0},
+          "global_order": {"type": "integer", "minimum": 0},
+          "word_count": {"type": "integer", "minimum": 0},
+          "sentence_count": {"type": "integer", "minimum": 0},
+          "parser_locator": {"type": "string", "minLength": 1},
+          "source_locator": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceLocator"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

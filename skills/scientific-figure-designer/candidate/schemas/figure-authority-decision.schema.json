@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure-authority-decision.schema.json",
+  "title": "Phase 8A Trusted Figure Authority Collection 0.1.0",
+  "type": "object",
+  "required": [
+    "interface_name", "interface_version", "collection_kind", "collection_id",
+    "collection_version", "collection_sha256", "supplied_by", "records"
+  ],
+  "properties": {
+    "interface_name": {"const": "trusted_authority_inputs"},
+    "interface_version": {"const": "0.1.0"},
+    "collection_kind": {"const": "trusted_authority_inputs"},
+    "collection_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "collection_version": {"const": "0.1.0"},
+    "collection_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "supplied_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "records": {"type": "array", "items": {"$ref": "#/$defs/authorityDecision"}, "uniqueItems": true}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "authorityDecision": {
+      "type": "object",
+      "required": [
+        "decision_id", "interface_version", "decision_sha256", "decision_type", "subject_refs",
+        "decision_value", "authorization_origin", "authorization_state", "decision_producer_role",
+        "created_at", "created_by", "reviewed_by", "upstream_input_bindings"
+      ],
+      "properties": {
+        "decision_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "interface_version": {"const": "0.1.0"},
+        "decision_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+        "decision_type": {
+          "type": "string",
+          "enum": [
+            "representative_image_selection", "material_evidence_omission", "panel_freeze",
+            "figure_conclusion_freeze", "layout_decision", "design_acceptance",
+            "finality_decision", "analysis_output_review"
+          ]
+        },
+        "subject_refs": {"type": "array", "items": {"$ref": "#/$defs/subjectRef"}, "minItems": 1, "uniqueItems": true},
+        "decision_value": {"type": "string", "enum": ["approve", "reject", "confirm", "resolve"]},
+        "authorization_origin": {"type": "string", "enum": ["author", "calling_workflow"]},
+        "authorization_state": {"type": "string", "enum": ["caller_accepted", "author_approved"]},
+        "decision_producer_role": {"type": "string", "enum": ["author", "authorized_figure_workflow", "authorized_analysis_workflow"]},
+        "created_at": {"$ref": "figure-shared-definitions.schema.json#/$defs/timestamp"},
+        "created_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "reviewed_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "upstream_input_bindings": {"type": "array", "items": {"$ref": "#/$defs/inputBinding"}, "uniqueItems": true},
+        "conditions": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}}
+      },
+      "additionalProperties": false
+    },
+    "subjectRef": {
+      "type": "object",
+      "required": ["subject_type", "subject_id", "asserted_state", "subject_version", "governed_content_sha256"],
+      "properties": {
+        "subject_type": {
+          "type": "string",
+          "enum": ["figure_card", "figure_contract", "representative_image", "evidence_omission", "layout", "finality", "analysis_output"]
+        },
+        "subject_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "asserted_state": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "subject_version": {"$ref": "figure-shared-definitions.schema.json#/$defs/semver"},
+        "governed_content_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "inputBinding": {
+      "type": "object",
+      "required": ["input_id", "input_version", "input_sha256"],
+      "properties": {
+        "input_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "input_version": {"$ref": "figure-shared-definitions.schema.json#/$defs/semver"},
+        "input_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

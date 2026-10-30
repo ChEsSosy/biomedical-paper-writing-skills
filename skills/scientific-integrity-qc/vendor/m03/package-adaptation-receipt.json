@@ -1,0 +1,57 @@
+{
+  "schema_name": "phase9_item3_package_adaptation",
+  "schema_version": "0.1.6",
+  "skill_name": "article-polisher",
+  "skill_package_version": "0.1.7",
+  "frozen_contract": {
+    "version": "0.1.2",
+    "source_sha256": "ba2a6efd3d888774abc6b794da783816dd21513fa042b05ea4bdaf10911a16d9"
+  },
+  "deterministic_core": {
+    "version": "0.1.6",
+    "derived_from_rejected_version": "0.1.5",
+    "modified_in_place": false
+  },
+  "patch_layer": {
+    "version": "0.1.6",
+    "derived_from_rejected_version": "0.1.5",
+    "modified_in_place": false
+  },
+  "package_adaptations": {
+    "scripts/validate_revision_package.py": {
+      "source_sha256": "43311414428478b6ad487affc1c6273daf1ee76d1dfb4c39bd18a916c5220537",
+      "packaged_sha256": "458302ee7b92a643e305ac6329e962e1b0ed304ff36a0d07803be05380fa426d",
+      "adaptation": "package-local schemas and hash-bound validator loader"
+    },
+    "schemas/change-manifest.schema.json": {
+      "source_sha256": "ee9659aa3aee16ccb6752ac893e4667367c82e907cbb0aee6b836ded1cfd607c",
+      "packaged_sha256": "127ee8de1ac10d43f775e8c80401bd4b875a18f60eeb3036a313645e553e7f81",
+      "adaptation": "package-local schema references only"
+    },
+    "schemas/author-query-list.schema.json": {
+      "source_sha256": "c94b84507453746bbc596baef0aa318ea33035f271dffe2841a87947fcd6332e",
+      "packaged_sha256": "50cbda9adb76dd240acb90af245669b9376e0bf214bfdb99fa566e44bfadb906",
+      "adaptation": "package-local schema references only"
+    },
+    "tests/test_core.py": {
+      "source_sha256": "ed3a7c3a4797fbd922b3fbc892075888b692511e4b4f2b4292d1d6c23f7fe1ad",
+      "packaged_sha256": "157d7dfc4c96c1efdb4b14d4f8cb1506e87826f73a343f5714505b138383eca7",
+      "adaptation": "package-local test and upstream fixture paths"
+    },
+    "tests/test_patch_application.py": {
+      "source_sha256": "c5cf432c0171bb83721846574895510bb8abe01ab10dd130b3476ed81955e657",
+      "packaged_sha256": "34c17f73f231b4fe793d40f228a6bc3ad33f57dee3c598404673ae3982cf8733",
+      "adaptation": "package-local core, upstream schema, and fixture paths"
+    }
+  },
+  "scientific_behavior_expanded_beyond_contract": false,
+  "installed_or_activated": false,
+  "guidance_update": {
+    "parent_package_version": "0.1.6",
+    "accepted_batches": [
+      "B",
+      "C1"
+    ],
+    "runtime_and_schema_logic_changed": false
+  }
+}

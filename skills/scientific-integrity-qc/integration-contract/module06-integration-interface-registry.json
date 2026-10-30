@@ -1,0 +1,443 @@
+{
+  "schema_name": "module06_integration_interface_registry",
+  "schema_version": "0.1.0",
+  "contract_version": "0.1.2",
+  "contract_state": "candidate_review_required",
+  "implementation_authorized": false,
+  "installed_or_activated": false,
+  "frozen_baselines": {
+    "phase9_contract": {
+      "version": "0.1.1",
+      "sha256": "7fc12671b129475d12de69915272f0a5da4180468180043b804d9acc5ab6f7ff"
+    },
+    "module06_minimum_gate": {
+      "contract_version": "0.1.3",
+      "contract_sha256": "f7c8360ccc11e4cbcd5d906bbb1ae9b37ab9367d160467685aaa650afa8f3a3e",
+      "ruleset_version": "0.1.1",
+      "validator_version": "0.1.0",
+      "tree_hash_algorithm": "sha256(sorted(relative_posix_path + TAB + file_sha256) joined with LF and final LF; excludes __pycache__ and .pyc)",
+      "file_count": 46,
+      "tree_sha256": "cb03850ca3e8ff3c70f9d95c658aa53aaf34e43adcdd704bce750c08e43ed685"
+    },
+    "producer_packages": [
+      {
+        "skill_name": "article-polisher",
+        "skill_package_version": "0.1.7",
+        "package_manifest_sha256": "c517643b4c9ea3bb5765314b4d07e927c4a29ddebff0dcd5d1c1584f508e7074",
+        "inventory_file_sha256": "32dbca7d3ab4ad49f613a5973458e3bb1be7f69e82ae4bb9cb86866941f3d61c"
+      },
+      {
+        "skill_name": "review-architect-polisher",
+        "skill_package_version": "0.1.7",
+        "package_manifest_sha256": "60a734ee8e7f32f543210e40fac72ee797a781499eb8997342eaaf5e6dd04f08",
+        "inventory_file_sha256": "bc851bc3ef180dab72598ddbe23c90b643496c37fb0b2231892fb20edf0ee14d"
+      },
+      {
+        "skill_name": "scientific-figure-designer",
+        "skill_package_version": "0.1.0",
+        "build_generation": "0.1.2",
+        "package_manifest_sha256": "897e31b93d8c6a997d3308b0dcf5cb5c4d4d3d7f3a351cc04f15ec6cee6a2429",
+        "inventory_file_sha256": "e5a6eed0848d6c27447120893c99fbc0cd9fc54c10366bd091c7865efd4f1476"
+      }
+    ],
+    "integration_manifest": {
+      "schema_version": "0.1.1",
+      "contract_version": "0.1.1",
+      "manifest_sha256": "94eb7f42598a352f708b6a7c6a4771d0a66f686e8235b33ea4ad8849de24333b",
+      "file_sha256": "4016b9eecc21dc1f00ae9c417dfb55413acd5c5ac7dfc717a3f019764a6d2adf"
+    }
+  },
+  "interfaces": [
+    {
+      "route": "article_revision",
+      "document_type": "original_article",
+      "producer_skill": "article-polisher",
+      "producer_interface": "module03_revision_qc_bundle",
+      "producer_interface_version": "0.1.2",
+      "consumer_interface": "module06_article_revision_admission",
+      "consumer_interface_version": "0.1.0"
+    },
+    {
+      "route": "review_revision",
+      "document_type": "review_article",
+      "producer_skill": "review-architect-polisher",
+      "producer_interface": "phase7b_revision_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_interface": "module06_review_revision_admission",
+      "consumer_interface_version": "0.1.0"
+    },
+    {
+      "route": "figure_qc",
+      "document_type": "article_or_review_exactly_one",
+      "producer_skill": "scientific-figure-designer",
+      "producer_interface": "module05_figure_qc_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_interface": "module06_figure_qc_admission",
+      "consumer_interface_version": "0.1.0"
+    },
+    {
+      "route": "common_output",
+      "direction": "output",
+      "interface": "module06_integrity_qc_bundle",
+      "interface_version": "0.1.0"
+    }
+  ],
+  "article_revision_route": {
+    "required_producer_state": "ready_for_independent_qc",
+    "required_document_type": "original_article",
+    "required_artifacts": [
+      {
+        "name": "source_document",
+        "version_rule": "exact_runtime_identity_validated_by_module03"
+      },
+      {
+        "name": "candidate_document",
+        "version_rule": "exact_runtime_identity_validated_by_module03"
+      },
+      {
+        "name": "change_manifest",
+        "version": "0.1.1"
+      },
+      {
+        "name": "author_query_list",
+        "version": "0.1.0"
+      },
+      {
+        "name": "revision_lineage_map",
+        "version": "0.1.0",
+        "required_origin": "deterministic_patch_layer"
+      }
+    ],
+    "required_consumer_dependency_closure": [
+      {
+        "name": "revision_contract",
+        "version_rule": "exact_manifest_reference_and_caller_expected_sha256"
+      },
+      {
+        "name": "article_polisher_change_inventory",
+        "version": "0.1.1"
+      },
+      {
+        "name": "article_polisher_patch_application_receipt",
+        "version": "0.1.0"
+      },
+      {
+        "name": "fresh_module03_package_validation",
+        "validator_component_version": "0.1.6"
+      }
+    ],
+    "accepted_states": [
+      "ready_for_independent_qc"
+    ],
+    "rejected_states": [
+      "machine_proposed",
+      "blocked",
+      "incomplete",
+      "stale",
+      "route_mismatch",
+      "hash_mismatch"
+    ]
+  },
+  "review_revision_route": {
+    "required_producer_state": "ready_for_independent_qc",
+    "required_document_type": "review_article",
+    "required_artifacts": [
+      {
+        "name": "source_document",
+        "version_rule": "exact_runtime_identity_validated_by_module04"
+      },
+      {
+        "name": "candidate_document",
+        "version_rule": "exact_runtime_identity_validated_by_module04"
+      },
+      {
+        "name": "review_change_manifest",
+        "version": "0.1.0"
+      },
+      {
+        "name": "review_author_query_list",
+        "version": "0.1.0"
+      },
+      {
+        "name": "review_revision_lineage_map",
+        "version": "0.1.0"
+      },
+      {
+        "name": "review_protected_change_inventory",
+        "version": "0.1.0"
+      },
+      {
+        "name": "review_patch_application_receipt",
+        "version": "0.1.0"
+      },
+      {
+        "name": "review_package_validation_result",
+        "version": "0.1.0"
+      }
+    ],
+    "required_consumer_dependency_closure": [
+      {
+        "name": "review_revision_permission",
+        "version": "0.1.0",
+        "caller_expected_sha256_required": true
+      },
+      {
+        "name": "review_revision_proposal",
+        "version": "0.1.0"
+      },
+      {
+        "name": "referenced_phase7a_closure",
+        "version_rule": "exact_affected_closure_only"
+      },
+      {
+        "name": "fresh_module04_package_validation",
+        "validator_component_version": "0.1.6"
+      }
+    ],
+    "accepted_states": [
+      "ready_for_independent_qc"
+    ],
+    "rejected_states": [
+      "machine_proposed",
+      "blocked",
+      "author_review_required_not_qc_ready",
+      "incomplete",
+      "stale",
+      "route_mismatch",
+      "hash_mismatch"
+    ]
+  },
+  "figure_route": {
+    "variants": {
+      "phase8a_design": {
+        "producer_artifacts": [
+          {
+            "name": "design_package_manifest",
+            "version": "0.1.0"
+          },
+          {
+            "name": "figure_qc",
+            "version": "0.1.0",
+            "phase": "phase8a"
+          }
+        ],
+        "validation_dependencies": [
+          {
+            "name": "source_data_manifest",
+            "version": "0.1.0"
+          },
+          {
+            "name": "figure_card",
+            "version": "0.1.0",
+            "cardinality": "one_or_more"
+          },
+          {
+            "name": "figure_contract",
+            "version": "0.1.0"
+          },
+          {
+            "name": "plot_recipe",
+            "version": "0.1.0"
+          },
+          {
+            "name": "trusted_inputs_root",
+            "version": "0.1.0",
+            "caller_expected_sha256_required": true
+          },
+          {
+            "name": "fresh_phase8a_validation",
+            "validator_version": "0.1.2"
+          }
+        ],
+        "accepted_readiness": [
+          "pass_for_declared_maturity"
+        ],
+        "degraded_readiness": [
+          "author_review_required"
+        ],
+        "rejected_readiness": [
+          "blocked"
+        ]
+      },
+      "phase8b_prototype": {
+        "requires_phase8a_design_variant": true,
+        "producer_artifacts": [
+          {
+            "name": "phase8a_admission_receipt",
+            "version": "0.1.0"
+          },
+          {
+            "name": "prototype_execution_result",
+            "version": "0.1.0"
+          },
+          {
+            "name": "render_output_manifest",
+            "version": "0.1.0"
+          },
+          {
+            "name": "render_inspection_record",
+            "version": "0.1.0",
+            "cardinality": "one_or_more"
+          },
+          {
+            "name": "figure_qc",
+            "version": "0.2.0",
+            "phase": "phase8b"
+          }
+        ],
+        "validation_dependencies": [
+          {
+            "name": "bound_execution_and_authorization_closure",
+            "version_rule": "exact_phase8b_package_closure"
+          },
+          {
+            "name": "fresh_phase8b_validation",
+            "validator_version": "0.1.1"
+          }
+        ],
+        "accepted_readiness": [
+          "prepared_for_future_figure_qc"
+        ],
+        "degraded_readiness": [
+          "author_review_required"
+        ],
+        "rejected_readiness": [
+          "blocked"
+        ],
+        "non_promotable_maturity": "prototype_generated_unverified"
+      }
+    },
+    "first_implementation_scope": "identity_state_and_handoff_closure_only",
+    "clean_pass_allowed": false
+  },
+  "common_admission": {
+    "admission_states": [
+      "accepted",
+      "accepted_degraded",
+      "rejected"
+    ],
+    "caller_expected_hash_required_for": [
+      "producer_package_inventory",
+      "external_trust_root",
+      "revision_contract_or_permission",
+      "authority_record_or_collection",
+      "execution_authorization",
+      "future_trusted_inspection_receipt"
+    ],
+    "recompute": [
+      "file_sha256",
+      "canonical_artifact_sha256",
+      "package_manifest_sha256",
+      "path_containment",
+      "interface_and_version",
+      "cross_artifact_identity",
+      "producer_validation"
+    ],
+    "fail_closed_on": [
+      "missing",
+      "stale",
+      "duplicate",
+      "extra_required_surface",
+      "hash_mismatch",
+      "path_escape",
+      "route_mismatch",
+      "unsupported_version",
+      "producer_blocker",
+      "internally_inconsistent_authority"
+    ]
+  },
+  "assessment_semantics": {
+    "assessment_states": [
+      "passed",
+      "failed",
+      "unassessable",
+      "not_assessed",
+      "not_applicable"
+    ],
+    "gate_outcomes": [
+      "pass",
+      "pass_with_warnings",
+      "fail",
+      "unassessable"
+    ],
+    "unimplemented_or_missing_check_may_pass": false,
+    "zero_findings_implies_pass": false,
+    "figure_clean_pass_allowed_in_first_implementation": false,
+    "pass_scope": "declared_and_fully_executed_implemented_scope_only",
+    "pass_is_scientific_truth": false,
+    "pass_is_author_approval": false
+  },
+  "explicitly_unimplemented_domains": {
+    "review": [
+      "evidence_sufficiency",
+      "synthesis_balance",
+      "retrieval_completeness",
+      "bibliographic_truth",
+      "consensus_adjudication",
+      "formal_systematic_review_compliance",
+      "meta_analysis"
+    ],
+    "figure": [
+      "scientific_meaning",
+      "raw_image_integrity",
+      "statistical_appropriateness",
+      "visual_effectiveness",
+      "cognitive_accessibility_inspection",
+      "copyright_clearance",
+      "journal_compliance"
+    ]
+  },
+  "output": {
+    "interface": "module06_integrity_qc_bundle",
+    "version": "0.1.0",
+    "common_artifacts": [
+      {
+        "name": "module06_integration_admission_receipt",
+        "version": "0.1.0"
+      },
+      {
+        "name": "module06_gate_report",
+        "version": "0.1.0"
+      },
+      {
+        "name": "qc_finding",
+        "version": "0.3.0",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "text_route_artifacts": [
+      {
+        "name": "comparison-manifest",
+        "version": "0.1.1"
+      },
+      {
+        "name": "preservation-snapshot",
+        "version": "0.1.1",
+        "cardinality": "exactly_two"
+      },
+      {
+        "name": "qc-report",
+        "version": "0.1.0"
+      },
+      {
+        "name": "structured_text_projection_receipt",
+        "version": "0.1.0"
+      }
+    ],
+    "terminal_states": [
+      "blocked",
+      "qc_complete_author_review_required",
+      "qc_unassessable_author_review_required",
+      "rejected"
+    ],
+    "author_approval_claimed": false,
+    "scientific_truth_claimed": false,
+    "automatic_repair_performed": false
+  },
+  "implementation_after_freeze": {
+    "additive_layer_required": true,
+    "frozen_minimum_core_modified": false,
+    "package_last": true,
+    "installation_or_activation_allowed": false
+  }
+}

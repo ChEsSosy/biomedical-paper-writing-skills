@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure-qc.schema.json",
+  "title": "Phase 8A Figure QC 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "design_package_id",
+    "design_package_version", "design_package_hash", "validator_version", "ruleset_version",
+    "check_level", "render_inspected", "component_hashes", "trusted_binding_hashes",
+    "findings", "domain_status", "readiness_gate", "generated_at", "figure_qc_sha256"
+  ],
+  "properties": {
+    "schema_name": {"const": "figure_qc"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "design_package_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "design_package_version": {"const": "0.1.0"},
+    "design_package_hash": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "validator_version": {"const": "0.1.2"},
+    "ruleset_version": {"const": "0.1.2"},
+    "check_level": {"const": "deterministic_phase8a"},
+    "render_inspected": {"const": false},
+    "component_hashes": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}, "uniqueItems": true},
+    "trusted_binding_hashes": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}, "uniqueItems": true},
+    "findings": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/finding"}},
+    "domain_status": {
+      "type": "object",
+      "required": ["schema", "identity", "trust", "authority", "data", "units_statistics", "figure_structure", "image_integrity", "copyright", "visual_semantics", "journal_backend"],
+      "properties": {
+        "schema": {"$ref": "#/$defs/domainState"},
+        "identity": {"$ref": "#/$defs/domainState"},
+        "trust": {"$ref": "#/$defs/domainState"},
+        "authority": {"$ref": "#/$defs/domainState"},
+        "data": {"$ref": "#/$defs/domainState"},
+        "units_statistics": {"$ref": "#/$defs/domainState"},
+        "figure_structure": {"$ref": "#/$defs/domainState"},
+        "image_integrity": {"$ref": "#/$defs/domainState"},
+        "copyright": {"$ref": "#/$defs/domainState"},
+        "visual_semantics": {"$ref": "#/$defs/domainState"},
+        "journal_backend": {"$ref": "#/$defs/domainState"}
+      },
+      "additionalProperties": false
+    },
+    "readiness_gate": {"type": "string", "enum": ["pass_for_declared_maturity", "blocked", "author_review_required"]},
+    "generated_at": {"$ref": "figure-shared-definitions.schema.json#/$defs/timestamp"},
+    "figure_qc_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "domainState": {"type": "string", "enum": ["pass", "fail", "not_assessed", "review_required"]}
+  }
+}

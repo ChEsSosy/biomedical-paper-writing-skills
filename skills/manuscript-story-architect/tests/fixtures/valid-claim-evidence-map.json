@@ -1,0 +1,130 @@
+{
+  "schema_name": "claim_evidence_map",
+  "schema_version": "0.1.1",
+  "artifact_id": "claim-map:synthetic-manuscript-1",
+  "created_at": "2026-08-30T12:00:00+00:00",
+  "created_by": "manuscript-story-architect-contract/0.1.1",
+  "source_artifact_ids": [],
+  "source_files": [
+    {
+      "path": "input/synthetic-manuscript.md",
+      "role": "other",
+      "document_id": "synthetic-manuscript-1",
+      "access_status": "author_owned"
+    }
+  ],
+  "status": "author_review_required",
+  "warnings": [],
+  "manuscript_id": "synthetic-manuscript-1",
+  "document_type": "original_article",
+  "central_question": {
+    "statement": "Does the candidate intervention change the measured response in model A?",
+    "provenance": "author_supplied",
+    "author_approval": "approved"
+  },
+  "frozen_elements": [
+    {
+      "element_id": "frozen:comparison-1",
+      "category": "comparison_direction",
+      "value": "candidate intervention versus matched control",
+      "source_locators": [
+        {
+          "location_kind": "author_input",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "local_identifier": "author-confirmed-comparison-1"
+        }
+      ],
+      "author_approval": "approved"
+    }
+  ],
+  "claim_records": [
+    {
+      "claim_id": "claim:result-1",
+      "statement": "The candidate intervention is associated with an increased measured response in model A.",
+      "claim_origin": "explicitly_stated_in_author_source",
+      "document_section": "results",
+      "claim_class": "primary_result",
+      "population_or_model": "model A",
+      "scope": "the measured assay and tested conditions",
+      "comparison_direction": "candidate intervention greater than matched control",
+      "causality_level": "associative",
+      "mechanistic_level": "none",
+      "hedging_level": "qualified",
+      "evidence_ids": ["evidence:cell-1"],
+      "support_status": "partially_supported",
+      "source_locators": [
+        {
+          "location_kind": "manuscript_text",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "section": "results",
+          "paragraph_id": "paragraph:results-1",
+          "sentence_id": "sentence:results-1-1",
+          "local_identifier": "results paragraph 1 sentence 1"
+        }
+      ],
+      "author_approval": "pending",
+      "unresolved_risks": ["The tested model does not establish broader biological relevance."]
+    }
+  ],
+  "evidence_records": [
+    {
+      "evidence_id": "evidence:cell-1",
+      "evidence_type": "cell_experiment",
+      "experiment_labels": ["cell", "molecular"],
+      "source_locators": [
+        {
+          "location_kind": "figure",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "figure_id": "figure:1",
+          "panel_id": "panel:a",
+          "local_identifier": "Figure 1 panel a"
+        }
+      ],
+      "biological_or_technical_unit": "independent cell-culture experiment",
+      "n_value": 3,
+      "n_definition": "three independent experiments",
+      "replicate_structure": "biological replicates with technical measurements",
+      "controls": ["matched vehicle control"],
+      "comparison": "candidate intervention versus matched control",
+      "effect_direction": "increased measured response",
+      "statistics_locators": [
+        {
+          "location_kind": "figure",
+          "source_file_path": "input/synthetic-manuscript.md",
+          "document_id": "synthetic-manuscript-1",
+          "figure_id": "figure:1",
+          "panel_id": "panel:a",
+          "local_identifier": "Figure 1a statistics annotation"
+        }
+      ],
+      "assay_or_model_limitations": ["single model and assay context"],
+      "data_availability": "synthetic fixture only",
+      "quality_flags": [],
+      "author_approval": "pending"
+    }
+  ],
+  "claim_evidence_links": [
+    {
+      "link_id": "link:claim-1-evidence-1",
+      "claim_id": "claim:result-1",
+      "evidence_id": "evidence:cell-1",
+      "relation": "partially_supports",
+      "rationale": "The observation supports the stated assay-specific association but not a mechanism or broader model claim.",
+      "scope_match": true,
+      "author_approval": "pending"
+    }
+  ],
+  "author_decisions": [
+    {
+      "decision_id": "decision:claim-scope-1",
+      "decision_type": "claim_scope",
+      "question": "Should the claim remain limited to the tested assay and model?",
+      "options": ["retain the tested scope", "revise after supplying additional evidence"],
+      "related_ids": ["claim:result-1", "evidence:cell-1"],
+      "status": "pending"
+    }
+  ]
+}

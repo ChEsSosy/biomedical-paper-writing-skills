@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "module06-integration-admission-receipt.schema.json",
+  "title": "Module 06 Integration Admission Receipt 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "receipt_id", "receipt_sha256", "created_at", "request_id", "route", "consumer_interface", "consumer_interface_version", "producer", "admission_state", "admitted_artifacts", "issues", "author_approval_claimed", "scientific_truth_claimed"],
+  "properties": {
+    "schema_name": {"const": "module06_integration_admission_receipt"}, "schema_version": {"const": "0.1.0"},
+    "receipt_id": {"type": "string", "minLength": 1}, "receipt_sha256": {"$ref": "#/$defs/sha256"},
+    "created_at": {"type": "string", "format": "date-time"}, "request_id": {"type": "string", "minLength": 1},
+    "route": {"type": "string", "minLength": 1}, "consumer_interface": {"type": "string", "minLength": 1},
+    "consumer_interface_version": {"type": "string", "minLength": 1}, "producer": {"type": "object"},
+    "admission_state": {"enum": ["accepted", "accepted_degraded", "rejected"]},
+    "admitted_artifacts": {"type": "array", "items": {"type": "object"}},
+    "issues": {"type": "array", "items": {"type": "object", "required": ["code", "message"]}},
+    "author_approval_claimed": {"const": false}, "scientific_truth_claimed": {"const": false}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

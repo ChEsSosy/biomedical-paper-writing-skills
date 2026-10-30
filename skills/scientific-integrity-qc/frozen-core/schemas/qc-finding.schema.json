@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qc-finding.schema.json",
+  "title": "Versioned Shared Biomedical Writing QC Finding 0.3.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "status", "warnings", "finding_id", "check_id",
+    "finding_class", "severity", "message", "evidence", "execution_state",
+    "finding_status"
+  ],
+  "properties": {
+    "schema_name": {"const": "qc-finding"},
+    "schema_version": {"const": "0.3.0"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "warnings": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/warning"}
+    },
+    "finding_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "check_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "finding_class": {
+      "type": "string",
+      "enum": [
+        "identity", "alignment", "numeric", "citation", "reference", "terminology",
+        "equation", "variable", "placeholder", "frozen_literal", "graph_identity",
+        "semantic_signal", "exception", "execution"
+      ]
+    },
+    "severity": {"$ref": "qc-shared-definitions.schema.json#/$defs/severity"},
+    "message": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_locator": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"},
+    "candidate_locator": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"},
+    "expected_representation": {"type": "string"},
+    "observed_representation": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+    },
+    "execution_state": {"$ref": "qc-shared-definitions.schema.json#/$defs/checkExecutionState"},
+    "finding_status": {"$ref": "qc-shared-definitions.schema.json#/$defs/findingStatus"},
+    "exception_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "human_decision": {"type": "string"}
+  },
+  "additionalProperties": false
+}

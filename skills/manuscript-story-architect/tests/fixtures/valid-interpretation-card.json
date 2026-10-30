@@ -1,0 +1,86 @@
+{
+  "schema_name": "interpretation_card",
+  "schema_version": "0.1.1",
+  "artifact_id": "interpretation-card:synthetic-1",
+  "created_at": "2026-08-30T12:00:00+00:00",
+  "created_by": "manuscript-story-architect-contract/0.1.1",
+  "source_artifact_ids": ["claim-map:synthetic-manuscript-1"],
+  "source_files": [
+    {
+      "path": "input/synthetic-manuscript.md",
+      "role": "other",
+      "document_id": "synthetic-manuscript-1",
+      "access_status": "author_owned"
+    }
+  ],
+  "status": "author_review_required",
+  "warnings": [],
+  "manuscript_id": "synthetic-manuscript-1",
+  "document_type": "original_article",
+  "card_id": "card:interpretation-1",
+  "claim_id": "claim:result-1",
+  "evidence_ids": ["evidence:cell-1"],
+  "experiment_labels": ["cell", "molecular"],
+  "observation": {
+    "statement": "The measured response was greater under the candidate condition than under the matched control condition.",
+    "provenance": "author_draft",
+    "source_locators": [
+      {
+        "location_kind": "figure",
+        "source_file_path": "input/synthetic-manuscript.md",
+        "document_id": "synthetic-manuscript-1",
+        "figure_id": "figure:1",
+        "panel_id": "panel:a",
+        "local_identifier": "Figure 1 panel a"
+      }
+    ],
+    "author_approval": "pending"
+  },
+  "interpretation": {
+    "statement": "The candidate intervention may be associated with the measured response under the tested conditions.",
+    "provenance": "model_proposal_author_review_required",
+    "causality_level": "associative",
+    "mechanistic_level": "none",
+    "hedging_level": "tentative",
+    "author_approval": "pending"
+  },
+  "boundary": {
+    "boundary_id": "boundary:interpretation-1",
+    "claim_ceiling": "assay-specific association in model A",
+    "population_or_model_limit": "model A under the tested culture conditions",
+    "assay_or_method_limits": ["single assay endpoint"],
+    "prohibited_extrapolations": ["mechanistic causality", "in-vivo relevance", "clinical relevance"],
+    "unresolved_uncertainties": ["generalisability to other models is not assessed"],
+    "author_approval": "pending"
+  },
+  "alternative_explanations": [
+    {
+      "alternative_id": "alternative:assay-context-1",
+      "statement": "The observed difference may depend on the assay context.",
+      "provenance": "method_or_model_limitation",
+      "source_locators": [],
+      "author_approval": "pending"
+    }
+  ],
+  "validation_needs": [
+    {
+      "validation_need_id": "validation-need:model-generality-1",
+      "description": "Additional model evidence would be required for a broader model claim.",
+      "need_type": "scope_extension",
+      "requirement_source": "claim_ceiling",
+      "status": "missing",
+      "author_approval": "pending"
+    }
+  ],
+  "proposed_validation_experiments": [],
+  "author_decisions": [
+    {
+      "decision_id": "decision:interpretation-1",
+      "decision_type": "scientific_interpretation",
+      "question": "Does the proposed interpretation accurately reflect the author's intended scientific boundary?",
+      "options": ["approve", "revise", "reject"],
+      "related_ids": ["card:interpretation-1", "claim:result-1"],
+      "status": "pending"
+    }
+  ]
+}

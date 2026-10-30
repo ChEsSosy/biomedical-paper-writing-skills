@@ -1,0 +1,3 @@
+Synthetic source two.
+An independent experiment reported a response in the same direction under a related condition.
+This fixture is not scientific evidence and exists only for deterministic contract tests.

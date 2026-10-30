@@ -1,0 +1,61 @@
+{
+  "schema_name": "corpus_manifest",
+  "schema_version": "0.2.2",
+  "artifact_id": "corpus-manifest:synthetic-original-phase31",
+  "created_at": "2026-08-30T12:00:00+08:00",
+  "created_by": "style-and-structure-distiller-test/0.2.2",
+  "source_artifact_ids": [],
+  "source_files": [
+    {"path": "papers/article-1.md", "role": "corpus_document", "document_id": "synthetic-article-1", "access_status": "author_owned"},
+    {"path": "papers/article-2.md", "role": "corpus_document", "document_id": "synthetic-article-2", "access_status": "author_owned"}
+  ],
+  "status": "author_approved",
+  "warnings": [],
+  "corpus_id": "synthetic-original-phase31",
+  "corpus_type": "original_article",
+  "minimum_document_count": 2,
+  "inclusion_criteria": ["Synthetic English biomedical-style Markdown created for deterministic software testing"],
+  "exclusion_criteria": ["Published prose, real scientific claims, or documents without explicit headings"],
+  "documents": [
+    {
+      "document_id": "synthetic-article-1",
+      "source_file": "papers/article-1.md",
+      "article_type": "original_article",
+      "title": "Synthetic hierarchy fixture one",
+      "journal": "software-test-journal-a",
+      "year": 2025,
+      "language": "en",
+      "source_type": "markdown",
+      "article_subtype": "research_article",
+      "corpus_group": "synthetic-pilot",
+      "lab_group": "synthetic-group-shared",
+      "journal_family": "software-test-family",
+      "domains": ["software validation"],
+      "experiment_labels": ["other"],
+      "access_status": "author_owned",
+      "license_note": "Synthetic fixture created for this candidate package",
+      "inclusion_status": "included",
+      "metadata_provenance": "Manually defined synthetic test fixture"
+    },
+    {
+      "document_id": "synthetic-article-2",
+      "source_file": "papers/article-2.md",
+      "article_type": "original_article",
+      "title": "Synthetic hierarchy fixture two",
+      "journal": "software-test-journal-b",
+      "year": 2026,
+      "language": "en",
+      "source_type": "markdown",
+      "article_subtype": "research_article",
+      "corpus_group": "synthetic-pilot",
+      "lab_group": "synthetic-group-shared",
+      "journal_family": "software-test-family",
+      "domains": ["software validation"],
+      "experiment_labels": ["other"],
+      "access_status": "author_owned",
+      "license_note": "Synthetic fixture created for this candidate package",
+      "inclusion_status": "included",
+      "metadata_provenance": "Manually defined synthetic test fixture"
+    }
+  ]
+}

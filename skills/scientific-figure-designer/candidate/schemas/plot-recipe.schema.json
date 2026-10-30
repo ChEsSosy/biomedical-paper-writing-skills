@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "plot-recipe.schema.json",
+  "title": "Phase 8A Backend-independent Plot Recipe 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "recipe_id", "figure_id", "panel_id", "document_type", "maturity", "source_data_ids",
+    "variable_mappings", "filters", "exclusions", "transformation_ids", "aggregation",
+    "ordering", "layers", "statistical_annotations", "axes", "palette_keys",
+    "image_instructions", "legend_intent", "export_intent", "backend_route",
+    "implementation_status", "review_status"
+  ],
+  "properties": {
+    "schema_name": {"const": "plot_recipe"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "recipe_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "figure_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "panel_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "document_type": {"$ref": "figure-shared-definitions.schema.json#/$defs/documentType"},
+    "maturity": {"$ref": "figure-shared-definitions.schema.json#/$defs/maturity"},
+    "source_data_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "variable_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["aesthetic", "source_data_id", "variable_id"],
+        "properties": {
+          "aesthetic": {"type": "string", "enum": ["x", "y", "color", "fill", "shape", "size", "alpha", "label", "facet", "image", "other"]},
+          "source_data_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "variable_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "filters": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "exclusions": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "transformation_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "aggregation": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "ordering": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["layer_id", "mark", "summary_intent", "raw_observation_policy", "uncertainty_representation"],
+        "properties": {
+          "layer_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "mark": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "summary_intent": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "raw_observation_policy": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "uncertainty_representation": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "statistical_annotations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["annotation_id", "status", "comparison_id", "symbol"],
+        "properties": {
+          "annotation_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "status": {"type": "string", "enum": ["supplied", "required_but_unavailable", "not_applicable"]},
+          "comparison_id": {"type": ["string", "null"]},
+          "symbol": {"type": ["string", "null"]},
+          "analysis_output_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/analysisOutputRef"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "axes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["axis", "variable_id", "scale", "unit", "limits_policy"],
+        "properties": {
+          "axis": {"type": "string", "enum": ["x", "y", "color", "size"]},
+          "variable_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "scale": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "unit": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "limits_policy": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "palette_keys": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "image_instructions": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "legend_intent": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "export_intent": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "backend_route": {
+      "type": ["object", "null"],
+      "properties": {
+        "backend_name": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "backend_version": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "capability_verified": {"type": "boolean"},
+        "data_shape": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "statistics_mode": {"type": "string", "enum": ["annotation_only", "none"]}
+      },
+      "required": ["backend_name", "backend_version", "capability_verified", "data_shape", "statistics_mode"],
+      "additionalProperties": false
+    },
+    "implementation_status": {"type": "string", "enum": ["not_executed", "prototype_generated_unverified", "prototype_verified"]},
+    "review_status": {"$ref": "figure-shared-definitions.schema.json#/$defs/reviewStatus"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "interpretation-card.schema.json",
+  "title": "Observation–Interpretation–Boundary–Validation Card 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "source_files", "status", "warnings", "manuscript_id",
+    "document_type", "card_id", "claim_id", "evidence_ids", "experiment_labels",
+    "observation", "interpretation", "boundary", "alternative_explanations",
+    "validation_needs", "proposed_validation_experiments", "author_decisions"
+  ],
+  "properties": {
+    "schema_name": {"const": "interpretation_card"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"
+    },
+    "created_at": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"
+    },
+    "created_by": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"
+    },
+    "source_artifact_ids": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"
+    },
+    "source_files": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"
+    },
+    "status": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"
+    },
+    "warnings": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"
+    },
+    "manuscript_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "document_type": {"const": "original_article"},
+    "card_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "claim_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "evidence_ids": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "experiment_labels": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/experimentLabel"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "observation": {
+      "type": "object",
+      "required": ["statement", "provenance", "source_locators", "author_approval"],
+      "properties": {
+        "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "provenance": {"$ref": "story-artifact-definitions.schema.json#/$defs/statementProvenance"},
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+          "minItems": 1
+        },
+        "author_approval": {
+          "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+        }
+      },
+      "additionalProperties": false
+    },
+    "interpretation": {
+      "type": "object",
+      "required": [
+        "statement", "provenance", "causality_level", "mechanistic_level",
+        "hedging_level", "author_approval"
+      ],
+      "properties": {
+        "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "provenance": {"$ref": "story-artifact-definitions.schema.json#/$defs/statementProvenance"},
+        "causality_level": {"$ref": "story-artifact-definitions.schema.json#/$defs/causalityLevel"},
+        "mechanistic_level": {"$ref": "story-artifact-definitions.schema.json#/$defs/mechanisticLevel"},
+        "hedging_level": {"$ref": "story-artifact-definitions.schema.json#/$defs/hedgingLevel"},
+        "author_approval": {
+          "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+        }
+      },
+      "additionalProperties": false
+    },
+    "boundary": {
+      "type": "object",
+      "required": [
+        "boundary_id", "claim_ceiling", "population_or_model_limit", "assay_or_method_limits",
+        "prohibited_extrapolations", "unresolved_uncertainties", "author_approval"
+      ],
+      "properties": {
+        "boundary_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+        "claim_ceiling": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "population_or_model_limit": {
+          "$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"
+        },
+        "assay_or_method_limits": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "prohibited_extrapolations": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "unresolved_uncertainties": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "author_approval": {
+          "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+        }
+      },
+      "additionalProperties": false
+    },
+    "alternative_explanations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["alternative_id", "statement", "provenance", "source_locators", "author_approval"],
+        "properties": {
+          "alternative_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "author_provided", "method_or_model_limitation", "located_literature",
+              "model_proposal_author_review_required"
+            ]
+          },
+          "source_locators": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"}
+          },
+          "author_approval": {
+            "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "validation_needs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "validation_need_id", "description", "need_type", "requirement_source",
+          "status", "author_approval"
+        ],
+        "properties": {
+          "validation_need_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "description": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "need_type": {
+            "type": "string",
+            "enum": [
+              "causal_validation", "orthogonal_support", "independent_replication",
+              "in_vivo_relevance", "scope_extension", "other_evidence_gap"
+            ]
+          },
+          "requirement_source": {
+            "type": "string",
+            "enum": ["author_requested", "evidence_gap", "method_limit", "claim_ceiling", "other"]
+          },
+          "status": {"type": "string", "enum": ["missing", "available", "not_applicable", "not_assessed"]},
+          "author_approval": {
+            "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "proposed_validation_experiments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "experiment_proposal_id", "description", "origin", "source_locators",
+          "author_approval"
+        ],
+        "properties": {
+          "experiment_proposal_id": {
+            "$ref": "story-artifact-definitions.schema.json#/$defs/identifier"
+          },
+          "description": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "origin": {
+            "type": "string",
+            "enum": ["author_supplied", "explicitly_requested_separate_task"]
+          },
+          "source_locators": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+            "minItems": 1
+          },
+          "author_approval": {
+            "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "author_decisions": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecision"}
+    }
+  },
+  "additionalProperties": false
+}

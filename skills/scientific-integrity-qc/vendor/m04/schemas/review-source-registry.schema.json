@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-source-registry.schema.json",
+  "title": "Phase 7A Review Source Registry 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "created_at", "created_by", "status", "scope_ref", "source_records"
+  ],
+  "properties": {
+    "schema_name": {"const": "review_source_registry"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.3"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "scope_ref": {"$ref": "review-scope.schema.json#/$defs/artifactRef"},
+    "source_records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/sourceRecord"},
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sourceRecord": {
+      "type": "object",
+      "required": [
+        "source_id", "source_record_sha256", "bibliographic_identity", "publication_status",
+        "verification_origin", "verification_timestamp", "access_level", "access_verification_origin",
+        "access_verification_status", "source_locators", "inclusion_status", "exclusion_reason",
+        "linked_source_ids", "evidence_unit_id", "independence_status", "assignment_origin",
+        "independence_review_status", "extraction_record_ids"
+      ],
+      "properties": {
+        "source_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "source_record_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+        "bibliographic_identity": {"$ref": "#/$defs/bibliographicIdentity"},
+        "publication_status": {"type": "string", "enum": ["current", "corrected", "expression_of_concern", "retracted", "unknown"]},
+        "verification_origin": {"type": "string", "enum": ["author_supplied", "authorized_retrieval_workflow", "model_proposed"]},
+        "verification_timestamp": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+        "access_level": {"$ref": "#/$defs/accessLevel"},
+        "access_verification_origin": {"type": "string", "enum": ["author_supplied_source_evidence", "authorized_retrieval_or_verification_workflow", "model_proposed"]},
+        "access_verification_status": {"type": "string", "enum": ["pending", "author_review_required", "approved", "rejected"]},
+        "access_verification_ref": {
+          "oneOf": [
+            {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+            {"$ref": "#/$defs/sourceEvidenceRef"}
+          ]
+        },
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"}
+        },
+        "inclusion_status": {"type": "string", "enum": ["included", "excluded", "disputed"]},
+        "exclusion_reason": {"type": ["string", "null"]},
+        "inclusion_decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+        "linked_source_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "evidence_unit_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "study_family_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "independence_status": {
+          "type": "string",
+          "enum": ["independent", "overlapping_population", "secondary_analysis", "follow_up", "duplicate_report", "linked_publication", "unresolved"]
+        },
+        "assignment_origin": {"type": "string", "enum": ["author_supplied", "authorized_retrieval_or_review_workflow", "model_proposed"]},
+        "independence_review_status": {"type": "string", "enum": ["pending", "author_review_required", "approved", "rejected"]},
+        "independence_decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+        "extraction_record_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bibliographicIdentity": {
+      "type": "object",
+      "required": ["title", "authors", "year", "journal", "identity_records"],
+      "properties": {
+        "title": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "authors": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+        "year": {"type": "integer", "minimum": 1000, "maximum": 3000},
+        "journal": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "identity_records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["identity_type", "value"],
+            "properties": {
+              "identity_type": {"type": "string", "enum": ["doi", "pmid", "pmcid", "title_author_year", "other"]},
+              "value": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "sourceEvidenceRef": {
+      "type": "object",
+      "required": ["input_id", "input_sha256"],
+      "properties": {
+        "input_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "input_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "accessLevel": {
+      "type": "string",
+      "enum": ["full_text_verified", "abstract_verified", "bibliographic_only", "unresolved"]
+    }
+  }
+}

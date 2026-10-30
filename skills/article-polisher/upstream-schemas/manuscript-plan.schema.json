@@ -1,0 +1,447 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manuscript-plan.schema.json",
+  "title": "Original Article Manuscript Plan 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "source_files", "status", "warnings", "manuscript_id",
+    "document_type", "plan_id", "plan_label", "claim_evidence_map_id",
+    "interpretation_card_ids", "story_anchors", "current_structure_assessment",
+    "frozen_elements", "section_plans", "figure_sequence", "evidence_assignment_audit",
+    "gaps_and_risks", "author_decisions", "approval_summary"
+  ],
+  "properties": {
+    "schema_name": {"const": "manuscript_plan"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"
+    },
+    "created_at": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"
+    },
+    "created_by": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"
+    },
+    "source_artifact_ids": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"
+    },
+    "source_files": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"
+    },
+    "status": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"
+    },
+    "warnings": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"
+    },
+    "manuscript_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "document_type": {"const": "original_article"},
+    "plan_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "plan_label": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+    "claim_evidence_map_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "interpretation_card_ids": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "upstream_profiles": {
+      "type": "object",
+      "properties": {
+        "structure_profile": {
+          "type": "object",
+          "required": ["artifact_id", "profile_kind", "extraction_mode", "scientific_authority"],
+          "properties": {
+            "artifact_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "profile_kind": {"const": "structure_profile"},
+            "extraction_mode": {"const": "deterministic"},
+            "scientific_authority": {"const": false}
+          },
+          "additionalProperties": false
+        },
+        "architecture_profile": {
+          "type": "object",
+          "required": ["artifact_id", "profile_kind", "review_status", "scientific_authority"],
+          "properties": {
+            "artifact_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "profile_kind": {"const": "architecture_profile"},
+            "review_status": {"const": "reviewed"},
+            "scientific_authority": {"const": false}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "journal_adaptation": {
+      "type": "object",
+      "required": [
+        "target_journal", "target_journal_profile", "journal_instructions_provenance",
+        "article_subtype", "allowed_influences", "scientific_authority"
+      ],
+      "properties": {
+        "target_journal": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "target_journal_profile": {
+          "$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"
+        },
+        "journal_instructions_provenance": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "article_subtype": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "allowed_influences": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["structure", "emphasis", "compression", "order"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "scientific_authority": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "story_anchors": {
+      "type": "object",
+      "required": [
+        "central_question", "take_home_message", "novelty_scope",
+        "key_claim_ids", "key_boundary_ids"
+      ],
+      "properties": {
+        "central_question": {
+          "type": "object",
+          "required": ["statement", "provenance", "source_locators", "author_approval"],
+          "properties": {
+            "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+            "provenance": {"$ref": "story-artifact-definitions.schema.json#/$defs/anchorProvenance"},
+            "source_locators": {
+              "type": "array",
+              "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+              "minItems": 1
+            },
+            "author_approval": {
+              "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+            }
+          },
+          "additionalProperties": false
+        },
+        "take_home_message": {
+          "type": "object",
+          "required": [
+            "statement", "provenance", "source_locators", "support_status", "author_approval"
+          ],
+          "properties": {
+            "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+            "provenance": {"$ref": "story-artifact-definitions.schema.json#/$defs/anchorProvenance"},
+            "source_locators": {
+              "type": "array",
+              "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+              "minItems": 1
+            },
+            "support_status": {
+              "$ref": "story-artifact-definitions.schema.json#/$defs/supportStatus"
+            },
+            "author_approval": {
+              "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+            }
+          },
+          "additionalProperties": false
+        },
+        "novelty_scope": {
+          "type": "object",
+          "required": ["statement", "provenance", "source_locators", "author_approval"],
+          "properties": {
+            "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+            "provenance": {
+              "type": "string",
+              "enum": ["author_supplied", "explicitly_approved_by_author"]
+            },
+            "source_locators": {
+              "type": "array",
+              "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+              "minItems": 1
+            },
+            "author_approval": {
+              "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+            }
+          },
+          "oneOf": [
+            {
+              "required": ["provenance", "author_approval"],
+              "properties": {"provenance": {"const": "author_supplied"}}
+            },
+            {
+              "required": ["provenance", "author_approval"],
+              "properties": {
+                "provenance": {"const": "explicitly_approved_by_author"},
+                "author_approval": {"const": "approved"}
+              }
+            }
+          ],
+          "additionalProperties": false
+        },
+        "key_claim_ids": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "key_boundary_ids": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "current_structure_assessment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["input_mode", "reverse_outline_items"],
+          "properties": {
+            "input_mode": {"const": "existing_manuscript"},
+            "reverse_outline_items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["source_paragraph_id", "current_role", "source_locators"],
+                "properties": {
+                  "source_paragraph_id": {
+                    "$ref": "story-artifact-definitions.schema.json#/$defs/identifier"
+                  },
+                  "current_role": {
+                    "$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"
+                  },
+                  "source_locators": {
+                    "type": "array",
+                    "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+                    "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["input_mode", "skipped_reason"],
+          "properties": {
+            "input_mode": {"const": "structured_notes"},
+            "skipped_reason": {
+              "const": "no_existing_manuscript_structure_to_reverse_outline"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "frozen_elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["element_id", "description", "source_locators", "author_approval"],
+        "properties": {
+          "element_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "description": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "source_locators": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+            "minItems": 1
+          },
+          "author_approval": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "section_plans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "section_id", "canonical_section", "goal", "claim_ids", "paragraph_plans", "author_approval"
+        ],
+        "properties": {
+          "section_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "canonical_section": {"$ref": "story-artifact-definitions.schema.json#/$defs/documentSection"},
+          "goal": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "claim_ids": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "uniqueItems": true
+          },
+          "paragraph_plans": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "paragraph_id", "role", "goal", "source_paragraph_ids", "claim_ids",
+                "evidence_ids", "figure_ids", "transition_goal", "material_reordering",
+                "author_approval"
+              ],
+              "properties": {
+                "paragraph_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "context", "gap", "objective", "method", "result", "interpretation",
+                    "limitation", "transition", "synthesis", "conclusion", "other"
+                  ]
+                },
+                "goal": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+                "source_paragraph_ids": {
+                  "type": "array",
+                  "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+                  "uniqueItems": true
+                },
+                "claim_ids": {
+                  "type": "array",
+                  "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+                  "uniqueItems": true
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+                  "uniqueItems": true
+                },
+                "figure_ids": {
+                  "type": "array",
+                  "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+                  "uniqueItems": true
+                },
+                "transition_goal": {"type": "string"},
+                "material_reordering": {"type": "boolean"},
+                "author_approval": {
+                  "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+                }
+              },
+              "additionalProperties": false
+            },
+            "minItems": 1
+          },
+          "author_approval": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "figure_sequence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "figure_id", "order", "purpose", "claim_ids", "evidence_ids", "author_approval"
+        ],
+        "properties": {
+          "figure_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "order": {"type": "integer", "minimum": 1},
+          "purpose": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "claim_ids": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "author_approval": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_assignment_audit": {
+      "type": "object",
+      "required": ["assigned_evidence_ids", "unassigned_evidence"],
+      "properties": {
+        "assigned_evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "unassigned_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["evidence_id", "reason", "rationale", "author_approval"],
+            "properties": {
+              "evidence_id": {
+                "$ref": "story-artifact-definitions.schema.json#/$defs/identifier"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "redundant_validation", "supplement_candidate", "outside_current_scope",
+                  "negative_or_counter_evidence_retained", "author_excluded", "unresolved"
+                ]
+              },
+              "rationale": {
+                "$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"
+              },
+              "author_approval": {
+                "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "gaps_and_risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gap_id", "gap_type", "severity", "description", "related_ids", "status"],
+        "properties": {
+          "gap_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "gap_type": {
+            "type": "string",
+            "enum": [
+              "evidence_gap", "logical_gap", "overclaim", "missing_input", "conflicting_evidence",
+              "reviewer_risk", "other"
+            ]
+          },
+          "severity": {"type": "string", "enum": ["blocker", "error", "warning", "info"]},
+          "description": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "related_ids": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+            "uniqueItems": true
+          },
+          "status": {"type": "string", "enum": ["open", "author_review_required", "resolved", "accepted_risk"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "author_decisions": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecision"}
+    },
+    "approval_summary": {
+      "type": "object",
+      "required": [
+        "overall_status", "pending_decision_count", "open_blocker_count",
+        "material_reordering_requires_approval"
+      ],
+      "properties": {
+        "overall_status": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"},
+        "pending_decision_count": {"type": "integer", "minimum": 0},
+        "open_blocker_count": {"type": "integer", "minimum": 0},
+        "material_reordering_requires_approval": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

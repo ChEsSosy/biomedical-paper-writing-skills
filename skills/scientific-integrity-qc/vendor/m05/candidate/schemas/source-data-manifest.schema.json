@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-data-manifest.schema.json",
+  "title": "Phase 8A Source Data Manifest 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "document_type", "maturity", "created_by", "source_records"
+  ],
+  "properties": {
+    "schema_name": {"const": "source_data_manifest"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "document_type": {"$ref": "figure-shared-definitions.schema.json#/$defs/documentType"},
+    "maturity": {"$ref": "figure-shared-definitions.schema.json#/$defs/maturity"},
+    "created_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_records": {"type": "array", "items": {"$ref": "#/$defs/sourceRecord"}, "minItems": 1, "uniqueItems": true}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sourceRecord": {
+      "type": "object",
+      "required": [
+        "source_data_id", "record_version", "source_class", "origin", "availability",
+        "data_status", "locators", "variables", "units", "replicates", "design_context",
+        "transformations", "processing_history", "analysis_output_ids", "declared_inspection_state",
+        "provenance_gaps"
+      ],
+      "properties": {
+        "source_data_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "record_version": {"const": "0.1.0"},
+        "source_class": {"type": "string", "enum": ["tabular", "image", "gel_blot", "spatial", "sequence_structure", "summary", "external_reference", "other"]},
+        "origin": {"type": "string", "enum": ["author_supplied", "authorized_workflow", "model_inventory", "missing"]},
+        "availability": {"type": "string", "enum": ["available", "unavailable", "unresolved"]},
+        "trusted_input_id": {"type": ["string", "null"], "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+        "file_identity": {
+          "type": ["object", "null"],
+          "properties": {
+            "path": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+            "format": {"type": "string", "enum": ["csv", "tsv", "json", "xlsx", "image", "binary", "other"]},
+            "size": {"type": "integer", "minimum": 0},
+            "sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+          },
+          "required": ["path", "format", "size", "sha256"],
+          "additionalProperties": false
+        },
+        "data_status": {"type": "string", "enum": ["raw", "processed", "normalized", "summary", "derived", "external_reference", "unresolved"]},
+        "locators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["locator_type", "value"],
+            "properties": {
+              "locator_type": {"type": "string", "enum": ["dataset", "sheet", "table", "header", "variable", "channel", "image", "region"]},
+              "value": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["variable_id", "data_type", "unit", "role", "missingness_status"],
+            "properties": {
+              "variable_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "data_type": {"type": "string", "enum": ["integer", "number", "string", "boolean", "category", "datetime", "image_channel", "other", "unresolved"]},
+              "unit": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+              "role": {"type": "string", "enum": ["entity_id", "group", "control", "condition", "time", "batch", "feature", "measurement", "statistic", "other"]},
+              "missingness_status": {"type": "string", "enum": ["none", "present_declared", "not_assessed", "unresolved"]}
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "units": {"$ref": "figure-shared-definitions.schema.json#/$defs/unitContext"},
+        "replicates": {"$ref": "figure-shared-definitions.schema.json#/$defs/replicateContext"},
+        "design_context": {
+          "type": "object",
+          "required": ["groups", "controls", "comparators", "contrasts", "paired", "repeated", "nested", "clustered", "batch_variable", "time_variable"],
+          "properties": {
+            "groups": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+            "controls": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+            "comparators": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+            "contrasts": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+            "paired": {"type": "boolean"},
+            "repeated": {"type": "boolean"},
+            "nested": {"type": "boolean"},
+            "clustered": {"type": "boolean"},
+            "batch_variable": {"type": ["string", "null"]},
+            "time_variable": {"type": ["string", "null"]}
+          },
+          "additionalProperties": false
+        },
+        "transformations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["transformation_id", "operation", "origin", "status"],
+            "properties": {
+              "transformation_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "operation": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+              "origin": {"type": "string", "enum": ["author_supplied", "authorized_workflow", "model_proposed"]},
+              "status": {"type": "string", "enum": ["applied", "proposed", "not_applicable"]}
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "processing_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["processing_id", "operation", "scope", "declared_acceptable"],
+            "properties": {
+              "processing_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "operation": {"type": "string", "enum": ["crop", "global_contrast", "background_subtraction", "denoising", "deconvolution", "segmentation", "pseudocolor", "stitching", "projection", "registration", "overlay", "lane_rearrangement", "local_masking", "cloning", "generative_fill", "hidden_splicing", "object_relocation", "other"]},
+              "scope": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+              "declared_acceptable": {"type": "boolean"},
+              "divider_policy": {"type": ["string", "null"]},
+              "calibration_ref": {"type": ["string", "null"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "analysis_output_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+        "declared_inspection_state": {"type": "string", "enum": ["not_assessed", "expected_identity_only", "content_expected", "not_performed"]},
+        "provenance_gaps": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

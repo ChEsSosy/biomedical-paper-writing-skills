@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "figure-qc-phase8b.schema.json", "type": "object",
+  "required": ["schema_name", "schema_version", "contract_version", "artifact_id", "figure_qc_sha256", "phase", "upstream_phase8a_qc_ref", "design_package_ref", "admission_receipt_ref", "execution_ref", "render_manifest_ref", "inspection_refs", "phase8a_figure_qc_sha256", "maturity", "readiness_gate", "module06_figure_qc_status", "inspection_provenance_limitation", "findings", "generated_at"],
+  "properties": {
+    "schema_name": {"const": "figure_qc"}, "schema_version": {"const": "0.2.0"}, "contract_version": {"const": "0.1.1"}, "artifact_id": {"type": "string", "minLength": 1}, "figure_qc_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "phase": {"const": "phase8b"},
+    "upstream_phase8a_qc_ref": {"type": "object", "required": ["artifact_id", "schema_version", "design_package_hash", "phase8a_figure_qc_sha256"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "schema_version": {"type": "string", "minLength": 1}, "design_package_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "phase8a_figure_qc_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false},
+    "design_package_ref": {"$ref": "#/$defs/hashRef"}, "admission_receipt_ref": {"$ref": "#/$defs/hashRef"}, "execution_ref": {"$ref": "#/$defs/hashRef"}, "render_manifest_ref": {"$ref": "#/$defs/hashRef"}, "inspection_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/hashRef"}},
+    "phase8a_figure_qc_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "maturity": {"type": "string", "enum": ["prototype_generated_unverified", "prototype_verified", "ready_for_qc", "blocked"]}, "readiness_gate": {"type": "string", "enum": ["author_review_required", "blocked", "prepared_for_future_figure_qc"]},
+    "module06_figure_qc_status": {"const": "not_implemented"}, "inspection_provenance_limitation": {"type": "string", "minLength": 1},
+    "findings": {"type": "array", "items": {"type": "object", "required": ["code", "severity", "message"], "properties": {"code": {"type": "string", "minLength": 1}, "severity": {"type": "string", "enum": ["info", "warning", "blocker"]}, "message": {"type": "string", "minLength": 1}}, "additionalProperties": false}},
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {"hashRef": {"type": "object", "required": ["id", "version", "sha256"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false}},
+  "additionalProperties": false
+}

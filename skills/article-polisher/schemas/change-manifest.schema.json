@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "change-manifest.schema.json",
+  "title": "Article Polisher Change Manifest 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "status", "source_artifact", "candidate_artifact", "revision_contract_ref", "changes"
+  ],
+  "properties": {
+    "schema_name": {"const": "change_manifest"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+    },
+    "created_at": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"
+    },
+    "created_by": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"
+    },
+    "status": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"
+    },
+    "source_artifact": {"$ref": "#/$defs/artifactIdentity"},
+    "candidate_artifact": {"$ref": "#/$defs/artifactIdentity"},
+    "revision_contract_ref": {
+      "type": "object",
+      "required": ["revision_contract_id", "revision_contract_version", "contract_sha256"],
+      "properties": {
+        "revision_contract_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "revision_contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "contract_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "changes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/changeRecord"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "artifactIdentity": {
+      "type": "object",
+      "required": ["document_id", "artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "document_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "artifact_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "paragraphFunction": {
+      "type": "object",
+      "required": ["label", "origin", "review_status"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": [
+            "context", "gap", "objective", "method", "observation", "result",
+            "validation", "comparison", "interpretation", "limitation", "transition",
+            "synthesis", "conclusion", "other"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "enum": ["author_supplied", "phase4_plan", "model_assisted_classification"]
+        },
+        "review_status": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/alignmentReviewStatus"
+        }
+      },
+      "additionalProperties": false
+    },
+    "profileFeatureRef": {
+      "type": "object",
+      "required": ["profile_id", "profile_version", "profile_sha256", "feature_id", "feature_support_ref"],
+      "properties": {
+        "profile_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "profile_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        },
+        "feature_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "feature_support_ref": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"
+        }
+      },
+      "additionalProperties": false
+    },
+    "upstreamArtifactRef": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_type", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "artifact_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "artifact_type": {
+          "type": "string",
+          "enum": [
+            "manuscript_plan", "claim_evidence_map", "interpretation_card",
+            "style_profile", "structure_profile"
+          ]
+        },
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "changeRecord": {
+      "type": "object",
+      "required": [
+        "change_id", "inventory_change_id", "source_unit_ids", "candidate_unit_ids",
+        "source_locators", "candidate_locators", "source_representation_sha256",
+        "candidate_representation_sha256", "section", "paragraph_function",
+        "experiment_labels", "revision_mode", "operation_type", "authorization_origin",
+        "authorization_state", "affected_protected_anchor_ids", "rationale", "risk_class",
+        "author_review_required", "structural_change_ids", "upstream_artifact_refs"
+      ],
+      "properties": {
+        "change_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "inventory_change_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "source_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "candidate_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"}
+        },
+        "candidate_locators": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"}
+        },
+        "source_representation_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        },
+        "candidate_representation_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        },
+        "section": {
+          "type": "string",
+          "enum": [
+            "title", "abstract", "introduction", "methods", "results", "discussion",
+            "conclusion", "figure_legend", "supplement", "other"
+          ]
+        },
+        "paragraph_function": {"$ref": "#/$defs/paragraphFunction"},
+        "experiment_labels": {
+          "type": "array",
+          "items": {
+            "$ref": "../upstream-schemas/story-artifact-definitions.schema.json#/$defs/experimentLabel"
+          },
+          "uniqueItems": true
+        },
+        "revision_mode": {"type": "string", "enum": ["light", "medium", "deep"]},
+        "operation_type": {
+          "type": "string",
+          "enum": [
+            "grammar", "punctuation", "syntax", "clarity", "lexical_tightening",
+            "redundancy_removal", "transition", "sentence_split", "sentence_merge",
+            "sentence_reorder", "information_reorder", "topic_sentence_repair",
+            "paragraph_split", "paragraph_merge", "paragraph_move"
+          ]
+        },
+        "authorization_origin": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/authorizationOrigin"
+        },
+        "authorization_state": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/authorizationState"
+        },
+        "affected_protected_anchor_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "rationale": {
+          "type": "string",
+          "enum": ["clarity", "grammar", "flow", "profile_alignment", "approved_structure"]
+        },
+        "risk_class": {"type": "string", "enum": ["low", "moderate", "high"]},
+        "author_review_required": {"type": "boolean"},
+        "structural_change_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "upstream_artifact_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/upstreamArtifactRef"},
+          "uniqueItems": true
+        },
+        "source_proposition_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "profile_feature_ref": {"$ref": "#/$defs/profileFeatureRef"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

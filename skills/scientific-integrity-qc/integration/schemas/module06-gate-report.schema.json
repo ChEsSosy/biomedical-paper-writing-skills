@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "module06-gate-report.schema.json",
+  "title": "Module 06 Integrated Gate Report 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "gate_report_id", "gate_report_sha256", "created_at", "request_id", "route", "admission_state", "gate_outcome", "terminal_state", "domain_coverage", "finding_ids", "human_review_required", "limitations", "author_approval_claimed", "scientific_truth_claimed", "automatic_repair_performed"],
+  "properties": {
+    "schema_name": {"const": "module06_gate_report"}, "schema_version": {"const": "0.1.0"},
+    "gate_report_id": {"type": "string", "minLength": 1}, "gate_report_sha256": {"$ref": "#/$defs/sha256"},
+    "created_at": {"type": "string", "format": "date-time"}, "request_id": {"type": "string", "minLength": 1},
+    "route": {"type": "string", "minLength": 1}, "admission_state": {"enum": ["accepted", "accepted_degraded", "rejected"]},
+    "gate_outcome": {"enum": ["pass", "pass_with_warnings", "fail", "unassessable"]},
+    "terminal_state": {"enum": ["blocked", "qc_complete_author_review_required", "qc_unassessable_author_review_required", "rejected"]},
+    "domain_coverage": {"type": "array", "items": {"$ref": "#/$defs/domain"}},
+    "finding_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "human_review_required": {"const": true}, "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "author_approval_claimed": {"const": false}, "scientific_truth_claimed": {"const": false}, "automatic_repair_performed": {"const": false}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "domain": {
+      "type": "object", "additionalProperties": false,
+      "required": ["domain", "requested", "implemented", "execution_state", "assessment_state"],
+      "properties": {
+        "domain": {"type": "string", "minLength": 1}, "requested": {"type": "boolean"}, "implemented": {"type": "boolean"},
+        "execution_state": {"enum": ["executed", "not_run_unimplemented", "not_run_unsupported"]},
+        "assessment_state": {"enum": ["passed", "failed", "unassessable", "not_assessed", "not_applicable"]}
+      }
+    }
+  }
+}

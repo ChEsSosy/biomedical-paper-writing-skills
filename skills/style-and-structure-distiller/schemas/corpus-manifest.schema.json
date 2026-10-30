@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "corpus-manifest.schema.json",
+  "title": "Biomedical Corpus Manifest 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "source_files", "status", "warnings", "corpus_id",
+    "corpus_type", "minimum_document_count", "inclusion_criteria", "exclusion_criteria", "documents"
+  ],
+  "properties": {
+    "schema_name": {"const": "corpus_manifest"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "corpus_id": {"type": "string", "minLength": 3, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]+$"},
+    "corpus_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "minimum_document_count": {"type": "integer", "minimum": 2},
+    "inclusion_criteria": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "exclusion_criteria": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "document_id", "source_file", "article_type", "title", "journal", "year",
+          "domains", "experiment_labels", "access_status", "license_note", "inclusion_status",
+          "metadata_provenance", "source_type"
+        ],
+        "properties": {
+          "document_id": {"type": "string", "minLength": 3, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]+$"},
+          "source_file": {"type": "string", "minLength": 1},
+          "article_type": {"type": "string", "enum": ["original_article", "review_article"]},
+          "title": {"type": "string"},
+          "journal": {"type": "string", "minLength": 1},
+          "year": {"type": "integer", "minimum": 1900, "maximum": 2200},
+          "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$"},
+          "pmid": {"type": "string", "pattern": "^[0-9]+$"},
+          "pmcid": {"type": "string", "pattern": "^PMC[0-9]+$"},
+          "language": {"type": "string", "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]+)*$"},
+          "source_type": {"type": "string", "enum": ["markdown", "plain_text", "jats_xml", "html", "pdf"]},
+          "article_subtype": {"type": "string", "minLength": 1},
+          "corpus_group": {"type": "string", "minLength": 1},
+          "lab_group": {"type": "string", "minLength": 1},
+          "journal_family": {"type": "string", "minLength": 1},
+          "domains": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+          "experiment_labels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["computational", "cell", "molecular", "animal", "omics", "imaging", "clinical_human", "structural_biophysical", "other"]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "access_status": {"type": "string", "enum": ["author_owned", "open_access", "licensed_local_use", "permission_confirmed"]},
+          "license_note": {"type": "string", "minLength": 1},
+          "inclusion_status": {"type": "string", "enum": ["included", "excluded"]},
+          "exclusion_reason": {"type": "string"},
+          "metadata_provenance": {"type": "string", "minLength": 1},
+          "expected_sha256": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

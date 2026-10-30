@@ -1,0 +1,34 @@
+{
+  "document_id": "article:synthetic:1",
+  "artifact_id": "article-source:synthetic:1",
+  "artifact_version": "1.0.0",
+  "paragraphs": [
+    {
+      "unit_id": "paragraph:results:1",
+      "section": "results",
+      "paragraph_function": {
+        "label": "observation",
+        "origin": "author_supplied",
+        "review_status": "author_approved"
+      },
+      "experiment_labels": ["cell"],
+      "sentences": [
+        {"unit_id": "sentence:results:1", "text": "The treatment reduced viability by 20%."},
+        {"unit_id": "sentence:results:2", "text": "The effect was observed in three biological replicates."}
+      ]
+    },
+    {
+      "unit_id": "paragraph:discussion:1",
+      "section": "discussion",
+      "paragraph_function": {
+        "label": "interpretation",
+        "origin": "phase4_plan",
+        "review_status": "author_approved"
+      },
+      "experiment_labels": ["cell"],
+      "sentences": [
+        {"unit_id": "sentence:discussion:1", "text": "These findings suggest a context-limited response."}
+      ]
+    }
+  ]
+}

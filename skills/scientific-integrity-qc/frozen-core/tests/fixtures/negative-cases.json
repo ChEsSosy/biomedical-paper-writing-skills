@@ -1,0 +1,13 @@
+[
+  {"case": "numeric_change", "source": "10 mg", "candidate": "20 mg", "expected": "fail"},
+  {"case": "comparator_change", "source": "P < 0.05", "candidate": "P = 0.05", "expected": "fail"},
+  {"case": "no_unit_conversion", "source": "1000 ng", "candidate": "1 µg", "expected": "fail"},
+  {"case": "citation_reference_change", "source": "[1]; Figure 1", "candidate": "[2]; Table 1", "expected": "fail"},
+  {"case": "semantic_warning", "source": "may increase", "candidate": "increases", "expected": "pass_with_warnings"},
+  {"case": "unsupported_split", "source_units": 1, "candidate_units": 2, "expected": "unassessable"},
+  {"case": "stale_exception", "approved_candidate": "20 mg", "actual_candidate": "200 mg", "expected": "fail"},
+  {"case": "direction_role_swap", "source": "X increased; Y decreased", "candidate": "X decreased; Y increased", "expected": "pass_with_warnings"},
+  {"case": "negation_scope_swap", "source": "X did not increase; Y increased", "candidate": "X increased; Y did not increase", "expected": "pass_with_warnings"},
+  {"case": "reference_namespace", "source": "Supplementary Fig. 2", "candidate": "Fig. 2", "expected": "fail"},
+  {"case": "author_year_citation", "source": "Smith et al., 2024", "candidate": "Smith et al., 2025", "expected": "fail"}
+]

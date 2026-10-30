@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "story-artifact-definitions.schema.json",
+  "title": "Manuscript Story Architect Shared Definitions 0.1.1",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "experimentLabel": {
+      "type": "string",
+      "enum": [
+        "computational", "cell", "molecular", "animal", "omics", "imaging",
+        "clinical_human", "structural_biophysical", "other"
+      ]
+    },
+    "supportStatus": {
+      "type": "string",
+      "enum": ["supported", "partially_supported", "unsupported", "conflicting", "not_assessed"]
+    },
+    "authorDecisionStatus": {
+      "type": "string",
+      "enum": ["not_requested", "pending", "approved", "rejected", "revision_requested"]
+    },
+    "statementProvenance": {
+      "type": "string",
+      "enum": ["author_provided", "author_draft", "source_derived", "model_proposal_author_review_required"]
+    },
+    "claimOrigin": {
+      "type": "string",
+      "enum": [
+        "author_supplied",
+        "explicitly_stated_in_author_source",
+        "architect_proposed_restatement"
+      ]
+    },
+    "anchorProvenance": {
+      "type": "string",
+      "enum": [
+        "author_supplied",
+        "explicitly_stated_in_author_source",
+        "architect_proposed_restatement"
+      ]
+    },
+    "documentSection": {
+      "type": "string",
+      "enum": [
+        "title", "abstract", "introduction", "methods", "results", "discussion",
+        "conclusion", "figure_legend", "supplement", "other"
+      ]
+    },
+    "causalityLevel": {
+      "type": "string",
+      "enum": ["descriptive", "associative", "predictive", "causal", "not_applicable", "not_assessed"]
+    },
+    "mechanisticLevel": {
+      "type": "string",
+      "enum": ["none", "suggestive", "supported", "demonstrated", "not_applicable", "not_assessed"]
+    },
+    "hedgingLevel": {
+      "type": "string",
+      "enum": ["unhedged", "qualified", "tentative", "not_applicable", "not_assessed"]
+    },
+    "storyLocator": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "location_kind", "source_file_path", "document_id", "section",
+            "paragraph_id", "local_identifier"
+          ],
+          "properties": {
+            "location_kind": {"const": "manuscript_text"},
+            "source_file_path": {"$ref": "#/$defs/nonEmptyString"},
+            "document_id": {"$ref": "#/$defs/identifier"},
+            "section": {"$ref": "#/$defs/documentSection"},
+            "paragraph_id": {"$ref": "#/$defs/identifier"},
+            "sentence_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "source_span_sha256": {
+              "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["location_kind", "source_file_path", "document_id", "figure_id", "local_identifier"],
+          "properties": {
+            "location_kind": {"const": "figure"},
+            "source_file_path": {"$ref": "#/$defs/nonEmptyString"},
+            "document_id": {"$ref": "#/$defs/identifier"},
+            "figure_id": {"$ref": "#/$defs/identifier"},
+            "panel_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "source_span_sha256": {
+              "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["location_kind", "source_file_path", "document_id", "table_id", "local_identifier"],
+          "properties": {
+            "location_kind": {"const": "table"},
+            "source_file_path": {"$ref": "#/$defs/nonEmptyString"},
+            "document_id": {"$ref": "#/$defs/identifier"},
+            "table_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "source_span_sha256": {
+              "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["location_kind", "source_file_path", "data_object_id", "local_identifier"],
+          "properties": {
+            "location_kind": {"const": "dataset"},
+            "source_file_path": {"$ref": "#/$defs/nonEmptyString"},
+            "data_object_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "source_span_sha256": {
+              "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["location_kind", "source_file_path", "local_identifier"],
+          "properties": {
+            "location_kind": {"const": "author_input"},
+            "source_file_path": {"$ref": "#/$defs/nonEmptyString"},
+            "document_id": {"$ref": "#/$defs/identifier"},
+            "local_identifier": {"$ref": "#/$defs/nonEmptyString"},
+            "source_span_sha256": {
+              "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "claimRecord": {
+      "type": "object",
+      "required": [
+        "claim_id", "statement", "claim_origin", "document_section", "claim_class",
+        "population_or_model", "scope", "comparison_direction", "causality_level",
+        "mechanistic_level", "hedging_level", "evidence_ids", "support_status",
+        "source_locators", "author_approval", "unresolved_risks"
+      ],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/identifier"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "claim_origin": {"$ref": "#/$defs/claimOrigin"},
+        "document_section": {"$ref": "#/$defs/documentSection"},
+        "claim_class": {
+          "type": "string",
+          "enum": [
+            "central", "primary_result", "secondary_result", "mechanistic", "validation",
+            "negative_or_null", "limitation", "context", "methods", "other"
+          ]
+        },
+        "population_or_model": {"$ref": "#/$defs/nonEmptyString"},
+        "scope": {"$ref": "#/$defs/nonEmptyString"},
+        "comparison_direction": {"$ref": "#/$defs/nonEmptyString"},
+        "causality_level": {"$ref": "#/$defs/causalityLevel"},
+        "mechanistic_level": {"$ref": "#/$defs/mechanisticLevel"},
+        "hedging_level": {"$ref": "#/$defs/hedgingLevel"},
+        "evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/identifier"},
+          "uniqueItems": true
+        },
+        "support_status": {"$ref": "#/$defs/supportStatus"},
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/storyLocator"},
+          "minItems": 1
+        },
+        "author_approval": {"$ref": "#/$defs/authorDecisionStatus"},
+        "unresolved_risks": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceRecord": {
+      "type": "object",
+      "required": [
+        "evidence_id", "evidence_type", "experiment_labels", "source_locators",
+        "biological_or_technical_unit", "n_value", "n_definition", "replicate_structure",
+        "controls", "comparison", "effect_direction", "statistics_locators",
+        "assay_or_model_limitations", "data_availability", "quality_flags", "author_approval"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/identifier"},
+        "evidence_type": {
+          "type": "string",
+          "enum": [
+            "computational_result", "cell_experiment", "molecular_experiment", "animal_experiment",
+            "omics_experiment", "imaging_experiment", "clinical_human_result",
+            "structural_biophysical_result", "other"
+          ]
+        },
+        "experiment_labels": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/experimentLabel"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_locators": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/storyLocator"},
+          "minItems": 1
+        },
+        "biological_or_technical_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "n_value": {"type": ["integer", "number", "string", "null"]},
+        "n_definition": {"$ref": "#/$defs/nonEmptyString"},
+        "replicate_structure": {"$ref": "#/$defs/nonEmptyString"},
+        "controls": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "comparison": {"$ref": "#/$defs/nonEmptyString"},
+        "effect_direction": {"$ref": "#/$defs/nonEmptyString"},
+        "statistics_locators": {"type": "array", "items": {"$ref": "#/$defs/storyLocator"}},
+        "assay_or_model_limitations": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        },
+        "data_availability": {"$ref": "#/$defs/nonEmptyString"},
+        "quality_flags": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "author_approval": {"$ref": "#/$defs/authorDecisionStatus"}
+      },
+      "additionalProperties": false
+    },
+    "claimEvidenceLink": {
+      "type": "object",
+      "required": [
+        "link_id", "claim_id", "evidence_id", "relation", "rationale",
+        "scope_match", "author_approval"
+      ],
+      "properties": {
+        "link_id": {"$ref": "#/$defs/identifier"},
+        "claim_id": {"$ref": "#/$defs/identifier"},
+        "evidence_id": {"$ref": "#/$defs/identifier"},
+        "relation": {
+          "type": "string",
+          "enum": ["supports", "partially_supports", "conflicts", "context_only", "does_not_support"]
+        },
+        "rationale": {"$ref": "#/$defs/nonEmptyString"},
+        "scope_match": {"type": "boolean"},
+        "author_approval": {"$ref": "#/$defs/authorDecisionStatus"}
+      },
+      "additionalProperties": false
+    },
+    "authorDecision": {
+      "type": "object",
+      "required": ["decision_id", "decision_type", "question", "options", "related_ids", "status"],
+      "properties": {
+        "decision_id": {"$ref": "#/$defs/identifier"},
+        "decision_type": {
+          "type": "string",
+          "enum": [
+            "scientific_interpretation", "claim_scope", "evidence_conflict", "material_reordering",
+            "figure_order", "missing_input", "other"
+          ]
+        },
+        "question": {"$ref": "#/$defs/nonEmptyString"},
+        "options": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "minItems": 1},
+        "related_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "uniqueItems": true},
+        "status": {"$ref": "#/$defs/authorDecisionStatus"},
+        "decision": {"type": "string"},
+        "rationale": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

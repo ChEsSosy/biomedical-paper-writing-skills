@@ -1,0 +1,6 @@
+interface:
+  display_name: "Scientific Figure Designer"
+  short_description: "Design auditable biomedical Figure prototypes"
+  default_prompt: "Use $scientific-figure-designer to route this Figure request through design_review_only or the admitted restricted Python/Pillow prototype workflow while preserving evidence, authority, and maturity boundaries."
+policy:
+  allow_implicit_invocation: true

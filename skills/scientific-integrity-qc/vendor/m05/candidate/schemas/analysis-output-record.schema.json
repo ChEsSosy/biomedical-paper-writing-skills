@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "analysis-output-record.schema.json",
+  "title": "Phase 8A Trusted Analysis Outputs Collection 0.1.0",
+  "type": "object",
+  "required": [
+    "interface_name", "interface_version", "collection_kind", "collection_id",
+    "collection_version", "collection_sha256", "supplied_by", "records"
+  ],
+  "properties": {
+    "interface_name": {"const": "trusted_analysis_outputs"},
+    "interface_version": {"const": "0.1.0"},
+    "collection_kind": {"const": "trusted_analysis_outputs"},
+    "collection_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "collection_version": {"const": "0.1.0"},
+    "collection_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "supplied_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "records": {"type": "array", "items": {"$ref": "#/$defs/analysisOutputRecord"}, "uniqueItems": true}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "analysisOutputRecord": {
+      "type": "object",
+      "required": [
+        "analysis_output_id", "record_version", "record_sha256", "result_status",
+        "source_data_refs", "input_data_hashes", "analysis_origin", "workflow",
+        "comparison_ids", "group_ids", "contrast_definition", "unit_context",
+        "n_by_group", "n_definition", "n_unit", "statistic_type", "paired", "repeated",
+        "nested", "clustered", "review_status", "authorization_state"
+      ],
+      "properties": {
+        "analysis_output_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "record_version": {"const": "0.1.0"},
+        "record_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+        "result_status": {"type": "string", "enum": ["supplied", "required_but_unavailable"]},
+        "source_data_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source_data_id", "source_data_version", "source_data_sha256", "trusted_input_id"],
+            "properties": {
+              "source_data_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "source_data_version": {"$ref": "figure-shared-definitions.schema.json#/$defs/semver"},
+              "source_data_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+              "trusted_input_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "input_data_hashes": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}, "minItems": 1, "uniqueItems": true},
+        "analysis_origin": {"type": "string", "enum": ["author_supplied", "authorized_analysis_workflow", "model_proposed"]},
+        "workflow": {
+          "type": ["object", "null"],
+          "properties": {
+            "name": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+            "version": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+            "output_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+          },
+          "required": ["name", "version", "output_sha256"],
+          "additionalProperties": false
+        },
+        "comparison_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+        "group_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 2, "uniqueItems": true},
+        "contrast_definition": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "unit_context": {"$ref": "figure-shared-definitions.schema.json#/$defs/unitContext"},
+        "n_by_group": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+        "n_definition": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "n_unit": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "statistic_type": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "estimate": {"type": ["number", "null"]},
+        "center_definition": {"type": ["string", "null"]},
+        "spread_or_interval_definition": {"type": ["string", "null"]},
+        "test_name": {"type": ["string", "null"]},
+        "model_specification": {"type": ["string", "null"]},
+        "paired": {"type": "boolean"},
+        "repeated": {"type": "boolean"},
+        "nested": {"type": "boolean"},
+        "clustered": {"type": "boolean"},
+        "sidedness": {"type": ["string", "null"], "enum": ["one_sided", "two_sided", "not_applicable", null]},
+        "multiplicity_correction": {"type": ["string", "null"]},
+        "p_value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "adjusted_p_value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "effect_size": {"type": ["number", "null"]},
+        "interval": {
+          "type": ["object", "null"],
+          "properties": {"lower": {"type": "number"}, "upper": {"type": "number"}, "level": {"type": "number", "minimum": 0, "maximum": 1}},
+          "required": ["lower", "upper", "level"],
+          "additionalProperties": false
+        },
+        "review_status": {"$ref": "figure-shared-definitions.schema.json#/$defs/reviewStatus"},
+        "authorization_state": {"type": "string", "enum": ["machine_proposed", "caller_accepted", "author_approved"]},
+        "decision_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/decisionRef"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

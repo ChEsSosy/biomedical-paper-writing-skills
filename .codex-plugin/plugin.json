@@ -1,0 +1,18 @@
+{
+  "name": "biomedical-paper-writing-skills",
+  "version": "0.1.5",
+  "description": "Six general biomedical writing Skills for architecture, Review synthesis, polishing, figures and integrity QC.",
+  "author": {
+    "name": "ChEsSosy"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Biomedical Paper Writing Skills",
+    "shortDescription": "Biomedical writing, review, figures, and QC.",
+    "longDescription": "Six general biomedical writing workflows. Private specialist expression resources are not distributed.",
+    "developerName": "ChEsSosy",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Help me improve a biomedical paper using the appropriate writing skills."
+  }
+}

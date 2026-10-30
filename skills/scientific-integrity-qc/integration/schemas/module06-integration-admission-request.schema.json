@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "module06-integration-admission-request.schema.json",
+  "title": "Module 06 Integration Admission Request 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "request_id", "created_at", "route", "consumer_interface", "consumer_interface_version", "producer", "artifacts", "producer_validation", "requested_domains", "claims"],
+  "properties": {
+    "schema_name": {"const": "module06_integration_admission_request"},
+    "schema_version": {"const": "0.1.0"},
+    "request_id": {"type": "string", "minLength": 2, "maxLength": 120, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "route": {"enum": ["article_revision", "review_revision", "figure_qc"]},
+    "consumer_interface": {"enum": ["module06_article_revision_admission", "module06_review_revision_admission", "module06_figure_qc_admission"]},
+    "consumer_interface_version": {"const": "0.1.0"},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["skill_name", "skill_package_version", "package_manifest_sha256", "expected_inventory_file_sha256", "producer_interface", "producer_interface_version"],
+      "properties": {
+        "skill_name": {"enum": ["article-polisher", "review-architect-polisher", "scientific-figure-designer"]},
+        "skill_package_version": {"type": "string", "minLength": 1},
+        "build_generation": {"type": "string", "minLength": 1},
+        "package_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "expected_inventory_file_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_interface": {"type": "string", "minLength": 1},
+        "producer_interface_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+    "producer_validation": {"type": "object"},
+    "requested_domains": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claims": {
+      "type": "object", "additionalProperties": false,
+      "required": ["admission_passed", "scientific_truth_claimed", "author_approval_claimed"],
+      "properties": {
+        "admission_passed": {"const": false},
+        "scientific_truth_claimed": {"const": false},
+        "author_approval_claimed": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "route": {"const": "article_revision"},
+            "consumer_interface": {"const": "module06_article_revision_admission"},
+            "producer_validation": {"type": "object", "additionalProperties": false}
+          }
+        },
+        {
+          "properties": {
+            "route": {"const": "review_revision"},
+            "consumer_interface": {"const": "module06_review_revision_admission"},
+            "producer_validation": {
+              "type": "object", "additionalProperties": false,
+              "required": ["expected_permission_sha256"],
+              "properties": {"expected_permission_sha256": {"$ref": "#/$defs/sha256"}}
+            }
+          }
+        },
+        {
+          "properties": {
+            "route": {"const": "figure_qc"},
+            "consumer_interface": {"const": "module06_figure_qc_admission"},
+            "producer_validation": {
+              "oneOf": [
+                {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["variant", "phase8a_package_root", "expected_trust_root_sha256"],
+                  "properties": {
+                    "variant": {"const": "phase8a_design"},
+                    "phase8a_package_root": {"type": "string", "minLength": 1},
+                    "expected_trust_root_sha256": {"$ref": "#/$defs/sha256"}
+                  }
+                },
+                {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["variant", "phase8a_package_root", "expected_trust_root_sha256", "expected_design_package_hash"],
+                  "properties": {
+                    "variant": {"const": "phase8b_prototype"},
+                    "phase8a_package_root": {"type": "string", "minLength": 1},
+                    "expected_trust_root_sha256": {"$ref": "#/$defs/sha256"},
+                    "expected_design_package_hash": {"$ref": "#/$defs/sha256"}
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_class", "path", "file_sha256", "canonical_sha256", "artifact_id", "artifact_version"],
+      "properties": {
+        "artifact_class": {"type": "string", "minLength": 1},
+        "phase": {"enum": ["phase8a", "phase8b"]},
+        "path": {"type": "string", "minLength": 1},
+        "file_sha256": {"$ref": "#/$defs/sha256"},
+        "canonical_sha256": {"$ref": "#/$defs/sha256"},
+        "caller_expected_file_sha256": {"$ref": "#/$defs/sha256"},
+        "artifact_id": {"type": "string", "minLength": 1},
+        "artifact_version": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

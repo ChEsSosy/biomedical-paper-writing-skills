@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "claim-evidence-map.schema.json",
+  "title": "Original Article Claim–Evidence Map 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "source_files", "status", "warnings", "manuscript_id",
+    "document_type", "central_question", "frozen_elements", "claim_records",
+    "evidence_records", "claim_evidence_links", "author_decisions"
+  ],
+  "properties": {
+    "schema_name": {"const": "claim_evidence_map"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"
+    },
+    "created_at": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"
+    },
+    "created_by": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"
+    },
+    "source_artifact_ids": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"
+    },
+    "source_files": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"
+    },
+    "status": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"
+    },
+    "warnings": {
+      "$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"
+    },
+    "manuscript_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+    "document_type": {"const": "original_article"},
+    "central_question": {
+      "type": "object",
+      "required": ["statement", "provenance", "author_approval"],
+      "properties": {
+        "statement": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+        "provenance": {"$ref": "story-artifact-definitions.schema.json#/$defs/anchorProvenance"},
+        "author_approval": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"}
+      },
+      "additionalProperties": false
+    },
+    "frozen_elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["element_id", "category", "value", "source_locators", "author_approval"],
+        "properties": {
+          "element_id": {"$ref": "story-artifact-definitions.schema.json#/$defs/identifier"},
+          "category": {
+            "type": "string",
+            "enum": [
+              "fact", "number", "statistic", "unit", "term", "citation", "comparison_direction",
+              "causality_level", "hedging", "conclusion_boundary", "other"
+            ]
+          },
+          "value": {"$ref": "story-artifact-definitions.schema.json#/$defs/nonEmptyString"},
+          "source_locators": {
+            "type": "array",
+            "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/storyLocator"},
+            "minItems": 1
+          },
+          "author_approval": {
+            "$ref": "story-artifact-definitions.schema.json#/$defs/authorDecisionStatus"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claim_records": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/claimRecord"},
+      "minItems": 1
+    },
+    "evidence_records": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/evidenceRecord"},
+      "minItems": 1
+    },
+    "claim_evidence_links": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/claimEvidenceLink"},
+      "minItems": 1
+    },
+    "author_decisions": {
+      "type": "array",
+      "items": {"$ref": "story-artifact-definitions.schema.json#/$defs/authorDecision"}
+    }
+  },
+  "additionalProperties": false
+}

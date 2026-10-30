@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "corpus-balance.schema.json",
+  "title": "Deterministic Corpus Balance Report 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "corpus_id", "corpus_type", "document_count",
+    "dominance_threshold", "dimensions", "group_metadata_usage"
+  ],
+  "properties": {
+    "schema_name": {"const": "corpus_balance"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "corpus_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "document_count": {"type": "integer", "minimum": 1},
+    "dominance_threshold": {"type": "number", "minimum": 0, "maximum": 1},
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "multi_valued", "available_document_count", "missing_document_count", "stratum_count",
+          "effective_stratum_count", "max_stratum_document_rate", "strata"
+        ],
+        "properties": {
+          "multi_valued": {"type": "boolean"},
+          "available_document_count": {"type": "integer", "minimum": 0},
+          "missing_document_count": {"type": "integer", "minimum": 0},
+          "stratum_count": {"type": "integer", "minimum": 0},
+          "effective_stratum_count": {"type": "number", "minimum": 0},
+          "max_stratum_document_rate": {"type": "number", "minimum": 0, "maximum": 1},
+          "strata": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["stratum", "document_count", "document_rate"],
+              "properties": {
+                "stratum": {"type": "string", "minLength": 1},
+                "document_count": {"type": "integer", "minimum": 1},
+                "document_rate": {"type": "number", "minimum": 0, "maximum": 1}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "group_metadata_usage": {"const": "bias_control_only_not_imitation"}
+  },
+  "additionalProperties": false
+}

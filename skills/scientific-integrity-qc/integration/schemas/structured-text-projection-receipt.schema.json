@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "structured-text-projection-receipt.schema.json",
+  "title": "Structured Text Projection Receipt 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "projection_id", "projection_sha256", "created_at", "route", "document_id", "encoding", "unit_delimiter", "normalization_performed", "source", "candidate"],
+  "properties": {
+    "schema_name": {"const": "structured_text_projection_receipt"}, "schema_version": {"const": "0.1.0"},
+    "projection_id": {"type": "string", "minLength": 1}, "projection_sha256": {"$ref": "#/$defs/sha256"},
+    "created_at": {"type": "string", "format": "date-time"}, "route": {"enum": ["article_revision", "review_revision"]},
+    "document_id": {"type": "string", "minLength": 1}, "encoding": {"const": "utf-8"}, "unit_delimiter": {"const": "\\n\\n"},
+    "normalization_performed": {"const": false}, "source": {"$ref": "#/$defs/side"}, "candidate": {"$ref": "#/$defs/side"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "side": {
+      "type": "object", "additionalProperties": false,
+      "required": ["side", "document_artifact_id", "document_artifact_version", "document_artifact_sha256", "projected_path", "projected_file_sha256", "unit_count", "units"],
+      "properties": {
+        "side": {"enum": ["source", "candidate"]}, "document_artifact_id": {"type": "string", "minLength": 1},
+        "document_artifact_version": {"type": "string", "minLength": 1}, "document_artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "projected_path": {"type": "string", "minLength": 1}, "projected_file_sha256": {"$ref": "#/$defs/sha256"},
+        "unit_count": {"type": "integer", "minimum": 1}, "units": {"type": "array", "minItems": 1, "items": {"type": "object"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure-contract.schema.json",
+  "title": "Phase 8A Figure Contract 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "figure_id", "document_type", "maturity", "intended_location", "upstream_ref",
+    "upstream_figure_or_brief_id", "conclusion", "ordered_panel_ids", "panel_roles",
+    "claim_ids", "evidence_ids", "evidence_unit_ids", "independent_evidence_unit_count",
+    "source_data_ids", "required_visibility_ids",
+    "omitted_evidence", "palette_semantics", "layout_decisions", "legend_requirements",
+    "accessibility_requirements", "requested_outputs", "finality_state", "review_status",
+    "decision_refs"
+  ],
+  "properties": {
+    "schema_name": {"const": "figure_contract"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "figure_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "document_type": {"$ref": "figure-shared-definitions.schema.json#/$defs/documentType"},
+    "maturity": {"$ref": "figure-shared-definitions.schema.json#/$defs/maturity"},
+    "intended_location": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "upstream_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/artifactRef"},
+    "upstream_figure_or_brief_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "conclusion": {
+      "type": "object",
+      "required": ["text", "origin", "review_status", "structured_ceiling"],
+      "properties": {
+        "text": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "origin": {"$ref": "figure-shared-definitions.schema.json#/$defs/origin"},
+        "review_status": {"$ref": "figure-shared-definitions.schema.json#/$defs/reviewStatus"},
+        "structured_ceiling": {"$ref": "figure-shared-definitions.schema.json#/$defs/structuredCeiling"}
+      },
+      "additionalProperties": false
+    },
+    "ordered_panel_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+    "panel_roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["panel_id", "role"],
+        "properties": {
+          "panel_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "role": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "claim_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+    "evidence_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "evidence_unit_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "independent_evidence_unit_count": {"type": "integer", "minimum": 0},
+    "source_data_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "required_visibility_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "omitted_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["omission_id", "evidence_id", "reason", "decision_ref"],
+        "properties": {
+          "omission_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "evidence_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "reason": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "decision_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/decisionRef"}
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "palette_semantics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["semantic_key", "value", "scope", "version"],
+        "properties": {
+          "semantic_key": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "value": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "scope": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "version": {"$ref": "figure-shared-definitions.schema.json#/$defs/semver"}
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "layout_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["layout_id", "description", "origin", "review_status"],
+        "properties": {
+          "layout_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+          "description": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+          "origin": {"$ref": "figure-shared-definitions.schema.json#/$defs/origin"},
+          "review_status": {"$ref": "figure-shared-definitions.schema.json#/$defs/reviewStatus"},
+          "decision_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/decisionRef"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "legend_requirements": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "accessibility_requirements": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "requested_outputs": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}},
+    "finality_state": {"$ref": "figure-shared-definitions.schema.json#/$defs/finality"},
+    "finality_decision_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/decisionRef"},
+    "review_status": {"$ref": "figure-shared-definitions.schema.json#/$defs/reviewStatus"},
+    "decision_refs": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/decisionRef"}, "uniqueItems": true}
+  },
+  "additionalProperties": false
+}

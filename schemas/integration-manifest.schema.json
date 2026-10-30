@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "integration-manifest.schema.json",
+  "title": "Phase 9 Cross-Skill Integration Manifest 0.1.1",
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "nullableSemver": {"type": ["string", "null"], "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "relativePath": {"type": "string", "minLength": 1, "pattern": "^(?![A-Za-z]:)(?!/)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*[ .](?:/|$))[^\\\\:\\x00-\\x1f]+$"},
+    "skillName": {
+      "type": "string",
+      "enum": [
+        "style-and-structure-distiller", "manuscript-story-architect", "article-polisher",
+        "review-architect-polisher", "scientific-figure-designer", "scientific-integrity-qc"
+      ]
+    },
+    "packageRef": {
+      "type": "object",
+      "required": ["skill_name", "skill_package_version", "inventory_path", "inventory_sha256"],
+      "properties": {
+        "skill_name": {"$ref": "#/$defs/skillName"},
+        "skill_package_version": {"$ref": "#/$defs/semver"},
+        "inventory_path": {"$ref": "#/$defs/relativePath"},
+        "inventory_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "artifactBinding": {
+      "type": "object",
+      "required": ["artifact_class", "artifact_id", "artifact_version", "content_sha256", "status", "path", "size_bytes"],
+      "properties": {
+        "artifact_class": {"type": "string", "minLength": 1},
+        "artifact_id": {"type": "string", "minLength": 1},
+        "artifact_version": {"$ref": "#/$defs/semver"},
+        "content_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"type": "string", "minLength": 1},
+        "path": {"$ref": "#/$defs/relativePath"},
+        "size_bytes": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "trustReference": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {"type": "string", "minLength": 1},
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "admission": {
+      "type": "object",
+      "required": ["state", "issue_codes"],
+      "properties": {
+        "state": {"type": "string", "enum": ["not_run", "accepted", "degraded", "blocked"]},
+        "issue_codes": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "blocker": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "handoff": {
+      "type": "object",
+      "required": [
+        "handoff_id", "producer_skill", "consumer_skill", "producer_package_version",
+        "consumer_package_version", "producer_interface", "producer_interface_version",
+        "consumer_admission_interface", "consumer_admission_interface_version",
+        "interface_qualifiers", "required_statuses", "execution_state", "artifacts", "trust_references",
+        "admission", "blockers"
+      ],
+      "properties": {
+        "handoff_id": {"type": "string", "pattern": "^H[0-9]{2}-[A-Z0-9-]+$"},
+        "producer_skill": {"$ref": "#/$defs/skillName"},
+        "consumer_skill": {"$ref": "#/$defs/skillName"},
+        "producer_package_version": {"$ref": "#/$defs/nullableSemver"},
+        "consumer_package_version": {"$ref": "#/$defs/nullableSemver"},
+        "producer_interface": {"type": "string", "minLength": 1},
+        "producer_interface_version": {"$ref": "#/$defs/nullableSemver"},
+        "consumer_admission_interface": {"type": "string", "minLength": 1},
+        "consumer_admission_interface_version": {"$ref": "#/$defs/nullableSemver"},
+        "interface_qualifiers": {
+          "type": "object",
+          "properties": {
+            "corpus_type": {"type": "string", "enum": ["original_article", "review_article"]}
+          },
+          "additionalProperties": false
+        },
+        "required_statuses": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "execution_state": {"type": "string", "enum": ["admitted", "blocked"]},
+        "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifactBinding"}},
+        "trust_references": {"type": "array", "items": {"$ref": "#/$defs/trustReference"}},
+        "admission": {"$ref": "#/$defs/admission"},
+        "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "manifest_id",
+    "manifest_sha256", "skill_packages", "handoffs"
+  ],
+  "properties": {
+    "schema_name": {"const": "cross_skill_integration_manifest"},
+    "schema_version": {"const": "0.1.1"},
+    "contract_version": {"const": "0.1.1"},
+    "manifest_id": {"type": "string", "minLength": 3},
+    "manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "skill_packages": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/packageRef"}
+    },
+    "handoffs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/handoff"}
+    }
+  },
+  "additionalProperties": false
+}

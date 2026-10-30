@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "author-query-list.schema.json",
+  "title": "Article Polisher Author Query List 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "status", "source_artifact", "candidate_artifact", "queries"
+  ],
+  "properties": {
+    "schema_name": {"const": "author_query_list"},
+    "schema_version": {"const": "0.1.0"},
+    "artifact_id": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+    },
+    "created_at": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"
+    },
+    "created_by": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"
+    },
+    "status": {
+      "$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"
+    },
+    "source_artifact": {"$ref": "#/$defs/artifactIdentity"},
+    "candidate_artifact": {"$ref": "#/$defs/artifactIdentity"},
+    "queries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/queryRecord"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "artifactIdentity": {
+      "type": "object",
+      "required": ["document_id", "artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "document_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "artifact_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_sha256": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "queryRecord": {
+      "type": "object",
+      "required": [
+        "query_id", "query_class", "question", "affected_unit_ids", "affected_locators",
+        "blocks_revision", "resolution_status"
+      ],
+      "properties": {
+        "query_id": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/identifier"
+        },
+        "query_class": {
+          "type": "string",
+          "enum": [
+            "ambiguity", "missing_reporting", "conflicting_source",
+            "scientific_judgment", "author_judgment", "alternative_wording"
+          ]
+        },
+        "question": {
+          "$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"
+        },
+        "affected_unit_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "affected_locators": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/typedLocator"},
+          "minItems": 1
+        },
+        "blocks_revision": {"type": "boolean"},
+        "resolution_status": {"type": "string", "enum": ["unresolved", "answered_by_author", "withdrawn"]},
+        "author_response": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

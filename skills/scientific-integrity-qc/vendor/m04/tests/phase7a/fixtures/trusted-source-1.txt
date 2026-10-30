@@ -1,0 +1,3 @@
+Synthetic source one.
+The intervention increased the measured response in the defined model system.
+This fixture is not scientific evidence and exists only for deterministic contract tests.

@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "revision-proposal.schema.json",
+  "title": "Article Polisher Revision Proposal 0.1.1",
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 1, "maxLength": 180, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "artifactIdentity": {
+      "type": "object",
+      "required": ["document_id", "artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "document_id": {"$ref": "#/$defs/identifier"},
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_version": {"$ref": "#/$defs/semver"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "candidateIdentity": {
+      "type": "object",
+      "required": ["document_id", "artifact_id", "artifact_version"],
+      "properties": {
+        "document_id": {"$ref": "#/$defs/identifier"},
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_version": {"$ref": "#/$defs/semver"}
+      },
+      "additionalProperties": false
+    },
+    "contractRef": {
+      "type": "object",
+      "required": ["revision_contract_id", "revision_contract_version", "contract_sha256"],
+      "properties": {
+        "revision_contract_id": {"$ref": "#/$defs/identifier"},
+        "revision_contract_version": {"$ref": "#/$defs/semver"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "upstreamRef": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_type", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_type": {
+          "type": "string",
+          "enum": [
+            "manuscript_plan", "claim_evidence_map", "interpretation_card",
+            "style_profile", "structure_profile"
+          ]
+        },
+        "artifact_version": {"$ref": "#/$defs/semver"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "profileFeatureRef": {
+      "type": "object",
+      "required": ["profile_id", "profile_version", "profile_sha256", "feature_id", "feature_support_ref"],
+      "properties": {
+        "profile_id": {"$ref": "#/$defs/identifier"},
+        "profile_version": {"$ref": "#/$defs/semver"},
+        "profile_sha256": {"$ref": "#/$defs/sha256"},
+        "feature_id": {"$ref": "#/$defs/identifier"},
+        "feature_support_ref": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "operation_id", "operation_type", "target_unit_ids", "expected_source_texts",
+        "expected_source_sha256s", "replacement_texts", "rationale", "risk_class",
+        "affected_protected_anchor_ids", "structural_change_ids", "upstream_artifact_refs"
+      ],
+      "properties": {
+        "operation_id": {"$ref": "#/$defs/identifier"},
+        "operation_type": {
+          "type": "string",
+          "enum": [
+            "grammar", "punctuation", "syntax", "clarity", "lexical_tightening",
+            "redundancy_removal", "transition", "sentence_split", "sentence_merge",
+            "sentence_reorder", "information_reorder", "topic_sentence_repair",
+            "paragraph_move"
+          ]
+        },
+        "target_unit_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+        "expected_source_texts": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "expected_source_sha256s": {"type": "array", "items": {"$ref": "#/$defs/sha256"}, "minItems": 1},
+        "replacement_texts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "candidate_source_order": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "uniqueItems": true},
+        "rationale": {"type": "string", "enum": ["clarity", "grammar", "flow", "profile_alignment", "approved_structure"]},
+        "risk_class": {"type": "string", "enum": ["low", "moderate", "high"]},
+        "affected_protected_anchor_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "uniqueItems": true},
+        "structural_change_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "uniqueItems": true},
+        "upstream_artifact_refs": {"type": "array", "items": {"$ref": "#/$defs/upstreamRef"}, "uniqueItems": true},
+        "source_proposition_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "uniqueItems": true},
+        "profile_feature_ref": {"$ref": "#/$defs/profileFeatureRef"}
+      },
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "required": ["query_id", "query_class", "question", "affected_unit_ids", "blocks_revision", "resolution_status"],
+      "properties": {
+        "query_id": {"$ref": "#/$defs/identifier"},
+        "query_class": {"type": "string", "enum": ["ambiguity", "missing_reporting", "conflicting_source", "scientific_judgment", "author_judgment", "alternative_wording"]},
+        "question": {"type": "string", "minLength": 1},
+        "affected_unit_ids": {"type": "array", "items": {"$ref": "#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+        "blocks_revision": {"type": "boolean"},
+        "resolution_status": {"const": "unresolved"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "proposal_id", "created_at", "created_by", "status",
+    "source_artifact", "candidate_artifact", "revision_contract_ref", "operations", "author_queries"
+  ],
+  "properties": {
+    "schema_name": {"const": "article_polisher_revision_proposal"},
+    "schema_version": {"const": "0.1.1"},
+    "proposal_id": {"$ref": "#/$defs/identifier"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string", "minLength": 1},
+    "status": {"const": "machine_proposed"},
+    "source_artifact": {"$ref": "#/$defs/artifactIdentity"},
+    "candidate_artifact": {"$ref": "#/$defs/candidateIdentity"},
+    "revision_contract_ref": {"$ref": "#/$defs/contractRef"},
+    "operations": {"type": "array", "items": {"$ref": "#/$defs/operation"}, "minItems": 1, "uniqueItems": true},
+    "author_queries": {"type": "array", "items": {"$ref": "#/$defs/query"}, "uniqueItems": true}
+  },
+  "additionalProperties": false
+}

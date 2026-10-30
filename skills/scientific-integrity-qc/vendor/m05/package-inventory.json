@@ -1,0 +1,363 @@
+{
+  "schema_name": "skill_package_inventory",
+  "schema_version": "0.1.1",
+  "skill_name": "scientific-figure-designer",
+  "skill_package_version": "0.1.0",
+  "package_manifest_id": "phase9-item5-scientific-figure-designer-0.1.0-build-0.1.2",
+  "package_manifest_sha256": "897e31b93d8c6a997d3308b0dcf5cb5c4d4d3d7f3a351cc04f15ec6cee6a2429",
+  "source_components": [
+    {
+      "component_id": "module05-phase8-contract",
+      "component_kind": "contract",
+      "version": "0.1.1",
+      "path": "references/phase8-development-contract.md",
+      "sha256": "533f6f11bc20315f0eb75da53571c6e0545ce213bb4c5dd60e071879f88177b3"
+    },
+    {
+      "component_id": "module05-phase8a-implementation",
+      "component_kind": "implementation",
+      "version": "0.1.2",
+      "path": "candidate/scripts/validate_figure_package.py",
+      "sha256": "e2f314f0af00df31419d38b11eda500ddd53df065a92c7d046b7e994c245bcb1"
+    },
+    {
+      "component_id": "module05-phase8b-contract",
+      "component_kind": "contract",
+      "version": "0.1.1",
+      "path": "references/phase8b-development-contract.md",
+      "sha256": "5de0a025eb74ebedd0bc89a885600b11e8e2ca4c40fad8644b1a7f1d3ecc5699"
+    },
+    {
+      "component_id": "module05-phase8b-implementation",
+      "component_kind": "implementation",
+      "version": "0.1.1",
+      "path": "phase8b-candidate/scripts/validate_phase8b_package.py",
+      "sha256": "b3fa251a1bab8c5895472ea6892fa1cc9a9fcf8da36b26cfd90ac9a3938a5313"
+    },
+    {
+      "component_id": "module05-skill-entrypoint",
+      "component_kind": "entrypoint",
+      "version": "0.1.0",
+      "path": "SKILL.md",
+      "sha256": "6d3c10b6dea69588fef24024cac823d3d39fabf3d0233ad513a1f21cb3d23550"
+    }
+  ],
+  "vendored_shared_core": {
+    "version": "0.2.2",
+    "inventory_path": "shared-core/shared-core-vendor-inventory.json",
+    "inventory_sha256": "a584b246d88e035a54eca8ab9859c7dc5e9eadf6518d9cfb8117a72d7f087590"
+  },
+  "supported_interfaces": [
+    {
+      "direction": "input",
+      "name": "module05_article_story_admission",
+      "version": "0.1.0"
+    },
+    {
+      "direction": "input",
+      "name": "module05_review_figure_admission",
+      "version": "0.1.0"
+    },
+    {
+      "direction": "output",
+      "name": "module05_figure_qc_bundle",
+      "version": "0.1.0"
+    }
+  ],
+  "files": [
+    {
+      "role": "ui_metadata",
+      "path": "agents/openai.yaml",
+      "sha256": "1478f93c5d48cef78987e91aec037f047f79e6b0d32b2a8e892a2cd699953350",
+      "size_bytes": 404
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/analysis-output-record.schema.json",
+      "sha256": "faab2c4ac048dcb9d4083b47cf2f12d46c66cd3518fa4430dd89f022b9e27d5c",
+      "size_bytes": 5804
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/design-package-manifest.schema.json",
+      "sha256": "8dfa34e1c4f534c5aeb68f2b1980d2704d4b6c0e2f07061587f060954f79743b",
+      "size_bytes": 8318
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/figure-authority-decision.schema.json",
+      "sha256": "1a933c6427e6516b29863e41447b8d6fafbc84808228005f98d4ae1d3c12a58d",
+      "size_bytes": 4355
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/figure-card.schema.json",
+      "sha256": "05524e631d28763062d495109ee2ce26e3e9207d66abdff329b4f6c5d20a4c16",
+      "size_bytes": 8249
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/figure-contract.schema.json",
+      "sha256": "16d4f27e152b3cefa8aad30919b2a8330e537cf5ccdd930276b53816e439ca5f",
+      "size_bytes": 6506
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/figure-qc.schema.json",
+      "sha256": "873485194958f563c58016dc010a4e4643a5a50435614ca0a494af5cf658431f",
+      "size_bytes": 2950
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/figure-shared-definitions.schema.json",
+      "sha256": "7583a65d29bc380881b1db3c2a56d4d685524de4e3430e78e702753a5975d7b2",
+      "size_bytes": 7371
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/plot-recipe.schema.json",
+      "sha256": "a4bc939228235bfa768a6a8ddf74f390d3972400e33f7247f8161a412b2b31c8",
+      "size_bytes": 6392
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/source-data-manifest.schema.json",
+      "sha256": "b64dbba5db36f7acd3535e5bf9915aed85f0c93edbebd164d8b247c60e51a317",
+      "size_bytes": 7940
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/trusted-inputs-root.schema.json",
+      "sha256": "8ab2df85db7e5d19a6e63b987269e4812c8b297b4eec6b6b430675f880416c90",
+      "size_bytes": 1619
+    },
+    {
+      "role": "schema",
+      "path": "candidate/schemas/trusted-source-inputs.schema.json",
+      "sha256": "1c7a8bd6f92ffb142d8f69f07125e2bb9a3f5c3a30506bf1b1e0fef8b9f3b946",
+      "size_bytes": 2884
+    },
+    {
+      "role": "script",
+      "path": "candidate/scripts/schema_runtime.py",
+      "sha256": "d6804d9747068a7811fe2e1214bc7186e2b4613e1bcbeca3d25816ac6df76c5c",
+      "size_bytes": 2444
+    },
+    {
+      "role": "script",
+      "path": "candidate/scripts/validate_figure_package.py",
+      "sha256": "e2f314f0af00df31419d38b11eda500ddd53df065a92c7d046b7e994c245bcb1",
+      "size_bytes": 64590
+    },
+    {
+      "role": "test",
+      "path": "candidate/tests/fixture_factory.py",
+      "sha256": "f8d77b226972a196afb5d61b9d5c0e7bfcb39c7223c60eb6a6c33ef61ed527d2",
+      "size_bytes": 32664
+    },
+    {
+      "role": "test",
+      "path": "candidate/tests/fixtures/negative-cases.json",
+      "sha256": "1123d9af0496a50654e84419c76eee5f0f84de862bd4ad9db05eb84500d76ec7",
+      "size_bytes": 7508
+    },
+    {
+      "role": "test",
+      "path": "candidate/tests/test_figure_package.py",
+      "sha256": "d7a7f13202c0f253bbde5fd930a261f8d39a2a630c0d65f6521fcc6de916ebd6",
+      "size_bytes": 26493
+    },
+    {
+      "role": "reference",
+      "path": "package-adaptation-receipt.json",
+      "sha256": "70024590274d786ba8229aaa7a89a2343e3cdd64e81359f5da4e136366c14d40",
+      "size_bytes": 19038
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/backend-environment-profile.schema.json",
+      "sha256": "41cca1e32ae5a67e8208eb456719cff17f746ac1aa19b8cd2442328865758abb",
+      "size_bytes": 2104
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/bounded-program-plan.schema.json",
+      "sha256": "2514af1470f5de23b07aee69cb970c4292866daf0dc26abb56bbfd6a80b43ea1",
+      "size_bytes": 4284
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/design-revision-proposal.schema.json",
+      "sha256": "66c30112f811454c1e2e1750280274a68788dba6c4c2c47e0b2af381fa3efde3",
+      "size_bytes": 1488
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/figure-qc-phase8b.schema.json",
+      "sha256": "5093b961b40cf344abfa9cac127140aab4a95487db46cea84f39be8a8a10ec29",
+      "size_bytes": 2719
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/phase8a-admission-receipt.schema.json",
+      "sha256": "b6c690b2115d9362c328e36899ddc45891e36065ec38ef843b1d6288c54aa50f",
+      "size_bytes": 3035
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/prototype-execution-authorization.schema.json",
+      "sha256": "a039d9203ad6d517a13d1631779eedb593dfd900c4a5d2755b2b041edcce8d56",
+      "size_bytes": 2173
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/prototype-execution-manifest.schema.json",
+      "sha256": "d25dbe2622af3d93fcc3f05b740ab8bb1d504f2628dd5178b8e07ae7ac314662",
+      "size_bytes": 3015
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/prototype-execution-result.schema.json",
+      "sha256": "346775e6e99e1f2ec51124cb787579297a1fa51bcf846da74d7e267f9707e92f",
+      "size_bytes": 3115
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/render-inspection-record.schema.json",
+      "sha256": "b456b0cd925afc706fe543764a036f8f7e374793bb07d9c4cff3f7ed6a1d8a3b",
+      "size_bytes": 2739
+    },
+    {
+      "role": "schema",
+      "path": "phase8b-candidate/schemas/render-output-manifest.schema.json",
+      "sha256": "f1411ece372a3fe9fd3a1d7e710d9157bf8f901225292115619c9a3437aaee46",
+      "size_bytes": 2450
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/generate_restricted_python.py",
+      "sha256": "37f349cb7f752a016bd8e9a99b36eac92707af8eafea8976ed41a1f535fe270d",
+      "size_bytes": 12703
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/inspect_render_metadata.py",
+      "sha256": "f009bba13193ae55a807199678e32004c59a4aed6693a67c11a6d59c1bdef427",
+      "size_bytes": 6341
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/phase8b_runtime.py",
+      "sha256": "51ae2b1a8e2be612a3dddd21c2ccd9c8327f4e484e714a7642d8d875b9fabf2f",
+      "size_bytes": 5799
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/probe_backend_environment.py",
+      "sha256": "b577421c1bc1f7e0ca171f1f808489f764b669a761ff575b0b9f49f98ca3e084",
+      "size_bytes": 5284
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/run_prototype.py",
+      "sha256": "7753f1da7f5224cf4a21f976e4710f44dea00488d27689faca42f6a71f63714c",
+      "size_bytes": 17952
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/validate_generated_program.py",
+      "sha256": "7fd3043f5c887eef5301c45330341d2b41fa354f3a0ca751237c895f98e7b2f7",
+      "size_bytes": 5220
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/validate_phase8b_admission.py",
+      "sha256": "b58e848fad0741edde66b01c0108165084181dd83800cc04582519c9ad23befd",
+      "size_bytes": 8175
+    },
+    {
+      "role": "script",
+      "path": "phase8b-candidate/scripts/validate_phase8b_package.py",
+      "sha256": "b3fa251a1bab8c5895472ea6892fa1cc9a9fcf8da36b26cfd90ac9a3938a5313",
+      "size_bytes": 38278
+    },
+    {
+      "role": "test",
+      "path": "phase8b-candidate/tests/fixture_factory.py",
+      "sha256": "2c1b3cfe56cafa4e09a1fbdc027ef928d988716b613cc8a54c34cafeaae68b20",
+      "size_bytes": 17309
+    },
+    {
+      "role": "test",
+      "path": "phase8b-candidate/tests/fixtures/negative-cases.json",
+      "sha256": "0c829401f5fffef3071b8d6281a9351a89164c2a8a0f8782f62a6048f7ede056",
+      "size_bytes": 13060
+    },
+    {
+      "role": "test",
+      "path": "phase8b-candidate/tests/test_phase8b_contract.py",
+      "sha256": "cd480dfb8b4229192477cd3995b3b31c2c09759b07fc7d49ad4edb9b590223b9",
+      "size_bytes": 26333
+    },
+    {
+      "role": "reference",
+      "path": "references/mode-routing.md",
+      "sha256": "18a26e7345c060971030dfc54a48326dd93c347024d64b0ef92abe82508990f1",
+      "size_bytes": 1572
+    },
+    {
+      "role": "reference",
+      "path": "references/phase8-development-contract.md",
+      "sha256": "533f6f11bc20315f0eb75da53571c6e0545ce213bb4c5dd60e071879f88177b3",
+      "size_bytes": 59497
+    },
+    {
+      "role": "reference",
+      "path": "references/phase8b-development-contract.md",
+      "sha256": "5de0a025eb74ebedd0bc89a885600b11e8e2ca4c40fad8644b1a7f1d3ecc5699",
+      "size_bytes": 45233
+    },
+    {
+      "role": "script",
+      "path": "scripts/validate_design_revision_proposal.py",
+      "sha256": "8cf42585a2eb67a6bd996ac24149d00005d00512e7d7249e1d8497879fd17e2c",
+      "size_bytes": 957
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/qc-finding.schema.json",
+      "sha256": "1b65b2165a01d6aec51c9525c393a416397cde80d3e62b2cb5fb02d70c81cea8",
+      "size_bytes": 888
+    },
+    {
+      "role": "schema",
+      "path": "shared-core/schemas/shared-artifact.schema.json",
+      "sha256": "a2a8479a505a79dd652e92d450041a7362d13724c58666aa3a0fe1ccf39feaeb",
+      "size_bytes": 8884
+    },
+    {
+      "role": "script",
+      "path": "shared-core/scripts/validate_artifact.py",
+      "sha256": "898ea588b065eedeb1ca7867ee2a3631496d8a36ca5605e4fd2718725003cc49",
+      "size_bytes": 12498
+    },
+    {
+      "role": "reference",
+      "path": "shared-core/shared-core-vendor-inventory.json",
+      "sha256": "582a00089707e6086e431eb49c57cc6fba384cd38a91bbc89682225d91dae114",
+      "size_bytes": 1418
+    },
+    {
+      "role": "skill",
+      "path": "SKILL.md",
+      "sha256": "6d3c10b6dea69588fef24024cac823d3d39fabf3d0233ad513a1f21cb3d23550",
+      "size_bytes": 3957
+    },
+    {
+      "role": "test",
+      "path": "tests/test_package_entrypoint.py",
+      "sha256": "26cb946d3afc106367177ac88616589b7751c63f27b90a2e8847f3a29c8cb3d3",
+      "size_bytes": 2809
+    }
+  ]
+}

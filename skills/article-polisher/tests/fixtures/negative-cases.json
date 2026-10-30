@@ -1,0 +1,12 @@
+[
+  {"case": "mislabelled_sentence_reorder_as_grammar", "expected_code": "operation:mislabelled_structural_change"},
+  {"case": "light_sentence_reorder", "expected_code": "mode:light_structural_effect"},
+  {"case": "medium_paragraph_move", "expected_code": "mode:medium_structural_effect"},
+  {"case": "calling_workflow_mints_author_approval", "expected_code": "authorization:origin_state"},
+  {"case": "unresolved_blocking_query_changed", "expected_code": "query:blocking_unit_changed"},
+  {"case": "unmanifested_actual_change", "expected_code": "manifest:unmanifested_change"},
+  {"case": "manifest_without_actual_diff", "expected_code": "manifest:no_actual_diff"},
+  {"case": "deep_missing_artifact_closure", "expected_code": "deep:authorization_closure"},
+  {"case": "deep_structural_id_absent_from_plan", "expected_code": "deep:authorization_closure"},
+  {"case": "deep_section_membership_change", "expected_code": "mode:deep_section_move_unsupported"}
+]

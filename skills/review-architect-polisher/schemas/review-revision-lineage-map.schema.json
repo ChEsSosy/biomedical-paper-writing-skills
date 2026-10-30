@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-revision-lineage-map.schema.json",
+  "title": "Phase 7B Review Revision Lineage Map 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "artifact_id", "artifact_sha256", "origin", "source_artifact", "candidate_artifact", "unit_lineage", "sentence_lineage"],
+  "properties": {
+    "schema_name": {"const": "review_revision_lineage_map"}, "schema_version": {"const": "0.1.0"},
+    "artifact_id": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "origin": {"enum": ["deterministic_patch_layer", "author_supplied", "reviewed_upstream_locator_map", "model_declared"]},
+    "source_artifact": {"$ref": "#/$defs/documentRef"}, "candidate_artifact": {"$ref": "#/$defs/documentRef"},
+    "unit_lineage": {"type": "array", "items": {"$ref": "#/$defs/unitLineage"}, "minItems": 1, "uniqueItems": true},
+    "sentence_lineage": {"type": "array", "items": {"$ref": "#/$defs/sentenceLineage"}, "minItems": 1, "uniqueItems": true}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "idArray": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "documentRef": {"type": "object", "additionalProperties": false, "required": ["manuscript_id", "artifact_id", "artifact_version", "artifact_sha256"], "properties": {"manuscript_id": {"$ref": "#/$defs/id"}, "artifact_id": {"$ref": "#/$defs/id"}, "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}},
+    "unitLineage": {"type": "object", "additionalProperties": false, "required": ["candidate_unit_id", "source_unit_ids", "authorized_draft_slot_ids", "relation"], "properties": {"candidate_unit_id": {"$ref": "#/$defs/id"}, "source_unit_ids": {"$ref": "#/$defs/idArray"}, "authorized_draft_slot_ids": {"$ref": "#/$defs/idArray"}, "relation": {"enum": ["unchanged", "replaced", "split", "merged", "moved", "drafted_slot", "orphan"]}}},
+    "sentenceLineage": {"type": "object", "additionalProperties": false, "required": ["candidate_sentence_id", "source_sentence_ids", "authorized_draft_slot_ids"], "properties": {"candidate_sentence_id": {"$ref": "#/$defs/id"}, "source_sentence_ids": {"$ref": "#/$defs/idArray"}, "authorized_draft_slot_ids": {"$ref": "#/$defs/idArray"}}}
+  }
+}

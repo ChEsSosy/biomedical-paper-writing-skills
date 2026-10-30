@@ -1,0 +1,305 @@
+{
+  "schema_name": "cross_skill_integration_manifest",
+  "schema_version": "0.1.1",
+  "contract_version": "0.1.1",
+  "manifest_id": "guidance-release-0.1.4-six-skill-integration",
+  "manifest_sha256": "2621b3bd82ef9eb63301a769b88fd8386c3c0f466086a639285e67a4b7125552",
+  "skill_packages": [
+    {
+      "skill_name": "style-and-structure-distiller",
+      "skill_package_version": "0.1.3",
+      "inventory_path": "skills/style-and-structure-distiller/package-inventory.json",
+      "inventory_sha256": "3ef8f11d0e867797a35ce9fb4735dd53744eca1b1168516f2df7a20227124ec5"
+    },
+    {
+      "skill_name": "manuscript-story-architect",
+      "skill_package_version": "0.1.1",
+      "inventory_path": "skills/manuscript-story-architect/package-inventory.json",
+      "inventory_sha256": "a90890785e6c32f86813a0054d2be8e9e39d3f4ec6cdc43797d863663f42c9b3"
+    },
+    {
+      "skill_name": "article-polisher",
+      "skill_package_version": "0.1.7",
+      "inventory_path": "skills/article-polisher/package-inventory.json",
+      "inventory_sha256": "c517643b4c9ea3bb5765314b4d07e927c4a29ddebff0dcd5d1c1584f508e7074"
+    },
+    {
+      "skill_name": "review-architect-polisher",
+      "skill_package_version": "0.1.7",
+      "inventory_path": "skills/review-architect-polisher/package-inventory.json",
+      "inventory_sha256": "60a734ee8e7f32f543210e40fac72ee797a781499eb8997342eaaf5e6dd04f08"
+    },
+    {
+      "skill_name": "scientific-figure-designer",
+      "skill_package_version": "0.1.0",
+      "inventory_path": "skills/scientific-figure-designer/package-inventory.json",
+      "inventory_sha256": "897e31b93d8c6a997d3308b0dcf5cb5c4d4d3d7f3a351cc04f15ec6cee6a2429"
+    },
+    {
+      "skill_name": "scientific-integrity-qc",
+      "skill_package_version": "0.1.1",
+      "inventory_path": "skills/scientific-integrity-qc/package-inventory.json",
+      "inventory_sha256": "2b72b4407b47e3c5124eda5a6d538c2d5937f1a57488b81c246b44420fbefa80"
+    }
+  ],
+  "handoffs": [
+    {
+      "handoff_id": "H01-ARTICLE-PROFILE-TO-02",
+      "producer_skill": "style-and-structure-distiller",
+      "consumer_skill": "manuscript-story-architect",
+      "producer_package_version": "0.1.3",
+      "consumer_package_version": "0.1.1",
+      "producer_interface": "module01_descriptive_profile_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module02_article_profile_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {
+        "corpus_type": "original_article"
+      },
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "M01 and M02 package interfaces are available, but Item 2 does not bind a user-approved runtime profile artifact instance."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H01-ARTICLE-PROFILE-TO-03",
+      "producer_skill": "style-and-structure-distiller",
+      "consumer_skill": "article-polisher",
+      "producer_package_version": "0.1.3",
+      "consumer_package_version": "0.1.7",
+      "producer_interface": "module01_descriptive_profile_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module03_article_profile_admission",
+      "consumer_admission_interface_version": "0.1.2",
+      "interface_qualifiers": {
+        "corpus_type": "original_article"
+      },
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "M01 and M03 interfaces are available, but no user-approved runtime Article profile instance is bound."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H01-REVIEW-PROFILE-TO-04",
+      "producer_skill": "style-and-structure-distiller",
+      "consumer_skill": "review-architect-polisher",
+      "producer_package_version": "0.1.3",
+      "consumer_package_version": "0.1.7",
+      "producer_interface": "module01_descriptive_profile_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module04_review_profile_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {
+        "corpus_type": "review_article"
+      },
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "No exact caller-supplied, hash-bound, author-reviewed Review-only M01 profile instance is supplied at package time."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H02-PLAN-TO-03",
+      "producer_skill": "manuscript-story-architect",
+      "consumer_skill": "article-polisher",
+      "producer_package_version": "0.1.1",
+      "consumer_package_version": "0.1.7",
+      "producer_interface": "module02_manuscript_plan_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module03_revision_admission",
+      "consumer_admission_interface_version": "0.1.2",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "M02 and M03 interfaces are available, but no exact runtime plan and claim/evidence artifact closure is bound."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H02-STORY-TO-05",
+      "producer_skill": "manuscript-story-architect",
+      "consumer_skill": "scientific-figure-designer",
+      "producer_package_version": "0.1.1",
+      "consumer_package_version": "0.1.0",
+      "producer_interface": "module02_figure_story_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module05_article_story_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "M02 and M05 package interfaces exist, but no exact runtime Article story/claim/interpretation closure is bound."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H03-REVISION-TO-06",
+      "producer_skill": "article-polisher",
+      "consumer_skill": "scientific-integrity-qc",
+      "producer_package_version": "0.1.7",
+      "consumer_package_version": "0.1.1",
+      "producer_interface": "module03_revision_qc_bundle",
+      "producer_interface_version": "0.1.2",
+      "consumer_admission_interface": "module06_article_revision_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "The Article producer and Module 06 admission interfaces are packaged; no exact runtime Article revision bundle is bound in this static manifest."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H04-ARCHITECTURE-TO-05",
+      "producer_skill": "review-architect-polisher",
+      "consumer_skill": "scientific-figure-designer",
+      "producer_package_version": "0.1.7",
+      "consumer_package_version": "0.1.0",
+      "producer_interface": "module04_review_architecture_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module05_review_figure_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "M04 and M05 package interfaces exist, but no exact runtime Review architecture/extraction/authority closure is bound."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H04-REVISION-TO-06",
+      "producer_skill": "review-architect-polisher",
+      "consumer_skill": "scientific-integrity-qc",
+      "producer_package_version": "0.1.7",
+      "consumer_package_version": "0.1.1",
+      "producer_interface": "phase7b_revision_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module06_review_revision_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "The Review producer and Module 06 admission interfaces are packaged; no exact runtime Review revision bundle is bound in this static manifest."
+        }
+      ]
+    },
+    {
+      "handoff_id": "H05-FIGURE-TO-06",
+      "producer_skill": "scientific-figure-designer",
+      "consumer_skill": "scientific-integrity-qc",
+      "producer_package_version": "0.1.0",
+      "consumer_package_version": "0.1.1",
+      "producer_interface": "module05_figure_qc_bundle",
+      "producer_interface_version": "0.1.0",
+      "consumer_admission_interface": "module06_figure_qc_admission",
+      "consumer_admission_interface_version": "0.1.0",
+      "interface_qualifiers": {},
+      "required_statuses": [],
+      "execution_state": "blocked",
+      "artifacts": [],
+      "trust_references": [],
+      "admission": {
+        "state": "blocked",
+        "issue_codes": [
+          "runtime:artifact_instance_not_supplied"
+        ]
+      },
+      "blockers": [
+        {
+          "code": "runtime:artifact_instance_not_supplied",
+          "message": "The Figure producer and Module 06 admission interfaces are packaged; no exact runtime Figure QC bundle is bound in this static manifest."
+        }
+      ]
+    }
+  ]
+}

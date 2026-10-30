@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-revision-permission.schema.json",
+  "title": "Phase 7B Review Revision Permission 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version", "permission_id", "permission_sha256",
+    "interface_name", "interface_version", "created_at", "created_by", "creator_role",
+    "authorization_origin", "authorization_state", "document_type", "review_type",
+    "source_artifact", "phase7a_closure", "authorized_source_unit_ids",
+    "authorized_empty_draft_slots", "revision_mode", "allowed_operations",
+    "prohibited_operations", "protected_anchor_ids", "authorized_decisions",
+    "comparison_qc_scope", "author_review_required"
+  ],
+  "properties": {
+    "schema_name": {"const": "review_revision_permission"},
+    "schema_version": {"const": "0.1.0"},
+    "permission_id": {"$ref": "#/$defs/id"},
+    "permission_sha256": {"$ref": "#/$defs/sha256"},
+    "interface_name": {"const": "module04_review_revision_admission"},
+    "interface_version": {"const": "0.1.0"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "created_by": {"$ref": "#/$defs/id"},
+    "creator_role": {"enum": ["author", "calling_workflow", "module04", "model"]},
+    "authorization_origin": {"enum": ["author", "calling_workflow", "model_proposed"]},
+    "authorization_state": {"enum": ["machine_proposed", "caller_accepted", "author_approved", "rejected"]},
+    "document_type": {"const": "review_article"},
+    "review_type": {"enum": ["narrative_review", "mini_review", "scoping_style_review", "systematic_style_draft"]},
+    "source_artifact": {"$ref": "#/$defs/documentRef"},
+    "phase7a_closure": {"$ref": "#/$defs/phase7aClosure"},
+    "authorized_source_unit_ids": {"$ref": "#/$defs/idArray"},
+    "authorized_empty_draft_slots": {"type": "array", "items": {"$ref": "#/$defs/draftSlot"}, "uniqueItems": true},
+    "revision_mode": {"enum": ["light", "medium", "deep"]},
+    "allowed_operations": {"$ref": "#/$defs/operationArray"},
+    "prohibited_operations": {"$ref": "#/$defs/operationArray"},
+    "protected_anchor_ids": {"$ref": "#/$defs/idArray"},
+    "authorized_decisions": {"type": "array", "items": {"$ref": "#/$defs/decision"}, "uniqueItems": true},
+    "comparison_qc_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exact_source_candidate_comparison", "protected_classes", "module06_handoff_state"],
+      "properties": {
+        "exact_source_candidate_comparison": {"const": true},
+        "protected_classes": {"type": "array", "items": {"$ref": "#/$defs/protectedClass"}, "minItems": 11, "maxItems": 11, "uniqueItems": true},
+        "module06_handoff_state": {"const": "blocked_pending_module06_integration_contract"}
+      }
+    },
+    "author_review_required": {"const": true}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "idArray": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "operation": {"enum": ["replace_unit_text", "paragraph_split", "paragraph_merge", "paragraph_move", "section_move", "theme_reorganization", "draft_authorized_unit"]},
+    "operationArray": {"type": "array", "items": {"$ref": "#/$defs/operation"}, "uniqueItems": true},
+    "protectedClass": {"enum": ["citation", "numeric", "statistic", "unit", "terminology", "figure_table_reference", "negation", "comparison_direction", "causal_mechanistic", "certainty_hedging", "consensus_conflict"]},
+    "documentRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manuscript_id", "artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "manuscript_id": {"$ref": "#/$defs/id"}, "artifact_id": {"$ref": "#/$defs/id"},
+        "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "artifactRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {"artifact_id": {"$ref": "#/$defs/id"}, "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "phase7aClosure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope", "source_registry", "synthesis_matrix", "outline", "extraction_records", "authority_manifest_sha256"],
+      "properties": {
+        "scope": {"$ref": "#/$defs/artifactRef"}, "source_registry": {"$ref": "#/$defs/artifactRef"},
+        "synthesis_matrix": {"$ref": "#/$defs/artifactRef"}, "outline": {"$ref": "#/$defs/artifactRef"},
+        "extraction_records": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}, "uniqueItems": true},
+        "authority_manifest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "sourceLocator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["locator_type", "side", "artifact_id", "unit_id", "span_sha256"],
+      "properties": {
+        "locator_type": {"enum": ["structured_unit", "authorized_empty_draft_slot"]},
+        "side": {"enum": ["source", "candidate"]}, "artifact_id": {"$ref": "#/$defs/id"},
+        "unit_id": {"$ref": "#/$defs/id"}, "span_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "draftSlot": {
+      "type": "object", "additionalProperties": false,
+      "required": ["slot_id", "slot_version", "placeholder_token", "placeholder_sha256", "outline_paragraph_id", "section_id", "locator"],
+      "properties": {
+        "slot_id": {"$ref": "#/$defs/id"}, "slot_version": {"$ref": "#/$defs/id"},
+        "placeholder_token": {"type": "string", "pattern": "^\\[\\[AUTHORIZED_DRAFT_SLOT:[^\\]]+\\]\\]$"},
+        "placeholder_sha256": {"$ref": "#/$defs/sha256"}, "outline_paragraph_id": {"$ref": "#/$defs/id"},
+        "section_id": {"$ref": "#/$defs/id"}, "locator": {"$ref": "#/$defs/sourceLocator"}
+      }
+    },
+    "operationClosure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["claim_ids", "citation_relation_ids", "source_ids", "extraction_record_ids", "conflict_ids", "limitation_ids", "gap_ids", "author_position_ids", "future_direction_ids"],
+      "properties": {
+        "claim_ids": {"$ref": "#/$defs/idArray"}, "citation_relation_ids": {"$ref": "#/$defs/idArray"},
+        "source_ids": {"$ref": "#/$defs/idArray"}, "extraction_record_ids": {"$ref": "#/$defs/idArray"},
+        "conflict_ids": {"$ref": "#/$defs/idArray"}, "limitation_ids": {"$ref": "#/$defs/idArray"},
+        "gap_ids": {"$ref": "#/$defs/idArray"}, "author_position_ids": {"$ref": "#/$defs/idArray"},
+        "future_direction_ids": {"$ref": "#/$defs/idArray"}
+      }
+    },
+    "materialization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["materialization_id", "protected_class", "candidate_token", "identity", "source_ids", "citation_relation_ids", "extraction_record_ids"],
+      "properties": {
+        "materialization_id": {"$ref": "#/$defs/id"}, "protected_class": {"enum": ["citation", "terminology", "numeric", "statistic", "unit"]},
+        "candidate_token": {"type": "string", "minLength": 1}, "identity": {"type": "string", "minLength": 1},
+        "source_ids": {"$ref": "#/$defs/idArray"}, "citation_relation_ids": {"$ref": "#/$defs/idArray"},
+        "extraction_record_ids": {"$ref": "#/$defs/idArray"}
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decision_id", "decision_type", "governed_subject_type", "governed_subject_id", "governed_subject_version", "governed_subject_sha256", "allowed_operation", "affected_source_unit_ids", "affected_paragraph_ids", "affected_section_ids", "affected_draft_slot_ids", "phase7a_closure", "materialization_allowlist", "required_materialization_ids", "authorization_origin", "authorization_state", "authorization_provenance"],
+      "properties": {
+        "decision_id": {"$ref": "#/$defs/id"}, "decision_type": {"enum": ["review_structural_revision", "review_draft_slot_materialization"]},
+        "governed_subject_type": {"enum": ["paragraph_plan", "section_plan", "source_unit", "authorized_empty_draft_slot"]},
+        "governed_subject_id": {"$ref": "#/$defs/id"}, "governed_subject_version": {"$ref": "#/$defs/id"},
+        "governed_subject_sha256": {"$ref": "#/$defs/sha256"}, "allowed_operation": {"$ref": "#/$defs/operation"},
+        "affected_source_unit_ids": {"$ref": "#/$defs/idArray"}, "affected_paragraph_ids": {"$ref": "#/$defs/idArray"},
+        "affected_section_ids": {"$ref": "#/$defs/idArray"}, "affected_draft_slot_ids": {"$ref": "#/$defs/idArray"},
+        "phase7a_closure": {"$ref": "#/$defs/operationClosure"},
+        "materialization_allowlist": {"type": "array", "items": {"$ref": "#/$defs/materialization"}, "uniqueItems": true},
+        "required_materialization_ids": {"$ref": "#/$defs/idArray"},
+        "authorization_origin": {"const": "author"}, "authorization_state": {"const": "author_approved"},
+        "authorization_provenance": {"$ref": "#/$defs/id"}
+      }
+    }
+  }
+}

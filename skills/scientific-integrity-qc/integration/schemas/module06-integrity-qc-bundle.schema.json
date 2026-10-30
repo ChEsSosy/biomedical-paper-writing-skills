@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "module06-integrity-qc-bundle.schema.json",
+  "title": "Module 06 Integrity QC Bundle 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "bundle_id", "bundle_sha256", "created_at", "request_id", "route", "consumer_interface", "consumer_interface_version", "output_interface", "output_interface_version", "contract_version", "integration_version", "admission_receipt_ref", "gate_report_ref", "output_artifacts", "terminal_state", "human_review_required", "author_approval_claimed", "scientific_truth_claimed", "automatic_repair_performed"],
+  "properties": {
+    "schema_name": {"const": "module06_integrity_qc_bundle"}, "schema_version": {"const": "0.1.0"},
+    "bundle_id": {"type": "string", "minLength": 1}, "bundle_sha256": {"$ref": "#/$defs/sha256"},
+    "created_at": {"type": "string", "format": "date-time"}, "request_id": {"type": "string", "minLength": 1},
+    "route": {"type": "string", "minLength": 1}, "consumer_interface": {"type": "string", "minLength": 1}, "consumer_interface_version": {"const": "0.1.0"},
+    "output_interface": {"const": "module06_integrity_qc_bundle"}, "output_interface_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.2"}, "integration_version": {"const": "0.1.1"},
+    "admission_receipt_ref": {"$ref": "#/$defs/ref"}, "gate_report_ref": {"$ref": "#/$defs/ref"},
+    "output_artifacts": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/output"}},
+    "terminal_state": {"enum": ["blocked", "qc_complete_author_review_required", "qc_unassessable_author_review_required", "rejected"]},
+    "human_review_required": {"const": true}, "author_approval_claimed": {"const": false}, "scientific_truth_claimed": {"const": false}, "automatic_repair_performed": {"const": false}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["id", "version", "sha256"], "properties": {"id": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}},
+    "output": {"type": "object", "additionalProperties": false, "required": ["path", "file_sha256", "canonical_sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "file_sha256": {"$ref": "#/$defs/sha256"}, "canonical_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}}}
+  }
+}

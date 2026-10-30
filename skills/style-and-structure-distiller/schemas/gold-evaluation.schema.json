@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gold-evaluation.schema.json",
+  "title": "Observable-Structure Gold Evaluation 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "evaluation_scope", "document_count", "aggregate", "documents"
+  ],
+  "properties": {
+    "schema_name": {"const": "observable_structure_gold_evaluation"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"const": "author_review_required"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "evaluation_scope": {"const": "parser_observable_structure_not_scientific_validity"},
+    "document_count": {"type": "integer", "minimum": 1},
+    "aggregate": {"$ref": "#/$defs/metricBundle"},
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["document_id", "metrics"],
+        "properties": {
+          "document_id": {"type": "string", "minLength": 1},
+          "metrics": {"$ref": "#/$defs/metricBundle"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "precisionRecall": {
+      "type": "object",
+      "required": ["true_positive", "false_positive", "false_negative", "precision", "recall", "f1"],
+      "properties": {
+        "true_positive": {"type": "integer", "minimum": 0},
+        "false_positive": {"type": "integer", "minimum": 0},
+        "false_negative": {"type": "integer", "minimum": 0},
+        "precision": {"type": "number", "minimum": 0, "maximum": 1},
+        "recall": {"type": "number", "minimum": 0, "maximum": 1},
+        "f1": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "paragraphBoundary": {
+      "type": "object",
+      "required": [
+        "true_positive", "false_positive", "false_negative", "precision", "recall", "f1",
+        "topology_evaluable_expected_count",
+        "fragmented_gold_paragraph_count", "fragmentation_rate",
+        "merged_gold_paragraph_count", "erroneous_merge_rate",
+        "shifted_boundary_pair_count", "shifted_boundary_rate",
+        "unclassifiable_boundary_error_count"
+      ],
+      "properties": {
+        "true_positive": {"type": "integer", "minimum": 0},
+        "false_positive": {"type": "integer", "minimum": 0},
+        "false_negative": {"type": "integer", "minimum": 0},
+        "precision": {"type": "number", "minimum": 0, "maximum": 1},
+        "recall": {"type": "number", "minimum": 0, "maximum": 1},
+        "f1": {"type": "number", "minimum": 0, "maximum": 1},
+        "topology_evaluable_expected_count": {"type": "integer", "minimum": 0},
+        "fragmented_gold_paragraph_count": {"type": "integer", "minimum": 0},
+        "fragmentation_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "merged_gold_paragraph_count": {"type": "integer", "minimum": 0},
+        "erroneous_merge_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "shifted_boundary_pair_count": {"type": "integer", "minimum": 0},
+        "shifted_boundary_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "unclassifiable_boundary_error_count": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "accuracy": {
+      "type": "object",
+      "required": ["correct", "evaluated", "accuracy"],
+      "properties": {
+        "correct": {"type": "integer", "minimum": 0},
+        "evaluated": {"type": "integer", "minimum": 0},
+        "accuracy": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "exactMatch": {
+      "type": "object",
+      "required": ["correct", "evaluated", "exact_match_rate"],
+      "properties": {
+        "correct": {"type": "integer", "minimum": 0},
+        "evaluated": {"type": "integer", "minimum": 0},
+        "exact_match_rate": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "metricBundle": {
+      "type": "object",
+      "required": [
+        "heading_detection", "heading_level", "parent_hierarchy", "canonical_section", "paragraph_boundary",
+        "figure_id", "panel_token", "full_reference_exact_match"
+      ],
+      "properties": {
+        "heading_detection": {"$ref": "#/$defs/precisionRecall"},
+        "heading_level": {"$ref": "#/$defs/accuracy"},
+        "parent_hierarchy": {"$ref": "#/$defs/accuracy"},
+        "canonical_section": {"$ref": "#/$defs/accuracy"},
+        "paragraph_boundary": {"$ref": "#/$defs/paragraphBoundary"},
+        "figure_id": {"$ref": "#/$defs/precisionRecall"},
+        "panel_token": {"$ref": "#/$defs/precisionRecall"},
+        "full_reference_exact_match": {"$ref": "#/$defs/exactMatch"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

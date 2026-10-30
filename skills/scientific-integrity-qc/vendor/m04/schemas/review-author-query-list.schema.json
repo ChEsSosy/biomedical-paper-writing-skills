@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-author-query-list.schema.json",
+  "title": "Phase 7B Review Author Query List 0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "artifact_id", "artifact_sha256", "source_artifact", "candidate_artifact", "proposal_ref", "queries", "author_review_required"],
+  "properties": {
+    "schema_name": {"const": "review_author_query_list"}, "schema_version": {"const": "0.1.0"},
+    "artifact_id": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "source_artifact": {"$ref": "#/$defs/documentRef"}, "candidate_artifact": {"$ref": "#/$defs/documentRef"},
+    "proposal_ref": {"$ref": "#/$defs/proposalRef"}, "queries": {"type": "array", "items": {"$ref": "#/$defs/query"}, "uniqueItems": true},
+    "author_review_required": {"const": true}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "idArray": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "documentRef": {"type": "object", "additionalProperties": false, "required": ["manuscript_id", "artifact_id", "artifact_version", "artifact_sha256"], "properties": {"manuscript_id": {"$ref": "#/$defs/id"}, "artifact_id": {"$ref": "#/$defs/id"}, "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}},
+    "proposalRef": {"type": "object", "additionalProperties": false, "required": ["proposal_id", "proposal_version", "proposal_sha256"], "properties": {"proposal_id": {"$ref": "#/$defs/id"}, "proposal_version": {"$ref": "#/$defs/id"}, "proposal_sha256": {"$ref": "#/$defs/sha256"}}},
+    "query": {"type": "object", "additionalProperties": false, "required": ["query_id", "query_type", "question", "affected_unit_ids", "blocks_revision", "status"], "properties": {"query_id": {"$ref": "#/$defs/id"}, "query_type": {"enum": ["ambiguity", "missing_extraction", "insufficient_access", "source_conflict", "source_scope", "citation_support", "scientific_judgment", "author_judgment"]}, "question": {"type": "string", "minLength": 1}, "affected_unit_ids": {"$ref": "#/$defs/idArray"}, "blocks_revision": {"type": "boolean"}, "status": {"const": "unresolved"}}}
+  }
+}

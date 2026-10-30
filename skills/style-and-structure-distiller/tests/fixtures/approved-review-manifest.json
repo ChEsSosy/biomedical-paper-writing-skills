@@ -1,0 +1,61 @@
+{
+  "schema_name": "corpus_manifest",
+  "schema_version": "0.2.2",
+  "artifact_id": "corpus-manifest:synthetic-review-phase31",
+  "created_at": "2026-08-30T12:10:00+08:00",
+  "created_by": "style-and-structure-distiller-test/0.2.2",
+  "source_artifact_ids": [],
+  "source_files": [
+    {"path": "review-papers/review-1.md", "role": "corpus_document", "document_id": "synthetic-review-1", "access_status": "author_owned"},
+    {"path": "review-papers/review-2.nxml", "role": "corpus_document", "document_id": "synthetic-review-2", "access_status": "author_owned"}
+  ],
+  "status": "author_approved",
+  "warnings": [],
+  "corpus_id": "synthetic-review-phase31",
+  "corpus_type": "review_article",
+  "minimum_document_count": 2,
+  "inclusion_criteria": ["Synthetic Review-style documents created for deterministic software testing"],
+  "exclusion_criteria": ["Published prose, real citation records, or Original Article fixtures"],
+  "documents": [
+    {
+      "document_id": "synthetic-review-1",
+      "source_file": "review-papers/review-1.md",
+      "article_type": "review_article",
+      "title": "Synthetic Review hierarchy fixture one",
+      "journal": "software-test-review-a",
+      "year": 2024,
+      "language": "en",
+      "source_type": "markdown",
+      "article_subtype": "narrative_review",
+      "corpus_group": "synthetic-review-pilot",
+      "lab_group": "synthetic-review-group",
+      "journal_family": "software-test-review-family",
+      "domains": ["software validation"],
+      "experiment_labels": ["other"],
+      "access_status": "author_owned",
+      "license_note": "Synthetic fixture created for this candidate package",
+      "inclusion_status": "included",
+      "metadata_provenance": "Manually defined synthetic test fixture"
+    },
+    {
+      "document_id": "synthetic-review-2",
+      "source_file": "review-papers/review-2.nxml",
+      "article_type": "review_article",
+      "title": "Synthetic Review JATS hierarchy fixture two",
+      "journal": "software-test-review-b",
+      "year": 2026,
+      "language": "en",
+      "source_type": "jats_xml",
+      "article_subtype": "narrative_review",
+      "corpus_group": "synthetic-review-pilot",
+      "lab_group": "synthetic-review-group",
+      "journal_family": "software-test-review-family",
+      "domains": ["software validation"],
+      "experiment_labels": ["other"],
+      "access_status": "author_owned",
+      "license_note": "Synthetic fixture created for this candidate package",
+      "inclusion_status": "included",
+      "metadata_provenance": "Manually defined synthetic test fixture"
+    }
+  ]
+}

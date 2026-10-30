@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trusted-source-inputs.schema.json",
+  "title": "Phase 8A Trusted Source Inputs Collection 0.1.0",
+  "type": "object",
+  "required": [
+    "interface_name", "interface_version", "collection_kind", "collection_id",
+    "collection_version", "collection_sha256", "supplied_by", "records"
+  ],
+  "properties": {
+    "interface_name": {"const": "trusted_source_inputs"},
+    "interface_version": {"const": "0.1.0"},
+    "collection_kind": {"const": "trusted_source_inputs"},
+    "collection_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "collection_version": {"const": "0.1.0"},
+    "collection_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "supplied_by": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/trustedSourceInput"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "trustedSourceInput": {
+      "type": "object",
+      "required": [
+        "trusted_input_id", "source_data_id", "access_mode", "format",
+        "expected_size", "expected_sha256", "expected_locators"
+      ],
+      "properties": {
+        "trusted_input_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "source_data_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "access_mode": {"type": "string", "enum": ["package_relative_file", "external_file", "resolver_reference"]},
+        "path": {"type": ["string", "null"]},
+        "resolver_ref": {"type": ["string", "null"]},
+        "format": {"type": "string", "enum": ["csv", "tsv", "json", "xlsx", "image", "binary", "other"]},
+        "expected_size": {"type": "integer", "minimum": 0},
+        "expected_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+        "expected_locators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["locator_type", "value"],
+            "properties": {
+              "locator_type": {"type": "string", "enum": ["dataset", "sheet", "table", "header", "variable", "channel", "image", "region"]},
+              "value": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "adapter": {
+          "type": ["object", "null"],
+          "properties": {
+            "name": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"},
+            "version": {"$ref": "figure-shared-definitions.schema.json#/$defs/nonEmptyString"}
+          },
+          "required": ["name", "version"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

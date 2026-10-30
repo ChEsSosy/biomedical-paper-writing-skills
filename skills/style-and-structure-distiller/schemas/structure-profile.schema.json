@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "structure-profile.schema.json",
+  "title": "Observable Corpus Structure Profile 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "corpus_id", "corpus_type", "document_count",
+    "section_presence", "common_canonical_sequences", "section_instances_per_document",
+    "paragraphs_per_document_section", "heading_depth_per_document",
+    "child_edge_count_per_document_canonical_section",
+    "mean_direct_children_per_root_section_instance_by_document",
+    "figure_references_per_document_section", "feature_support", "deterministic_only",
+    "semantic_annotation_status", "semantic_role_labels_present"
+  ],
+  "properties": {
+    "schema_name": {"const": "structure_profile"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "corpus_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "document_count": {"type": "integer", "minimum": 1},
+    "section_presence": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["document_count", "document_rate"],
+        "properties": {
+          "document_count": {"type": "integer", "minimum": 1},
+          "document_rate": {"type": "number", "minimum": 0, "maximum": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "common_canonical_sequences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sequence", "document_count", "document_rate"],
+        "properties": {
+          "sequence": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "document_count": {"type": "integer", "minimum": 1},
+          "document_rate": {"type": "number", "minimum": 0, "maximum": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "section_instances_per_document": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+    },
+    "paragraphs_per_document_section": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+    },
+    "heading_depth_per_document": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+    "child_edge_count_per_document_canonical_section": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+    },
+    "mean_direct_children_per_root_section_instance_by_document": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+    },
+    "figure_references_per_document_section": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+    },
+    "feature_support": {
+      "type": "object",
+      "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/featureSupport"}
+    },
+    "deterministic_only": {"const": true},
+    "semantic_annotation_status": {"const": "not_performed_phase3_1"},
+    "semantic_role_labels_present": {"const": false}
+  },
+  "additionalProperties": false
+}

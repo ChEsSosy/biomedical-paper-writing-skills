@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-patch-application-receipt.schema.json",
+  "title": "Phase 7B Review Patch Application Receipt 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "artifact_id", "artifact_sha256", "source_artifact", "candidate_artifact", "permission_ref", "proposal_ref", "lineage_ref", "protected_inventory_ref", "author_query_list_ref", "applied_operation_ids", "application_engine", "status", "author_review_required"],
+  "properties": {
+    "schema_name": {"const": "review_patch_application_receipt"},
+    "schema_version": {"const": "0.1.0"},
+    "artifact_id": {"$ref": "#/$defs/id"},
+    "artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "source_artifact": {"$ref": "#/$defs/documentRef"},
+    "candidate_artifact": {"$ref": "#/$defs/documentRef"},
+    "permission_ref": {"$ref": "#/$defs/permissionRef"},
+    "proposal_ref": {"$ref": "#/$defs/proposalRef"},
+    "lineage_ref": {"$ref": "#/$defs/artifactRef"},
+    "protected_inventory_ref": {"$ref": "#/$defs/artifactRef"},
+    "author_query_list_ref": {"$ref": "#/$defs/artifactRef"},
+    "applied_operation_ids": {"$ref": "#/$defs/idArray"},
+    "application_engine": {"type": "object", "additionalProperties": false, "required": ["name", "version"], "properties": {"name": {"const": "phase7b_deterministic_patch_layer"}, "version": {"const": "0.1.6"}}},
+    "status": {"const": "applied"},
+    "author_review_required": {"const": true}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "idArray": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "artifactRef": {"type": "object", "additionalProperties": false, "required": ["artifact_id", "artifact_version", "artifact_sha256"], "properties": {"artifact_id": {"$ref": "#/$defs/id"}, "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}},
+    "documentRef": {"type": "object", "additionalProperties": false, "required": ["manuscript_id", "artifact_id", "artifact_version", "artifact_sha256"], "properties": {"manuscript_id": {"$ref": "#/$defs/id"}, "artifact_id": {"$ref": "#/$defs/id"}, "artifact_version": {"$ref": "#/$defs/id"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}},
+    "permissionRef": {"type": "object", "additionalProperties": false, "required": ["permission_id", "permission_version", "permission_sha256"], "properties": {"permission_id": {"$ref": "#/$defs/id"}, "permission_version": {"$ref": "#/$defs/id"}, "permission_sha256": {"$ref": "#/$defs/sha256"}}},
+    "proposalRef": {"type": "object", "additionalProperties": false, "required": ["proposal_id", "proposal_version", "proposal_sha256"], "properties": {"proposal_id": {"$ref": "#/$defs/id"}, "proposal_version": {"$ref": "#/$defs/id"}, "proposal_sha256": {"$ref": "#/$defs/sha256"}}}
+  }
+}

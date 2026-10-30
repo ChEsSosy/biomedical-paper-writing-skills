@@ -1,0 +1,4 @@
+interface:
+  display_name: "Style and Structure Distiller"
+  short_description: "Measure biomedical corpus style and structure"
+  default_prompt: "Use $style-and-structure-distiller to extract traceable observable structure and document-weighted statistics from my curated biomedical paper corpus."

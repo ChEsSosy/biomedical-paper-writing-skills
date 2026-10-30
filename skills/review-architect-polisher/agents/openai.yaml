@@ -1,0 +1,5 @@
+interface:
+  display_name: "Review Architect and Polisher"
+  short_description: "Build and revise auditable biomedical Reviews"
+  default_prompt: "Use $review-architect-polisher to architect or revise this biomedical Review from the supplied source and authority artifacts while preserving exact provenance, unresolved decisions, and author-review boundaries."
+

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase8a-admission-receipt.schema.json",
+  "type": "object",
+  "required": ["schema_name", "schema_version", "contract_version", "receipt_id", "receipt_sha256", "created_at", "mode", "design_package_ref", "trust_root_ref", "phase8a_qc_ref", "validator", "invocation_result"],
+  "properties": {
+    "schema_name": {"const": "phase8a_admission_receipt"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "mode": {"type": "string", "enum": ["design_review_only", "prototype_code_generation", "prototype_execution_and_inspection"]},
+    "design_package_ref": {"$ref": "#/$defs/designRef"},
+    "trust_root_ref": {"$ref": "#/$defs/trustRef"},
+    "phase8a_qc_ref": {"$ref": "#/$defs/qcRef"},
+    "validator": {
+      "type": "object",
+      "required": ["validator_version", "ruleset_version", "file_path", "file_sha256"],
+      "properties": {
+        "validator_version": {"const": "0.1.2"},
+        "ruleset_version": {"const": "0.1.2"},
+        "file_path": {"type": "string", "minLength": 1},
+        "file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "invocation_result": {
+      "type": "object",
+      "required": ["valid", "issue_codes", "readiness_gate"],
+      "properties": {
+        "valid": {"const": true},
+        "issue_codes": {"type": "array", "items": {"type": "string"}, "maxItems": 0},
+        "readiness_gate": {"type": "string", "enum": ["pass_for_declared_maturity", "author_review_required"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "designRef": {
+      "type": "object", "required": ["design_package_id", "design_package_version", "design_package_hash"],
+      "properties": {"design_package_id": {"type": "string", "minLength": 1}, "design_package_version": {"type": "string", "minLength": 1}, "design_package_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false
+    },
+    "trustRef": {
+      "type": "object", "required": ["root_id", "root_version", "root_sha256"],
+      "properties": {"root_id": {"type": "string", "minLength": 1}, "root_version": {"type": "string", "minLength": 1}, "root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false
+    },
+    "qcRef": {
+      "type": "object", "required": ["artifact_id", "schema_version", "design_package_hash", "phase8a_figure_qc_sha256"],
+      "properties": {"artifact_id": {"type": "string", "minLength": 1}, "schema_version": {"type": "string", "minLength": 1}, "design_package_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "phase8a_figure_qc_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

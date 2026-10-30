@@ -1,0 +1,47 @@
+{
+  "schema_name": "six_skill_public_distribution_preparation",
+  "schema_version": "0.1.0",
+  "build": "0.1.5-six-skill-public.1",
+  "date": "2026-10-30",
+  "maintainer": "ChEsSosy",
+  "repository_url": "https://github.com/ChEsSosy/biomedical-paper-writing-skills",
+  "license_status": "MIT_ORIGINAL_CONTRIBUTIONS_THIRD_PARTY_TERMS_RETAINED",
+  "included_skills": [
+    "style-and-structure-distiller",
+    "manuscript-story-architect",
+    "article-polisher",
+    "review-architect-polisher",
+    "scientific-figure-designer",
+    "scientific-integrity-qc"
+  ],
+  "module_package_baseline": "general guidance release 0.1.4; exact source payloads retained",
+  "source_collection": "0.1.5",
+  "private_mrna_expression_included": false,
+  "attribution_in_manuscripts_required": false,
+  "attribution_scope": "suite documentation only, not scholarly deliverables",
+  "reference_notices": [
+    "third-party-notices/codex-academic-humanizer-LICENSE.txt",
+    "third-party-notices/codex-academic-humanizer-NOTICE.txt",
+    "third-party-notices/writing-dna-skill-LICENSE.txt"
+  ],
+  "third_party_license_audit": "historical independent-reimplementation policy found; file-level clearance not asserted",
+  "publication_state": "USER_AUTHORIZED_PUBLIC_RELEASE",
+  "recipient_installation_performed": false,
+  "runtime_dependency_binaries_included": false,
+  "module_payload_changes": 0,
+  "module_inventory_hashes": {
+    "style-and-structure-distiller": "3ef8f11d0e867797a35ce9fb4735dd53744eca1b1168516f2df7a20227124ec5",
+    "manuscript-story-architect": "a90890785e6c32f86813a0054d2be8e9e39d3f4ec6cdc43797d863663f42c9b3",
+    "article-polisher": "c517643b4c9ea3bb5765314b4d07e927c4a29ddebff0dcd5d1c1584f508e7074",
+    "review-architect-polisher": "60a734ee8e7f32f543210e40fac72ee797a781499eb8997342eaaf5e6dd04f08",
+    "scientific-figure-designer": "897e31b93d8c6a997d3308b0dcf5cb5c4d4d3d7f3a351cc04f15ec6cee6a2429",
+    "scientific-integrity-qc": "2b72b4407b47e3c5124eda5a6d538c2d5937f1a57488b81c246b44420fbefa80"
+  },
+  "license_file": "LICENSE",
+  "preparation_state": "COMPLETE",
+  "publication_readiness": "USER_AUTHORIZED_WITHOUT_ADDITIONAL_PROVENANCE_REVIEW",
+  "unresolved_reference_projects": [
+    "writing-style-extractor",
+    "codex-skills"
+  ]
+}

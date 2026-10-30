@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/phase8a/trusted-inputs-root.schema.json",
+  "title": "Phase 8A externally supplied trusted-inputs root",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "trust_root_id",
+    "supplied_by",
+    "collections"
+  ],
+  "properties": {
+    "schema_name": {"const": "trusted_inputs_root"},
+    "schema_version": {"const": "0.1.0"},
+    "trust_root_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "supplied_by": {"type": "string", "minLength": 1},
+    "collections": {
+      "type": "object",
+      "required": [
+        "trusted_source_inputs",
+        "trusted_analysis_outputs",
+        "trusted_authority_inputs"
+      ],
+      "properties": {
+        "trusted_source_inputs": {"$ref": "#/$defs/collectionReference"},
+        "trusted_analysis_outputs": {"$ref": "#/$defs/collectionReference"},
+        "trusted_authority_inputs": {"$ref": "#/$defs/collectionReference"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "collectionReference": {
+      "type": "object",
+      "required": ["collection_id", "collection_version", "collection_sha256"],
+      "properties": {
+        "collection_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "collection_version": {"$ref": "figure-shared-definitions.schema.json#/$defs/semver"},
+        "collection_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

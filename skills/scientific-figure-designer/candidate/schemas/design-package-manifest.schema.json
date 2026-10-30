@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "design-package-manifest.schema.json",
+  "title": "Phase 8A Non-circular Design Package Manifest 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "design_package_id",
+    "design_package_version", "design_package_hash", "created_at", "document_type", "maturity",
+    "upstream_context", "components", "trust_bindings", "ruleset", "profiles"
+  ],
+  "properties": {
+    "schema_name": {"const": "design_package_manifest"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.1"},
+    "design_package_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+    "design_package_version": {"const": "0.1.0"},
+    "design_package_hash": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"},
+    "created_at": {"$ref": "figure-shared-definitions.schema.json#/$defs/timestamp"},
+    "document_type": {"$ref": "figure-shared-definitions.schema.json#/$defs/documentType"},
+    "maturity": {"$ref": "figure-shared-definitions.schema.json#/$defs/maturity"},
+    "upstream_context": {"$ref": "#/$defs/upstreamContext"},
+    "components": {
+      "type": "object",
+      "required": ["source_data_manifest", "figure_cards", "figure_contracts", "plot_recipes"],
+      "properties": {
+        "source_data_manifest": {"$ref": "figure-shared-definitions.schema.json#/$defs/componentFileRef"},
+        "figure_cards": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/componentFileRef"}, "minItems": 1, "uniqueItems": true},
+        "figure_contracts": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/componentFileRef"}, "minItems": 1, "uniqueItems": true},
+        "plot_recipes": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/componentFileRef"}, "minItems": 1, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "trust_bindings": {
+      "type": "object",
+      "required": ["trusted_source_inputs"],
+      "properties": {
+        "trusted_source_inputs": {"$ref": "figure-shared-definitions.schema.json#/$defs/collectionFileRef"},
+        "trusted_analysis_outputs": {"$ref": "figure-shared-definitions.schema.json#/$defs/collectionFileRef"},
+        "trusted_authority_inputs": {"$ref": "figure-shared-definitions.schema.json#/$defs/collectionFileRef"}
+      },
+      "additionalProperties": false
+    },
+    "ruleset": {
+      "type": "object",
+      "required": ["ruleset_id", "ruleset_version", "ruleset_sha256"],
+      "properties": {
+        "ruleset_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+        "ruleset_version": {"const": "0.1.0"},
+        "ruleset_sha256": {"$ref": "figure-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["profile_kind", "status"],
+        "properties": {
+          "profile_kind": {"type": "string", "enum": ["experiment", "journal", "reporting", "backend"]},
+          "status": {"type": "string", "enum": ["not_assessed", "supplied", "verified"]},
+          "profile_id": {"type": ["string", "null"]},
+          "profile_version": {"type": ["string", "null"]},
+          "profile_sha256": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "upstreamContext": {
+      "type": "object",
+      "required": ["artifact_ref", "claims", "evidence", "claim_evidence_relations", "required_visibility_ids", "figure_sequence", "review_figure_briefs"],
+      "properties": {
+        "artifact_ref": {"$ref": "figure-shared-definitions.schema.json#/$defs/artifactRef"},
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "claim_origin", "source_ids", "evidence_unit_ids", "structured_ceiling"],
+            "properties": {
+              "claim_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "claim_origin": {"type": "string", "enum": ["source_claim", "cross_source_synthesis", "author_position", "future_direction"]},
+              "source_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+              "evidence_unit_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+              "structured_ceiling": {"$ref": "figure-shared-definitions.schema.json#/$defs/structuredCeiling"}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["evidence_id", "evidence_unit_id", "relation_status"],
+            "properties": {
+              "evidence_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "evidence_unit_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "linked_source_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+              "relation_status": {"type": "string", "enum": ["support", "partial_support", "conflict", "context_only", "non_support"]}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "claim_evidence_relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "evidence_id", "relation_type"],
+            "properties": {
+              "claim_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "evidence_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "relation_type": {"type": "string", "enum": ["support", "partial_support", "conflict", "context_only", "non_support"]}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "required_visibility_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+        "figure_sequence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["figure_id", "order", "claim_ids", "evidence_ids", "author_approval"],
+            "properties": {
+              "figure_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "order": {"type": "integer", "minimum": 1},
+              "claim_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+              "evidence_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+              "author_approval": {"type": "string", "enum": ["pending", "approved", "rejected"]}
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "review_figure_briefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["brief_id", "output_type", "claim_ids", "source_ids"],
+            "properties": {
+              "brief_id": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"},
+              "output_type": {"type": "string", "enum": ["figure", "table"]},
+              "claim_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true},
+              "source_ids": {"type": "array", "items": {"$ref": "figure-shared-definitions.schema.json#/$defs/identifier"}, "minItems": 1, "uniqueItems": true}
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

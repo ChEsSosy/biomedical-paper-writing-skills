@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-scope.schema.json",
+  "title": "Phase 7A Review Scope Contract 0.1.0",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "contract_version", "artifact_id", "artifact_sha256",
+    "created_at", "created_by", "status", "document_type", "review_type", "execution_mode",
+    "review_question", "target_audience", "intended_use", "scope_boundaries",
+    "permitted_source_ids", "coverage", "author_objectives", "protocol_artifact_refs",
+    "authorization", "unresolved_decision_refs", "unresolved_queries"
+  ],
+  "properties": {
+    "schema_name": {"const": "review_scope_contract"},
+    "schema_version": {"const": "0.1.0"},
+    "contract_version": {"const": "0.1.3"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "artifact_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "document_type": {"const": "review_article"},
+    "review_type": {
+      "type": "string",
+      "enum": ["narrative_review", "mini_review", "scoping_style_review", "systematic_style_draft"]
+    },
+    "execution_mode": {"type": "string", "enum": ["executable", "architecture_only_degraded"]},
+    "review_question": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "target_audience": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "intended_use": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "scope_boundaries": {"$ref": "#/$defs/scopeBoundaries"},
+    "permitted_source_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "coverage": {"$ref": "#/$defs/coverageRecord"},
+    "author_objectives": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/authorObjective"},
+      "uniqueItems": true
+    },
+    "protocol_artifact_refs": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifactRef"},
+      "uniqueItems": true
+    },
+    "profile_ref": {"$ref": "#/$defs/profileRef"},
+    "authorization": {"$ref": "#/$defs/authorization"},
+    "unresolved_decision_refs": {
+      "type": "array",
+      "items": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+      "uniqueItems": true
+    },
+    "unresolved_queries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/query"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "scopeBoundaries": {
+      "type": "object",
+      "required": [
+        "population_or_system", "biological_context", "method_or_intervention",
+        "date_window", "publication_types", "languages", "inclusion_rules", "exclusion_rules"
+      ],
+      "properties": {
+        "population_or_system": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "biological_context": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "method_or_intervention": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "date_window": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {"start": {"type": ["string", "null"]}, "end": {"type": ["string", "null"]}},
+          "additionalProperties": false
+        },
+        "publication_types": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+        "languages": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+        "inclusion_rules": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+        "exclusion_rules": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1}
+      },
+      "additionalProperties": false
+    },
+    "coverageRecord": {
+      "type": "object",
+      "required": ["coverage_id", "basis", "known_blind_spots", "coverage_origin", "coverage_review_status"],
+      "properties": {
+        "coverage_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "basis": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "known_blind_spots": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "coverage_origin": {"type": "string", "enum": ["author_supplied", "authorized_retrieval_workflow", "model_proposed"]},
+        "coverage_review_status": {"type": "string", "enum": ["pending", "author_review_required", "approved", "rejected"]},
+        "coverage_decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"},
+        "supporting_input_ids": {
+          "type": "array",
+          "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorObjective": {
+      "type": "object",
+      "required": ["author_objective_id", "objective", "decision_ref"],
+      "properties": {
+        "author_objective_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "objective": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"}
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "artifact_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "artifact_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "profileRef": {
+      "type": "object",
+      "required": ["profile_id", "profile_kind", "profile_version", "profile_sha256", "profile_alignment_used"],
+      "properties": {
+        "profile_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "profile_kind": {"type": "string", "enum": ["review_article", "original_article", "mixed", "uncertain"]},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "profile_sha256": {"$ref": "qc-shared-definitions.schema.json#/$defs/sha256"},
+        "profile_alignment_used": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "authorization": {
+      "type": "object",
+      "required": ["authorization_origin", "authorization_state"],
+      "properties": {
+        "authorization_origin": {"$ref": "qc-shared-definitions.schema.json#/$defs/authorizationOrigin"},
+        "authorization_state": {"$ref": "qc-shared-definitions.schema.json#/$defs/authorizationState"},
+        "decision_ref": {"$ref": "review-authority-decision.schema.json#/$defs/decisionRef"}
+      },
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "required": ["query_id", "query_class", "question", "related_ids", "resolution_status"],
+      "properties": {
+        "query_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "query_class": {"type": "string", "enum": ["scope", "source_identity", "taxonomy", "synthesis", "coverage", "other"]},
+        "question": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+        "related_ids": {"type": "array", "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"}, "uniqueItems": true},
+        "resolution_status": {"type": "string", "enum": ["unresolved", "resolved", "dismissed"]}
+      },
+      "additionalProperties": false
+    }
+  }
+}

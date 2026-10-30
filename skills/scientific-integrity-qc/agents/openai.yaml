@@ -1,0 +1,7 @@
+interface:
+  display_name: "Scientific Integrity QC"
+  short_description: "Gate Article, Review, and Figure outputs for integrity QC"
+  default_prompt: "Use $scientific-integrity-qc to validate one exact, hash-bound Article, Review, or Figure producer package through the frozen Module 06 integration contract. Fail closed on incomplete provenance, report only implemented assessment domains, and never claim scientific truth or author approval."
+
+policy:
+  allow_implicit_invocation: true

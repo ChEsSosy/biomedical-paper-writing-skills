@@ -1,0 +1,61 @@
+{
+  "schema_name": "biomedical_paper_writing_skills_github_release",
+  "schema_version": "0.1.1",
+  "release_version": "0.1.5-six-skill-public.1",
+  "source_project_state": "SIX_GENERAL_SKILL_PUBLIC_SOURCE_PREPARATION",
+  "skills": [
+    {
+      "name": "style-and-structure-distiller",
+      "package_version": "0.1.3",
+      "inventory_sha256": "3ef8f11d0e867797a35ce9fb4735dd53744eca1b1168516f2df7a20227124ec5"
+    },
+    {
+      "name": "manuscript-story-architect",
+      "package_version": "0.1.1",
+      "inventory_sha256": "a90890785e6c32f86813a0054d2be8e9e39d3f4ec6cdc43797d863663f42c9b3"
+    },
+    {
+      "name": "article-polisher",
+      "package_version": "0.1.7",
+      "inventory_sha256": "c517643b4c9ea3bb5765314b4d07e927c4a29ddebff0dcd5d1c1584f508e7074"
+    },
+    {
+      "name": "review-architect-polisher",
+      "package_version": "0.1.7",
+      "inventory_sha256": "60a734ee8e7f32f543210e40fac72ee797a781499eb8997342eaaf5e6dd04f08"
+    },
+    {
+      "name": "scientific-figure-designer",
+      "package_version": "0.1.0",
+      "inventory_sha256": "897e31b93d8c6a997d3308b0dcf5cb5c4d4d3d7f3a351cc04f15ec6cee6a2429"
+    },
+    {
+      "name": "scientific-integrity-qc",
+      "package_version": "0.1.1",
+      "package_build": "guidance release 0.1.4; frozen functional lineage build 0.1.10",
+      "inventory_sha256": "2b72b4407b47e3c5124eda5a6d538c2d5937f1a57488b81c246b44420fbefa80"
+    }
+  ],
+  "excluded": [
+    "private mrna-review-expression Skill",
+    "specialized expression/corpus manifests",
+    "training PDFs and full-text Markdown",
+    "private author manuscripts",
+    "project execution/review/cleanup logs",
+    "old archives and development candidates outside the six package payloads"
+  ],
+  "integration_manifest": {
+    "path": "integration-manifest.json",
+    "manifest_sha256": "2621b3bd82ef9eb63301a769b88fd8386c3c0f466086a639285e67a4b7125552",
+    "schema_path": "schemas/integration-manifest.schema.json",
+    "schema_file_sha256": "4cb0b81ccb47635f38693b54f69e26bcd5252b72371b7b7b4849b1b14cf51193"
+  },
+  "review_state": "DISTRIBUTION_ONLY_NO_NEW_MODULE_REVIEW",
+  "installation_state": "NOT_INSTALLED_BY_THIS_SHARE_BUILD",
+  "general_skill_baseline_release": "0.1.4",
+  "source_collection_version": "0.1.5",
+  "distribution_author": "ChEsSosy",
+  "attribution_path": "ATTRIBUTION.md",
+  "license_scope": "MIT for maintainer original contributions; third-party terms retained",
+  "public_release_clearance": "PENDING_REFERENCE_PROVENANCE_CONFIRMATION"
+}

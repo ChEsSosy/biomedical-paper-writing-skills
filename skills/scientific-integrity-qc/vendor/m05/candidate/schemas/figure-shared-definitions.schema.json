@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "figure-shared-definitions.schema.json",
+  "title": "Phase 8A Figure Shared Definitions 0.1.0",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "documentType": {"type": "string", "enum": ["original_article", "review_article"]},
+    "maturity": {
+      "type": "string",
+      "enum": [
+        "architecture_only", "ready_for_author_review", "ready_for_prototype",
+        "prototype_generated_unverified", "prototype_verified", "ready_for_qc", "blocked"
+      ]
+    },
+    "finality": {
+      "type": "string",
+      "enum": ["design_candidate", "author_review_required", "submission_candidate", "author_approved_final"]
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["observed", "author_supplied", "workflow_supplied", "model_proposed", "missing"]
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": ["pending", "author_review_required", "approved", "rejected", "not_assessed"]
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_version", "artifact_sha256"],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_version": {"$ref": "#/$defs/semver"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "decisionRef": {
+      "type": "object",
+      "required": ["decision_id", "interface_version", "decision_sha256"],
+      "properties": {
+        "decision_id": {"$ref": "#/$defs/identifier"},
+        "interface_version": {"const": "0.1.0"},
+        "decision_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "analysisOutputRef": {
+      "type": "object",
+      "required": ["analysis_output_id", "record_version", "record_sha256"],
+      "properties": {
+        "analysis_output_id": {"$ref": "#/$defs/identifier"},
+        "record_version": {"$ref": "#/$defs/semver"},
+        "record_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "componentFileRef": {
+      "type": "object",
+      "required": [
+        "artifact_type", "artifact_id", "artifact_version", "artifact_sha256", "path", "file_sha256"
+      ],
+      "properties": {
+        "artifact_type": {
+          "type": "string",
+          "enum": ["source_data_manifest", "figure_card", "figure_contract", "plot_recipe"]
+        },
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "artifact_version": {"$ref": "#/$defs/semver"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "path": {"$ref": "#/$defs/nonEmptyString"},
+        "file_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "collectionFileRef": {
+      "type": "object",
+      "required": [
+        "interface_name", "collection_id", "collection_version", "collection_sha256", "path", "file_sha256"
+      ],
+      "properties": {
+        "interface_name": {
+          "type": "string",
+          "enum": ["trusted_source_inputs", "trusted_analysis_outputs", "trusted_authority_inputs"]
+        },
+        "collection_id": {"$ref": "#/$defs/identifier"},
+        "collection_version": {"$ref": "#/$defs/semver"},
+        "collection_sha256": {"$ref": "#/$defs/sha256"},
+        "path": {"$ref": "#/$defs/nonEmptyString"},
+        "file_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "trustedCollectionHeader": {
+      "type": "object",
+      "required": [
+        "interface_name", "interface_version", "collection_kind", "collection_id",
+        "collection_version", "collection_sha256", "supplied_by", "records"
+      ],
+      "properties": {
+        "interface_name": {"type": "string", "minLength": 1},
+        "interface_version": {"const": "0.1.0"},
+        "collection_kind": {"type": "string", "minLength": 1},
+        "collection_id": {"$ref": "#/$defs/identifier"},
+        "collection_version": {"$ref": "#/$defs/semver"},
+        "collection_sha256": {"$ref": "#/$defs/sha256"},
+        "supplied_by": {"$ref": "#/$defs/nonEmptyString"},
+        "records": {"type": "array"}
+      }
+    },
+    "unitContext": {
+      "type": "object",
+      "required": ["observation_unit", "feature_unit", "experimental_unit", "inference_unit"],
+      "properties": {
+        "observation_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "feature_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "experimental_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "inference_unit": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "replicateContext": {
+      "type": "object",
+      "required": [
+        "biological_replicate", "biological_replicate_unit", "technical_replicate",
+        "technical_replicate_unit", "n_definition", "n_unit", "n_by_group"
+      ],
+      "properties": {
+        "biological_replicate": {"$ref": "#/$defs/nonEmptyString"},
+        "biological_replicate_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "technical_replicate": {"$ref": "#/$defs/nonEmptyString"},
+        "technical_replicate_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "n_definition": {"$ref": "#/$defs/nonEmptyString"},
+        "n_unit": {"$ref": "#/$defs/nonEmptyString"},
+        "n_by_group": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      },
+      "additionalProperties": false
+    },
+    "experimentLabel": {
+      "type": "string",
+      "enum": [
+        "computational_dry_lab", "cell_based", "molecular_biochemical", "animal_in_vivo",
+        "omics", "imaging", "clinical_human", "structural_biophysical", "other", "unresolved"
+      ]
+    },
+    "structuredCeiling": {
+      "type": "object",
+      "required": ["strength", "causality", "mechanism", "generalization"],
+      "properties": {
+        "strength": {"type": "string", "enum": ["descriptive", "associative", "comparative", "explanatory"]},
+        "causality": {"type": "string", "enum": ["none", "association", "causal"]},
+        "mechanism": {"type": "string", "enum": ["none", "suggestive", "established"]},
+        "generalization": {"type": "string", "enum": ["system_only", "bounded_extension", "broad"]}
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": ["finding_id", "severity", "code", "path", "message", "review_route"],
+      "properties": {
+        "finding_id": {"$ref": "#/$defs/identifier"},
+        "severity": {"type": "string", "enum": ["blocker", "error", "warning", "info"]},
+        "code": {"$ref": "#/$defs/nonEmptyString"},
+        "path": {"$ref": "#/$defs/nonEmptyString"},
+        "message": {"$ref": "#/$defs/nonEmptyString"},
+        "review_route": {"type": "string", "enum": ["deterministic", "author", "statistics", "image_integrity", "copyright", "journal", "backend", "model_human"]}
+      },
+      "additionalProperties": false
+    }
+  }
+}

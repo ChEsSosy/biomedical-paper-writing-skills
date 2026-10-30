@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "style-profile.schema.json",
+  "title": "Document-First Biomedical Style Profile 0.2.2",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by", "source_artifact_ids",
+    "source_files", "status", "warnings", "corpus_id", "corpus_type", "document_count",
+    "feature_method_version", "aggregation_contract", "sections", "prohibited_content_audit"
+  ],
+  "properties": {
+    "schema_name": {"const": "style_profile"},
+    "schema_version": {"const": "0.2.2"},
+    "artifact_id": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactId"},
+    "created_at": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/createdBy"},
+    "source_artifact_ids": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceArtifactIds"},
+    "source_files": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/sourceFiles"},
+    "status": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/artifactStatus"},
+    "warnings": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/warnings"},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "corpus_type": {"type": "string", "enum": ["original_article", "review_article"]},
+    "document_count": {"type": "integer", "minimum": 1},
+    "feature_method_version": {"type": "string", "minLength": 1},
+    "aggregation_contract": {
+      "type": "object",
+      "required": ["primary_interpretation", "observation_hierarchy", "token_weighted_retained"],
+      "properties": {
+        "primary_interpretation": {"const": "document_weighted"},
+        "observation_hierarchy": {"const": "observation_to_document_section_to_corpus_to_stratum"},
+        "token_weighted_retained": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["document_count", "document_coverage", "document_weighted", "token_weighted", "feature_support"],
+        "properties": {
+          "document_count": {"type": "integer", "minimum": 1},
+          "document_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+          "document_weighted": {
+            "type": "object",
+            "required": [
+              "word_count_per_document", "mean_sentence_words_per_document", "mean_paragraph_words_per_document",
+              "mean_sentences_per_paragraph_per_document", "marker_rates_per_1000_words",
+              "citation_position_rates", "figure_position_rates"
+            ],
+            "properties": {
+              "word_count_per_document": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "mean_sentence_words_per_document": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "mean_paragraph_words_per_document": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "mean_sentences_per_paragraph_per_document": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "marker_rates_per_1000_words": {
+                "type": "object",
+                "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+              },
+              "citation_position_rates": {
+                "type": "object",
+                "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+              },
+              "figure_position_rates": {
+                "type": "object",
+                "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"}
+              }
+            },
+            "additionalProperties": false
+          },
+          "token_weighted": {
+            "type": "object",
+            "required": [
+              "word_count", "sentence_count", "paragraph_count", "sentence_words", "paragraph_words",
+              "sentences_per_paragraph", "marker_rates_per_1000_words", "citation_position_rates", "figure_position_rates"
+            ],
+            "properties": {
+              "word_count": {"type": "integer", "minimum": 0},
+              "sentence_count": {"type": "integer", "minimum": 0},
+              "paragraph_count": {"type": "integer", "minimum": 0},
+              "sentence_words": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "paragraph_words": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "sentences_per_paragraph": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/numericDistribution"},
+              "marker_rates_per_1000_words": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+              "citation_position_rates": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+              "figure_position_rates": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}}
+            },
+            "additionalProperties": false
+          },
+          "feature_support": {
+            "type": "object",
+            "additionalProperties": {"$ref": "../shared-core/schemas/shared-artifact.schema.json#/$defs/featureSupport"}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "prohibited_content_audit": {
+      "type": "object",
+      "required": [
+        "scanned_artifact_count", "scanned_key_count", "scanned_string_count", "finding_count", "findings",
+        "raw_passages_stored", "topic_lexicon_stored", "author_identity_features_stored",
+        "semantic_role_labels_stored", "result"
+      ],
+      "properties": {
+        "scanned_artifact_count": {"type": "integer", "minimum": 1},
+        "scanned_key_count": {"type": "integer", "minimum": 1},
+        "scanned_string_count": {"type": "integer", "minimum": 0},
+        "finding_count": {"type": "integer", "minimum": 0},
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["category", "path", "key"],
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": ["raw_passages", "topic_lexicon", "author_identity_features", "semantic_role_labels"]
+              },
+              "path": {"type": "string", "minLength": 1},
+              "key": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "raw_passages_stored": {"type": "boolean"},
+        "topic_lexicon_stored": {"type": "boolean"},
+        "author_identity_features_stored": {"type": "boolean"},
+        "semantic_role_labels_stored": {"type": "boolean"},
+        "result": {"type": "string", "enum": ["pass", "author_review_required"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

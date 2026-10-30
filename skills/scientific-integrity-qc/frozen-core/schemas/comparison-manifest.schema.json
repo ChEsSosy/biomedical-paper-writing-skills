@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "comparison-manifest.schema.json",
+  "title": "Minimum QC Comparison Manifest 0.1.1",
+  "type": "object",
+  "required": [
+    "schema_name", "schema_version", "artifact_id", "created_at", "created_by",
+    "source_artifact_ids", "status", "warnings", "manifest_id", "producer",
+    "source_file", "candidate_file", "comparison_scope", "protected_categories",
+    "required_checks", "optional_checks", "degraded_modes", "unit_alignments",
+    "approved_exceptions", "upstream_baselines"
+  ],
+  "properties": {
+    "schema_name": {"const": "comparison-manifest"},
+    "schema_version": {"const": "0.1.1"},
+    "artifact_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "created_at": {"$ref": "qc-shared-definitions.schema.json#/$defs/timestamp"},
+    "created_by": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"},
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "status": {"$ref": "qc-shared-definitions.schema.json#/$defs/artifactStatus"},
+    "warnings": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/warning"}
+    },
+    "manifest_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+    "producer": {"type": "string", "enum": ["arbitrary_user_comparison", "article_polisher", "other_skill"]},
+    "source_file": {"$ref": "qc-shared-definitions.schema.json#/$defs/fileIdentity"},
+    "candidate_file": {"$ref": "qc-shared-definitions.schema.json#/$defs/fileIdentity"},
+    "comparison_scope": {
+      "type": "object",
+      "required": ["document_id", "unit_kind", "scope_description"],
+      "properties": {
+        "document_id": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+        "unit_kind": {"type": "string", "enum": ["document", "section", "paragraph", "structured_unit"]},
+        "scope_description": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "protected_categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "numeric", "citation", "reference", "terminology", "equation", "variable",
+          "placeholder", "frozen_literal", "graph_identity", "semantic_signal"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "required_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "manifest_semantics", "hash_identity", "alignment_coverage",
+          "protected_anchor_comparison", "semantic_risk_localization",
+          "exception_validation", "upstream_baseline_semantics"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "optional_checks": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/identifier"},
+      "uniqueItems": true
+    },
+    "degraded_modes": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/nonEmptyString"}
+    },
+    "revision_contract": {"$ref": "qc-shared-definitions.schema.json#/$defs/revisionContract"},
+    "unit_alignments": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/unitAlignment"},
+      "minItems": 1
+    },
+    "approved_exceptions": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/approvedException"}
+    },
+    "upstream_baselines": {
+      "type": "array",
+      "items": {"$ref": "qc-shared-definitions.schema.json#/$defs/upstreamBaseline"}
+    }
+  },
+  "additionalProperties": false
+}
